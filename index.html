@@ -4,309 +4,260 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Гермес - Агентство недвижимости</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/catalog.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Дополнительные стили для главной страницы */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
+        /* Prevent flash of unstyled content */
+        html {
+            visibility: hidden;
+            opacity: 0;
         }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            color: white;
-        }
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        .btn-large {
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border-radius: 50px;
-        }
-        .stats-section {
-            padding: 4rem 0;
-            background: var(--bg-secondary);
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--secondary-color);
-        }
-        .services-section {
-            padding: 4rem 0;
-        }
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-        .service-card {
-            background: var(--bg-primary);
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s;
-        }
-        .service-card:hover {
-            transform: translateY(-5px);
-        }
-        .service-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            color: white;
-            font-size: 1.8rem;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        .btn-demo {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            background: #27ae60;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 12px 20px;
-            cursor: pointer;
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-        }
-        .btn-demo:hover {
-            transform: scale(1.05);
-            background: #1e8449;
-        }
-        
-        /* Панель уведомлений */
-        .notifications-panel {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            width: 380px;
-            max-height: 500px;
-            background: var(--bg-primary);
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            z-index: 9999;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-        }
-        .notifications-panel.show {
-            display: flex;
-            animation: slideIn 0.3s ease;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(100px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        .notifications-header {
-            padding: 16px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-primary);
-        }
-        .notifications-header h3 {
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .notifications-list {
-            flex: 1;
-            overflow-y: auto;
-            max-height: 400px;
-        }
-        .notification-item {
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: background 0.2s;
-            display: flex;
-            gap: 12px;
-        }
-        .notification-item:hover {
-            background: var(--bg-secondary);
-        }
-        .notification-item.unread {
-            background: rgba(52, 152, 219, 0.05);
-        }
-        .notification-icon {
-            flex-shrink: 0;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-        .notification-content {
-            flex: 1;
-        }
-        .notification-title {
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
-        .notification-message {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 4px;
-        }
-        .notification-time {
-            font-size: 11px;
-            color: var(--text-tertiary);
-        }
-        .empty-notifications {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-tertiary);
-        }
-        
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .notifications-panel { width: calc(100% - 40px); right: 20px; left: 20px; }
+
+        html[data-theme] {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 0.3s ease;
         }
     </style>
 </head>
+
+<!-- Отладочная информация (можно удалить после тестирования) -->
+<div style="position: fixed; bottom: 10px; left: 10px; background: rgba(0,0,0,0.8); color: white; padding: 10px; border-radius: 5px; font-size: 12px; z-index: 9999; display: none;" id="debugInfo">
+    Theme Debug: <span id="themeStatus">Loading...</span>
+</div>
+
+<script>
+    // Показать отладку при двойном нажатии Ctrl
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.code === 'Digit0') {
+            const debug = document.getElementById('debugInfo');
+            debug.style.display = debug.style.display === 'none' ? 'block' : 'none';
+        }
+    });
+
+    // Обновить статус темы
+    function updateDebugInfo() {
+        const theme = document.documentElement.getAttribute('data-theme') || 'not set';
+        const saved = localStorage.getItem('theme') || 'not saved';
+        document.getElementById('themeStatus').textContent =
+            `HTML: ${theme} | LocalStorage: ${saved}`;
+    }
+
+    // Обновлять при изменении темы
+    document.addEventListener('themechange', updateDebugInfo);
+    setInterval(updateDebugInfo, 1000);
+    updateDebugInfo();
+</script>
+
 <body>
     <!-- Header -->
-    <header class="header">
-        <nav class="nav">
-            <div class="nav-brand">
-                <h2><a href="index.html" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
-                <span>Агентство недвижимости</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Главная</a></li>
-                <li><a href="#about">О нас</a></li>
-                <li><a href="#services">Услуги</a></li>
-                <li><a href="catalog.html">Каталог</a></li>
-                <li><a href="#contact">Контакты</a></li>
-            </ul>
-            <div class="nav-actions">
-                <button class="theme-toggle" id="themeToggle">
-                    <span class="theme-icon">🌙</span>
-                    <span class="theme-text">Темная тема</span>
-                </button>
-                <div class="notifications-icon-wrapper" style="position: relative;">
-                    <button class="notifications-btn" id="notificationsBtn" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; color: var(--text-primary); position: relative;">
-                        <i class="fas fa-bell"></i>
-                        <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
-                    </button>
-                </div>
-                <div class="nav-auth" id="authSection">
-                    <a href="login.html" class="auth-btn auth-login">Войти</a>
-                    <a href="register.html" class="auth-btn auth-register">Регистрация</a>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Панель уведомлений -->
-    <div class="notifications-panel" id="notificationsPanel">
-        <div class="notifications-header">
-            <h3><i class="fas fa-bell"></i> Уведомления</h3>
-            <button class="btn-clear-all" id="clearAllBtn" style="background: none; border: none; color: var(--text-tertiary); cursor: pointer; font-size: 12px;">
-                <i class="fas fa-check-double"></i> Прочитать все
-            </button>
+<header class="header">
+    <nav class="nav">
+        <div class="nav-brand">
+            <h2><a href="index" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
+            <span>Агентство недвижимости</span>
         </div>
-        <div class="notifications-list" id="notificationsList">
-            <div class="empty-notifications">
-                <i class="fas fa-bell-slash" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                <p>Нет уведомлений</p>
+        <ul class="nav-links">
+            <li><a href="#home">Главная</a></li>
+            <li><a href="#about">О нас</a></li>
+            <li><a href="#services">Услуги</a></li>
+            <li><a href="catalog.html">Каталог</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+
+                        <div class="nav-actions">
+        <!-- Переключатель темы -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+        <span class="theme-icon">🌙</span>
+        <span class="theme-text">Темная тема</span>
+        </button>
+        
+            <!-- Кнопки авторизации -->
+            <div class="nav-auth">
+                <a href="login.html" class="auth-btn auth-login">Войти</a>
+                <a href="register.html" class="auth-btn auth-register">Регистрация</a>
+            </div>
+        </div>
+
+    </nav>
+</header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+    <div class="hero-background">
+        <div class="bg-shape shape-1"></div>
+        <div class="bg-shape shape-2"></div>
+        <div class="bg-shape shape-3"></div>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <!-- Добавляем затемненный фон для текстового контента -->
+                <div class="text-background">
+                    <h1>Найдем ваш идеальный дом</h1>
+                    <p>Профессиональные услуги по покупке, продаже и аренде недвижимости</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="scrollToSection('properties')">Смотреть объекты</button>
+                        <button class="btn btn-secondary" onclick="scrollToSection('contact')">Консультация</button>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/hero/modern-house.jpeg" alt="Современный дом" class="animated-house">
+                <div class="sparkle sparkle-1"></div>
+                <div class="sparkle sparkle-2"></div>
+                <div class="sparkle sparkle-3"></div>
             </div>
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Найдем ваш идеальный дом</h1>
-                <p>Профессиональные услуги по покупке, продаже и аренде недвижимости</p>
-                <div class="hero-buttons">
-                    <a href="catalog.html" class="btn btn-primary btn-large">Смотреть объекты</a>
-                    <a href="#contact" class="btn btn-secondary btn-large">Консультация</a>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Stats Section -->
-    <section class="stats-section">
+</section>
+
+</section>
+
+
+    <!-- About Section -->
+    <section id="about" class="about">
         <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card"><div class="stat-number">500+</div><div class="stat-label">Счастливых семей</div></div>
-                <div class="stat-card"><div class="stat-number">1000+</div><div class="stat-label">Объектов продано</div></div>
-                <div class="stat-card"><div class="stat-number">50+</div><div class="stat-label">Агентов</div></div>
-                <div class="stat-card"><div class="stat-number">10 лет</div><div class="stat-label">На рынке</div></div>
+            <h2>О компании "Гермес"</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Мы - профессиональное агентство недвижимости с 10-летним опытом работы на рынке. Наша команда поможет вам найти идеальное жилье или выгодно продать вашу недвижимость.</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <h3>500+</h3>
+                            <p>Успешных сделок</p>
+                        </div>
+                        <div class="stat">
+                            <h3>10 лет</h3>
+                            <p>Опыта работы</p>
+                        </div>
+                        <div class="stat">
+                            <h3>24/7</h3>
+                            <p>Поддержка клиентов</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Services Section -->
-    <section class="services-section" id="services">
+    <section id="services" class="services">
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 3rem;">Наши услуги</h2>
+            <h2>Наши услуги</h2>
             <div class="services-grid">
-                <div class="service-card"><div class="service-icon"><i class="fas fa-home"></i></div><h3>Покупка</h3><p>Поможем подобрать идеальный вариант под ваш бюджет</p></div>
-                <div class="service-card"><div class="service-icon"><i class="fas fa-chart-line"></i></div><h3>Продажа</h3><p>Быстрая продажа по максимальной цене</p></div>
-                <div class="service-card"><div class="service-icon"><i class="fas fa-key"></i></div><h3>Аренда</h3><p>Найдем квартиру или дом в аренду</p></div>
-                <div class="service-card"><div class="service-icon"><i class="fas fa-gavel"></i></div><h3>Юр. сопровождение</h3><p>Полное юридическое сопровождение сделок</p></div>
+                <div class="service-card">
+                    <h3>Покупка недвижимости</h3>
+                    <p>Поможем найти и купить квартиру, дом или коммерческую недвижимость по лучшей цене</p>
+                </div>
+                <div class="service-card">
+                    <h3>Продажа недвижимости</h3>
+                    <p>Оценим и продадим вашу недвижимость максимально быстро и выгодно</p>
+                </div>
+                <div class="service-card">
+                    <h3>Аренда</h3>
+                    <p>Подберем оптимальные варианты для аренды жилья или коммерческих помещений</p>
+                </div>
+                <div class="service-card">
+                    <h3>Юридическое сопровождение</h3>
+                    <p>Обеспечим полное юридическое сопровождение сделки</p>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- Properties Section -->
+<section id="properties" class="properties">
+    <div class="container">
+        <h2>Популярные объекты</h2>
+        <div class="properties-grid">
+            <!-- Объект 1 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <img src="images/properties/1.jpg" alt="3-комнатная квартира в Центральном районе">
+                </div>
+                <div class="property-info">
+                    <h3><a href="apartment1.html" class="property-title-link">3-комн. квартира</a></h3>
+                    <p class="property-location">📍 Центральный район, ул. Ленина, 15</p>
+                    <p class="property-price">12 500 000 ₽</p>
+                    <p class="property-area">🛋️ 85 м² • 🛏️ 3 комнаты</p>
+                    <div class="property-features">
+                        <span class="feature">5/9 этаж</span>
+                        <span class="feature">Евроремонт</span>
+                    </div>
+                    <a href="apartment1.html" class="btn-details">Подробнее об объекте</a>
+                </div>
+            </div>
+
+            <!-- Объект 2 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <img src="images/properties/2.jpg" alt="2-комнатная квартира в Северном районе">
+                </div>
+                <div class="property-info">
+                    <h3><a href="apartment2.html" class="property-title-link">2-комн. квартира</a></h3>
+                    <p class="property-location">📍 Северный район, пр. Мира, 42</p>
+                    <p class="property-price">8 200 000 ₽</p>
+                    <p class="property-area">🛋️ 65 м² • 🛏️ 2 комнаты</p>
+                    <div class="property-features">
+                        <span class="feature">3/5 этаж</span>
+                        <span class="feature">Чистовая</span>
+                    </div>
+                    <a href="apartment2.html" class="btn-details">Подробнее об объекте</a>
+                </div>
+            </div>
+
+            <!-- Объект 3 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <img src="images/properties/3.jpg" alt="Загородный дом в Пригороде">
+                </div>
+                <div class="property-info">
+                    <h3><a href="house1.html" class="property-title-link">Загородный дом</a></h3>
+                    <p class="property-location">📍 Пригород, с. Подгорное, ул. Садовая, 7</p>
+                    <p class="property-price">25 000 000 ₽</p>
+                    <p class="property-area">🏠 150 м² • 🌳 10 соток</p>
+                    <div class="property-features">
+                        <span class="feature">2 этажа</span>
+                        <span class="feature">Участок</span>
+                    </div>
+                    <a href="house1.html" class="btn-details">Подробнее об объекте</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Кнопка для просмотра всех объектов -->
+        <div class="properties-more">
+            <a href="catalog.html" class="btn btn-secondary">Смотреть все объекты</a>
+        </div>
+    </div>
+</section>
+
     <!-- Contact Section -->
-    <section class="contact-section" id="contact" style="padding: 4rem 0; background: var(--bg-secondary);">
+    <section id="contact" class="contact">
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 3rem;">Свяжитесь с нами</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-                <div><i class="fas fa-phone"></i><h3>Телефон</h3><p>+7 (495) 123-45-67</p></div>
-                <div><i class="fas fa-envelope"></i><h3>Email</h3><p>info@hermes.ru</p></div>
-                <div><i class="fas fa-map-marker-alt"></i><h3>Адрес</h3><p>г. Москва, ул. Тверская, 15</p></div>
+            <h2>Свяжитесь с нами</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Контакты</h3>
+                    <p>📞 +7 (495) 123-45-67</p>
+                    <p>📧 info@hermes-realty.ru</p>
+                    <p>📍 Москва, ул. Примерная, д. 123</p>
+                    <p>🕒 Пн-Пт: 9:00-20:00, Сб-Вс: 10:00-18:00</p>
+                </div>
+                <form class="contact-form">
+                    <input type="text" placeholder="Ваше имя" required>
+                    <input type="tel" placeholder="Телефон" required>
+                    <input type="email" placeholder="Email">
+                    <textarea placeholder="Сообщение" rows="5"></textarea>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
             </div>
         </div>
     </section>
@@ -315,246 +266,41 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-brand"><h3>ГЕРМЕС</h3><p>Агентство недвижимости</p></div>
+                <div class="footer-brand">
+                    <h3>ГЕРМЕС</h3>
+                    <p>Агентство недвижимости</p>
+                </div>
                 <div class="footer-links">
-                    <a href="index.html">Главная</a>
+                    <a href="index#home">Главная</a>
+                    <a href="index#about">О нас</a>
+                    <a href="index#services">Услуги</a>
                     <a href="catalog.html">Каталог</a>
-                    <a href="#contact">Контакты</a>
+                    <a href="index#contact">Контакты</a>
                 </div>
                 <div class="footer-social">
                     <a href="https://vk.com/club233530044"><i class="fab fa-vk"></i></a>
                 </div>
             </div>
-            <div class="footer-bottom"><p>&copy; 2025 Агентство недвижимости "Гермес". Все права защищены.</p></div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Агентство недвижимости "Гермес". Все права защищены.</p>
+                <p class="footer-info">
+                    Информация на сайте не является публичной офертой.
+                    <a href="privacy.html">Политика конфиденциальности</a>
+                </p>
+            </div>
         </div>
     </footer>
 
-    <!-- Кнопка демо-уведомлений -->
-    <button class="btn-demo" id="demoNotificationsBtn">
-        <i class="fas fa-bell"></i> Тест уведомлений
-    </button>
+    <script src="js/theme.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/catalog.js"></script>
 
     <script>
-        // ========== СИСТЕМА УВЕДОМЛЕНИЙ ==========
-        
-        class NotificationManager {
-            constructor() {
-                this.notifications = [];
-                this.loadHistory();
-                this.init();
-            }
-
-            init() {
-                this.createToastContainer();
-                this.setupEventListeners();
-                this.updateBadge();
-            }
-
-            createToastContainer() {
-                if (document.getElementById('toast-container')) return;
-                const container = document.createElement('div');
-                container.id = 'toast-container';
-                container.style.cssText = `
-                    position: fixed; bottom: 20px; right: 20px; z-index: 10000;
-                    display: flex; flex-direction: column; gap: 12px; max-width: 380px;
-                `;
-                document.body.appendChild(container);
-                this.toastContainer = container;
-            }
-
-            loadHistory() {
-                const saved = localStorage.getItem('hermes_notifications');
-                if (saved) {
-                    this.notifications = JSON.parse(saved);
-                } else {
-                    // Демо-уведомления при первом запуске
-                    this.notifications = [
-                        { id: 1, type: 'success', title: 'Добро пожаловать!', message: 'Добро пожаловать в агентство "Гермес"', timestamp: new Date().toISOString(), read: false },
-                        { id: 2, type: 'info', title: 'Новые объекты', message: 'Добавлено 5 новых квартир в центре города', timestamp: new Date(Date.now() - 86400000).toISOString(), read: false },
-                        { id: 3, type: 'warning', title: 'Акция', message: 'Скидка 50% на услуги агента до конца месяца!', timestamp: new Date(Date.now() - 172800000).toISOString(), read: true }
-                    ];
-                    this.saveHistory();
-                }
-                this.renderNotificationsList();
-            }
-
-            saveHistory() {
-                localStorage.setItem('hermes_notifications', JSON.stringify(this.notifications.slice(0, 100)));
-            }
-
-            show(message, type = 'info', options = {}) {
-                const { title = null, duration = 4000, actions = [], onClick = null } = options;
-                
-                // Сохраняем в историю
-                const notification = {
-                    id: Date.now() + Math.random(),
-                    type, title: title || this.getDefaultTitle(type),
-                    message, timestamp: new Date().toISOString(), read: false
-                };
-                this.notifications.unshift(notification);
-                this.saveHistory();
-                this.renderNotificationsList();
-                this.updateBadge();
-                
-                // Показываем toast
-                this.showToast(message, type, title, duration, actions, onClick, notification.id);
-                
-                return notification.id;
-            }
-
-            getDefaultTitle(type) {
-                const titles = { success: 'Успешно', error: 'Ошибка', warning: 'Внимание', info: 'Информация', booking: 'Бронирование', deal: 'Сделка' };
-                return titles[type] || 'Уведомление';
-            }
-
-            showToast(message, type, title, duration, actions, onClick, id) {
-                const toast = document.createElement('div');
-                const iconMap = { success: 'fa-check-circle', error: 'fa-exclamation-circle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle', booking: 'fa-calendar-check', deal: 'fa-handshake' };
-                const colorMap = { success: '#27ae60', error: '#e74c3c', warning: '#f39c12', info: '#3498db', booking: '#9b59b6', deal: '#1abc9c' };
-                const icon = iconMap[type] || iconMap.info;
-                const color = colorMap[type] || colorMap.info;
-                
-                toast.className = `toast-notification toast-${type}`;
-                toast.style.cssText = `
-                    background: var(--bg-primary); border-radius: 12px; padding: 14px 16px;
-                    display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-                    transform: translateX(400px); transition: transform 0.3s; border-left: 4px solid ${color};
-                    margin-bottom: 8px; cursor: pointer;
-                `;
-                toast.innerHTML = `
-                    <div><i class="fas ${icon}" style="color: ${color}; font-size: 20px;"></i></div>
-                    <div style="flex:1;"><div style="font-weight:600; margin-bottom:4px;">${title}</div><div style="font-size:13px; color:var(--text-secondary);">${message}</div></div>
-                    <div class="toast-close" style="width:20px; text-align:center;"><i class="fas fa-times" style="color:var(--text-tertiary); font-size:12px;"></i></div>
-                `;
-                
-                toast.addEventListener('click', (e) => {
-                    if (e.target.closest('.toast-close')) {
-                        toast.remove();
-                        return;
-                    }
-                    if (onClick) onClick();
-                    this.markAsRead(id);
-                });
-                
-                this.toastContainer.appendChild(toast);
-                setTimeout(() => toast.style.transform = 'translateX(0)', 10);
-                setTimeout(() => { if (toast.parentNode) toast.remove(); }, duration);
-            }
-
-            markAsRead(id) {
-                const notification = this.notifications.find(n => n.id === id);
-                if (notification && !notification.read) {
-                    notification.read = true;
-                    this.saveHistory();
-                    this.renderNotificationsList();
-                    this.updateBadge();
-                }
-            }
-
-            markAllAsRead() {
-                this.notifications.forEach(n => n.read = true);
-                this.saveHistory();
-                this.renderNotificationsList();
-                this.updateBadge();
-                this.show('Все уведомления прочитаны', 'info', { duration: 2000 });
-            }
-
-            updateBadge() {
-                const unreadCount = this.notifications.filter(n => !n.read).length;
-                const badge = document.getElementById('notificationBadge');
-                if (badge) {
-                    if (unreadCount > 0) {
-                        badge.textContent = unreadCount;
-                        badge.style.display = 'block';
-                    } else {
-                        badge.style.display = 'none';
-                    }
-                }
-            }
-
-            renderNotificationsList() {
-                const list = document.getElementById('notificationsList');
-                if (!list) return;
-                
-                if (this.notifications.length === 0) {
-                    list.innerHTML = '<div class="empty-notifications"><i class="fas fa-bell-slash" style="font-size:2rem;"></i><p>Нет уведомлений</p></div>';
-                    return;
-                }
-                
-                list.innerHTML = this.notifications.map(n => `
-                    <div class="notification-item ${n.read ? 'read' : 'unread'}" onclick="notificationManager.markAsRead(${n.id})">
-                        <div class="notification-icon"><i class="fas ${this.getIcon(n.type)}" style="color: ${this.getColor(n.type)};"></i></div>
-                        <div class="notification-content">
-                            <div class="notification-title">${n.title}</div>
-                            <div class="notification-message">${n.message}</div>
-                            <div class="notification-time">${this.formatTime(n.timestamp)}</div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            getIcon(type) { const icons = { success:'fa-check-circle', error:'fa-exclamation-circle', warning:'fa-exclamation-triangle', info:'fa-info-circle', booking:'fa-calendar-check', deal:'fa-handshake' }; return icons[type] || 'fa-info-circle'; }
-            getColor(type) { const colors = { success:'#27ae60', error:'#e74c3c', warning:'#f39c12', info:'#3498db', booking:'#9b59b6', deal:'#1abc9c' }; return colors[type] || '#3498db'; }
-            formatTime(timestamp) { const diff = Date.now() - new Date(timestamp).getTime(); if (diff < 60000) return 'только что'; if (diff < 3600000) return `${Math.floor(diff/60000)} мин назад`; if (diff < 86400000) return `${Math.floor(diff/3600000)} ч назад`; return new Date(timestamp).toLocaleDateString(); }
-
-            setupEventListeners() {
-                const btn = document.getElementById('notificationsBtn');
-                const panel = document.getElementById('notificationsPanel');
-                const clearBtn = document.getElementById('clearAllBtn');
-                if (btn) btn.addEventListener('click', () => panel.classList.toggle('show'));
-                if (clearBtn) clearBtn.addEventListener('click', () => this.markAllAsRead());
-                document.addEventListener('click', (e) => { if (!e.target.closest('#notificationsBtn') && !e.target.closest('#notificationsPanel')) panel.classList.remove('show'); });
-            }
+        // Проверяем, загрузился ли theme.js
+        if (typeof ThemeManager !== 'undefined') {
+            window.themeManager = new ThemeManager();
         }
-
-        // Инициализация
-        const notificationManager = new NotificationManager();
-        window.notificationManager = notificationManager;
-        window.notify = notificationManager;
-
-        // Демо-уведомления
-        document.getElementById('demoNotificationsBtn').addEventListener('click', () => {
-            const types = ['success', 'error', 'warning', 'info', 'booking', 'deal'];
-            const messages = [
-                'Объект "3-комн. квартира" успешно добавлен',
-                'Заполните обязательное поле "Адрес объекта"',
-                'Внимание! Объект скоро будет забронирован',
-                'Новый комментарий к сделке №123',
-                'Назначен показ на 25.05.2026 в 14:00',
-                'Сделка №456 закрыта. Комиссия 50 000 ₽ начислена'
-            ];
-            const type = types[Math.floor(Math.random() * types.length)];
-            const message = messages[Math.floor(Math.random() * messages.length)];
-            notificationManager.show(message, type);
-        });
-
-        // Тема
-        const themeToggle = document.getElementById('themeToggle');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => {
-                document.documentElement.setAttribute('data-theme', 
-                    document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
-                );
-            });
-        }
-
-        // Авторизация
-        class SimpleAuth {
-            getCurrentUser() { return JSON.parse(localStorage.getItem('hermes_current_user')); }
-            updateAuthUI() {
-                const user = this.getCurrentUser();
-                const authSection = document.getElementById('authSection');
-                if (authSection) {
-                    if (user) {
-                        authSection.innerHTML = `<div class="user-menu"><div class="user-avatar" style="width:40px;height:40px;border-radius:50%;background:#667eea;display:flex;align-items:center;justify-content:center;color:white;">${user.firstName?.charAt(0)}</div></div>`;
-                    } else {
-                        authSection.innerHTML = '<a href="login.html" class="auth-btn auth-login">Войти</a><a href="register.html" class="auth-btn auth-register">Регистрация</a>';
-                    }
-                }
-            }
-        }
-        const auth = new SimpleAuth();
-        auth.updateAuthUI();
     </script>
+
 </body>
 </html>
