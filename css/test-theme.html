@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестирование темной темы</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Тестирование темной темы</h1>
+
+        <div class="theme-test">
+            <div class="test-card">
+                <h3>Карточка</h3>
+                <p>Пример текста в карточке</p>
+                <button class="btn btn-primary">Кнопка</button>
+            </div>
+
+            <div class="test-form">
+                <input type="text" placeholder="Введите текст">
+                <textarea placeholder="Введите сообщение"></textarea>
+            </div>
+        </div>
+
+        <button onclick="toggleTheme()" class="theme-toggle">
+            Переключить тему
+        </button>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Загружаем сохраненную тему
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</body>
+</html>
