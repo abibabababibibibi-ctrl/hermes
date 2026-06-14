@@ -267,7 +267,7 @@
                 ${property.status === 'reserved' ? '<div class="property-badge">Забронировано</div>' : ''}
 
                 <div class="property-image">
-                    <img src="${property.image}" alt="${property.title}">
+                    <img src="images/properties/studio.jpeg" alt="${property.title}">
                     <div class="property-favorite ${isFavorite ? 'active' : ''}" data-property-id="${property.id}">
                         <i class="fas fa-heart"></i>
                     </div>
@@ -276,7 +276,7 @@
                 <div class="property-info">
                     <div class="property-header">
                         <h3 class="property-title">
-                            <a href="properties/apartment${property.id}.html">${property.title}</a>
+                            <a href="apartment${property.id}.html">${property.title}</a>
                         </h3>
                         <p class="property-location">
                             <i class="fas fa-map-marker-alt"></i> ${property.location}
@@ -298,7 +298,7 @@
                     <div class="property-price">${formatPrice(property.price)}</div>
 
                     <div class="property-actions">
-                        <a href="properties/apartment${property.id}.html" class="btn btn-primary">
+                        <a href="apartment${property.id}.html" class="btn btn-primary">
                             <i class="fas fa-eye"></i> Подробнее
                         </a>
                         <button class="btn btn-secondary" onclick="scheduleViewing(${property.id})">
@@ -353,7 +353,7 @@
                         <div class="property-list-actions">
                             <div class="property-price">${formatPrice(property.price)}</div>
                             <div class="property-buttons">
-                                <a href="properties/apartment${property.id}.html" class="btn btn-primary btn-sm">
+                                <a href="apartment${property.id}.html" class="btn btn-primary btn-sm">
                                     <i class="fas fa-eye"></i> Подробнее
                                 </a>
                                 <button class="btn btn-secondary btn-sm" onclick="scheduleViewing(${property.id})">
@@ -456,7 +456,7 @@
                     </div>
                     <div class="property-info">
                         <h3 class="property-title">
-                            <a href="properties/apartment${property.id}.html">${property.title}</a>
+                            <a href="apartment${property.id}.html">${property.title}</a>
                         </h3>
                         <p class="property-location">
                             <i class="fas fa-map-marker-alt"></i> ${property.location}
@@ -470,7 +470,7 @@
                             </div>
                         </div>
                         <div class="property-price">${formatPrice(property.price)}</div>
-                        <a href="properties/apartment${property.id}.html" class="btn btn-primary btn-block">
+                        <a href="apartment${property.id}.html" class="btn btn-primary btn-block">
                             <i class="fas fa-eye"></i> Посмотреть
                         </a>
                     </div>
@@ -952,7 +952,7 @@ function createPropertyCard(property) {
             <!-- ... существующий код ... -->
 
             <div class="property-actions">
-                <a href="properties/apartment${property.id}.html" class="btn btn-primary">
+                <a href="apartment${property.id}.html" class="btn btn-primary">
                     <i class="fas fa-eye"></i> Подробнее
                 </a>
                 <button class="btn btn-success" onclick="buyFromCatalog(${property.id})">
@@ -963,398 +963,137 @@ function createPropertyCard(property) {
     `;
 }
 
-// Добавьте в начало файла catalog.js
+// Добавьте в catalog.js
+function initFilterOverlay() {
+    const filterToggle = document.getElementById('filterToggle');
+    const filterSection = document.querySelector('.filters-section');
+    const closeFilterBtn = document.querySelector('.close-filters');
 
-// Управление раздвижной панелью фильтров
-class FilterPanel {
-    constructor() {
-        this.panel = document.getElementById('filterSlidePanel');
-        this.overlay = document.getElementById('filterOverlay');
-        this.toggleBtn = document.getElementById('filterToggleBtn');
-        this.closeBtn = document.getElementById('closeFilterPanel');
-        this.resetBtn = document.getElementById('resetFiltersBtn');
-        this.applyBtn = document.getElementById('applyFiltersBtn');
-        
-        this.isOpen = false;
-        this.init();
-    }
-    
-    init() {
-        // Открытие панели
-        if (this.toggleBtn) {
-            this.toggleBtn.addEventListener('click', () => this.open());
-        }
-        
-        // Закрытие через крестик
-        if (this.closeBtn) {
-            this.closeBtn.addEventListener('click', () => this.close());
-        }
-        
-        // Закрытие по оверлею
-        if (this.overlay) {
-            this.overlay.addEventListener('click', () => this.close());
-        }
-        
-        // Сброс фильтров
-        if (this.resetBtn) {
-            this.resetBtn.addEventListener('click', () => this.resetFilters());
-        }
-        
-        // Применение фильтров
-        if (this.applyBtn) {
-            this.applyBtn.addEventListener('click', () => this.applyFilters());
-        }
-        
-        // Закрытие по Escape
+    if (filterToggle && filterSection) {
+        // Открытие/закрытие фильтров
+        filterToggle.addEventListener('click', () => {
+            filterSection.classList.toggle('active');
+
+            // Меняем иконку
+            const icon = filterToggle.querySelector('i');
+            if (filterSection.classList.contains('active')) {
+                icon.className = 'fas fa-times';
+                filterToggle.setAttribute('aria-label', 'Закрыть фильтры');
+            } else {
+                icon.className = 'fas fa-filter';
+                filterToggle.setAttribute('aria-label', 'Открыть фильтры');
+            }
+        });
+
+        // Закрытие при клике вне области фильтров
+        document.addEventListener('click', (e) => {
+            if (filterSection.classList.contains('active') &&
+                !filterSection.contains(e.target) &&
+                e.target !== filterToggle &&
+                !filterToggle.contains(e.target)) {
+                filterSection.classList.remove('active');
+                filterToggle.querySelector('i').className = 'fas fa-filter';
+                filterToggle.setAttribute('aria-label', 'Открыть фильтры');
+            }
+        });
+
+        // Закрытие на Escape
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isOpen) {
-                this.close();
+            if (e.key === 'Escape' && filterSection.classList.contains('active')) {
+                filterSection.classList.remove('active');
+                filterToggle.querySelector('i').className = 'fas fa-filter';
+                filterToggle.setAttribute('aria-label', 'Открыть фильтры');
             }
         });
-        
-        // Инициализация ползунка цен
-        this.initPriceSlider();
-        
-        // Загрузка сохраненных фильтров
-        this.loadSavedFilters();
-        
-        // Обновление счетчика активных фильтров
-        this.updateActiveFiltersCount();
-        
-        // Следим за изменениями для обновления счетчика
-        this.watchFilterChanges();
     }
-    
-    open() {
-        this.isOpen = true;
-        this.panel.classList.add('open');
-        this.overlay.classList.add('active');
-        this.toggleBtn.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-    
-    close() {
-        this.isOpen = false;
-        this.panel.classList.remove('open');
-        this.overlay.classList.remove('active');
-        this.toggleBtn.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-    
-    initPriceSlider() {
-        const minSlider = document.getElementById('priceSliderMin');
-        const maxSlider = document.getElementById('priceSliderMax');
-        const minInput = document.getElementById('filterMinPrice');
-        const maxInput = document.getElementById('filterMaxPrice');
-        const track = document.getElementById('sliderTrack');
-        
-        if (!minSlider || !maxSlider) return;
-        
-        const updateTrack = () => {
-            const min = parseInt(minSlider.value);
-            const max = parseInt(maxSlider.value);
-            const percentMin = (min / 100000000) * 100;
-            const percentMax = (max / 100000000) * 100;
-            track.style.left = percentMin + '%';
-            track.style.width = (percentMax - percentMin) + '%';
-        };
-        
-        const updateFromSlider = () => {
-            let min = parseInt(minSlider.value);
-            let max = parseInt(maxSlider.value);
-            
-            if (min > max) {
-                [min, max] = [max, min];
-                minSlider.value = min;
-                maxSlider.value = max;
-            }
-            
-            minInput.value = this.formatNumberInput(min);
-            maxInput.value = this.formatNumberInput(max);
-            updateTrack();
-            this.updateActiveFiltersCount();
-        };
-        
-        const updateFromInput = () => {
-            let min = this.parseNumberInput(minInput.value);
-            let max = this.parseNumberInput(maxInput.value);
-            
-            if (isNaN(min)) min = 0;
-            if (isNaN(max)) max = 50000000;
-            if (min > max) [min, max] = [max, min];
-            if (min < 0) min = 0;
-            if (max > 100000000) max = 100000000;
-            
-            minSlider.value = min;
-            maxSlider.value = max;
-            minInput.value = this.formatNumberInput(min);
-            maxInput.value = this.formatNumberInput(max);
-            updateTrack();
-            this.updateActiveFiltersCount();
-        };
-        
-        minSlider.addEventListener('input', updateFromSlider);
-        maxSlider.addEventListener('input', updateFromSlider);
-        minInput.addEventListener('change', updateFromInput);
-        maxInput.addEventListener('change', updateFromInput);
-        
-        updateTrack();
-    }
-    
-    formatNumberInput(value) {
-        return new Intl.NumberFormat('ru-RU').format(value);
-    }
-    
-    parseNumberInput(value) {
-        return parseInt(String(value).replace(/\s/g, '')) || 0;
-    }
-    
-    getCurrentFilters() {
-        // Тип недвижимости
-        const types = Array.from(document.querySelectorAll('input[name="filter_type"]:checked'))
-            .map(cb => cb.value);
-        
-        // Цена
-        const minPrice = this.parseNumberInput(document.getElementById('filterMinPrice').value);
-        const maxPrice = this.parseNumberInput(document.getElementById('filterMaxPrice').value);
-        
-        // Комнаты
-        const rooms = Array.from(document.querySelectorAll('input[name="filter_rooms"]:checked'))
-            .map(cb => cb.value);
-        
-        // Площадь
-        const minArea = parseInt(document.getElementById('filterMinArea').value) || 0;
-        const maxArea = parseInt(document.getElementById('filterMaxArea').value) || 500;
-        
-        // Район
-        const district = document.getElementById('filterDistrict').value;
-        
-        // Статус
-        const status = document.querySelector('input[name="filter_status"]:checked')?.value || 'all';
-        
-        return { types, minPrice, maxPrice, rooms, minArea, maxArea, district, status };
-    }
-    
-    resetFilters() {
-        // Сброс типов
-        document.querySelectorAll('input[name="filter_type"]').forEach(cb => {
-            cb.checked = cb.value === 'apartment' || cb.value === 'house';
-        });
-        
-        // Сброс цены
-        document.getElementById('filterMinPrice').value = '0';
-        document.getElementById('filterMaxPrice').value = '50 000 000';
-        document.getElementById('priceSliderMin').value = 0;
-        document.getElementById('priceSliderMax').value = 50000000;
-        this.initPriceSlider();
-        
-        // Сброс комнат
-        document.querySelectorAll('input[name="filter_rooms"]').forEach(cb => {
-            cb.checked = false;
-        });
-        
-        // Сброс площади
-        document.getElementById('filterMinArea').value = '0';
-        document.getElementById('filterMaxArea').value = '500';
-        
-        // Сброс района
-        document.getElementById('filterDistrict').value = '';
-        
-        // Сброс статуса
-        document.querySelector('input[name="filter_status"][value="all"]').checked = true;
-        
-        // Обновляем счетчик
-        this.updateActiveFiltersCount();
-        
-        // Применяем фильтры
-        this.applyFilters();
-        
-        // Показываем уведомление
-        this.showNotification('Фильтры сброшены', 'info');
-    }
-    
-    applyFilters() {
-        const filters = this.getCurrentFilters();
-        
-        // Сохраняем фильтры
-        localStorage.setItem('catalog_filters', JSON.stringify(filters));
-        
-        // Применяем фильтрацию (вызываем вашу существующую функцию)
-        if (typeof window.applyFiltersAndUpdate === 'function') {
-            window.applyFiltersAndUpdate(filters);
-        } else {
-            // Симулируем событие для обновления
-            const event = new CustomEvent('filtersApplied', { detail: filters });
-            document.dispatchEvent(event);
-        }
-        
-        // Обновляем счетчик
-        this.updateActiveFiltersCount();
-        
-        // Закрываем панель на мобильных
-        if (window.innerWidth <= 768) {
-            this.close();
-        }
-        
-        this.showNotification('Фильтры применены', 'success');
-    }
-    
-    updateActiveFiltersCount() {
-        const filters = this.getCurrentFilters();
-        let count = 0;
-        
-        // Считаем активные фильтры
-        if (filters.types.length !== 2 || !filters.types.includes('apartment') || !filters.types.includes('house')) {
-            count += filters.types.length;
-        }
-        
-        if (filters.minPrice > 0 || filters.maxPrice < 50000000) count++;
-        if (filters.rooms.length > 0) count++;
-        if (filters.minArea > 0 || filters.maxArea < 500) count++;
-        if (filters.district) count++;
-        if (filters.status !== 'all') count++;
-        
-        const badge = document.getElementById('activeFiltersCount');
-        const toggleBtn = document.getElementById('filterToggleBtn');
-        
-        if (count > 0) {
-            badge.textContent = count;
-            badge.style.display = 'inline-block';
-            toggleBtn.style.background = 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)';
-        } else {
-            badge.style.display = 'none';
-            toggleBtn.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-        }
-    }
-    
-    watchFilterChanges() {
-        const inputs = document.querySelectorAll('.filter-option input, .room-option input, .status-option input, #filterDistrict, #filterMinArea, #filterMaxArea, #filterMinPrice, #filterMaxPrice');
-        inputs.forEach(input => {
-            input.addEventListener('change', () => this.updateActiveFiltersCount());
-            input.addEventListener('input', () => this.updateActiveFiltersCount());
-        });
-    }
-    
-    loadSavedFilters() {
-        const saved = localStorage.getItem('catalog_filters');
-        if (!saved) return;
-        
-        try {
-            const filters = JSON.parse(saved);
-            
-            // Загружаем типы
-            document.querySelectorAll('input[name="filter_type"]').forEach(cb => {
-                if (filters.types) {
-                    cb.checked = filters.types.includes(cb.value);
+
+    // Закрытие фильтров после применения
+    const applyBtn = document.querySelector('.filters-footer .btn-primary');
+    if (applyBtn) {
+        applyBtn.addEventListener('click', () => {
+            setTimeout(() => {
+                filterSection.classList.remove('active');
+                if (filterToggle) {
+                    filterToggle.querySelector('i').className = 'fas fa-filter';
+                    filterToggle.setAttribute('aria-label', 'Открыть фильтры');
                 }
-            });
-            
-            // Загружаем цену
-            if (filters.minPrice) {
-                document.getElementById('filterMinPrice').value = this.formatNumberInput(filters.minPrice);
-                document.getElementById('priceSliderMin').value = filters.minPrice;
-            }
-            if (filters.maxPrice) {
-                document.getElementById('filterMaxPrice').value = this.formatNumberInput(filters.maxPrice);
-                document.getElementById('priceSliderMax').value = filters.maxPrice;
-            }
-            this.initPriceSlider();
-            
-            // Загружаем комнаты
-            if (filters.rooms) {
-                document.querySelectorAll('input[name="filter_rooms"]').forEach(cb => {
-                    cb.checked = filters.rooms.includes(cb.value);
-                });
-            }
-            
-            // Загружаем площадь
-            if (filters.minArea) document.getElementById('filterMinArea').value = filters.minArea;
-            if (filters.maxArea) document.getElementById('filterMaxArea').value = filters.maxArea;
-            
-            // Загружаем район
-            if (filters.district) document.getElementById('filterDistrict').value = filters.district;
-            
-            // Загружаем статус
-            if (filters.status) {
-                const statusRadio = document.querySelector(`input[name="filter_status"][value="${filters.status}"]`);
-                if (statusRadio) statusRadio.checked = true;
-            }
-            
-            this.updateActiveFiltersCount();
-        } catch (e) {
-            console.error('Ошибка загрузки фильтров:', e);
-        }
-    }
-    
-    showNotification(message, type) {
-        const notification = document.createElement('div');
-        notification.className = `auth-notification ${type}`;
-        notification.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i> ${message}`;
-        document.body.appendChild(notification);
-        setTimeout(() => notification.remove(), 2000);
+            }, 500); // Небольшая задержка чтобы пользователь увидел результат
+        });
     }
 }
 
-// Инициализация при загрузке
-let filterPanel;
+// Вызовите функцию при загрузке
 document.addEventListener('DOMContentLoaded', function() {
-    filterPanel = new FilterPanel();
+    initFilterOverlay();
+    // ... остальной код инициализации
 });
 
-// Функция применения фильтров (интеграция с существующей логикой)
-window.applyFiltersAndUpdate = function(filters) {
-    // Здесь ваша существующая логика фильтрации
-    console.log('Применяем фильтры:', filters);
-    
-    // Пример обновления каталога
-    if (typeof window.filterProperties === 'function') {
-        window.filterProperties(filters);
-    } else {
-        // Вызываем существующую функцию applyFilters если она есть
-        if (typeof applyFilters === 'function') {
-            applyFilters();
-        }
+// Обновите функцию resetFilters чтобы закрывать шторку
+function resetFilters() {
+    // ... существующий код сброса фильтров ...
+
+    // Закрываем шторку
+    const filterSection = document.querySelector('.filters-section');
+    const filterToggle = document.getElementById('filterToggle');
+
+    if (filterSection && filterToggle) {
+        filterSection.classList.remove('active');
+        filterToggle.querySelector('i').className = 'fas fa-filter';
+        filterToggle.setAttribute('aria-label', 'Открыть фильтры');
     }
-};
-
-// Экспортируем для использования в других функциях
-window.filterPanel = filterPanel;
-
-// В вашем существующем catalog.js
-function applyFilters() {
-    // Получаем фильтры из панели
-    const filters = filterPanel ? filterPanel.getCurrentFilters() : getFiltersFromDOM();
-    
-    // Ваша существующая логика фильтрации
-    const filtered = allProperties.filter(property => {
-        // Тип
-        if (filters.types.length && !filters.types.includes(property.type)) return false;
-        
-        // Цена
-        if (property.price < filters.minPrice || property.price > filters.maxPrice) return false;
-        
-        // Комнаты
-        if (filters.rooms.length) {
-            const roomValue = property.rooms === 0 ? 'studio' : property.rooms.toString();
-            if (!filters.rooms.includes(roomValue)) return false;
-        }
-        
-        // Площадь
-        if (property.area < filters.minArea || property.area > filters.maxArea) return false;
-        
-        // Район
-        if (filters.district && property.district !== filters.district) return false;
-        
-        // Статус
-        if (filters.status !== 'all' && property.status !== filters.status) return false;
-        
-        return true;
-    });
-    
-    // Обновляем отображение
-    renderProperties(filtered);
-    updateFilterCount(filtered.length);
-    
-    // Сохраняем фильтры
-    localStorage.setItem('catalog_filters', JSON.stringify(filters));
 }
+
+// В catalog.js обновите массив properties:
+const properties = [
+    {
+        id: 4,
+        title: '1-комн. квартира в Южном районе',
+        price: 5500000,
+        area: 45,
+        rooms: 1,
+        location: 'Южный район, ул. Солнечная, 25',
+        type: 'apartment',
+        status: 'available',
+        description: 'Современная однокомнатная квартира в новостройке с отделкой под ключ.',
+        image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&auto=format&fit=crop',
+        images: ['1.jpg'],
+        features: ['новая отделка', 'панорамные окна', 'встроенная кухня'],
+        district: 'south',
+        createdAt: '2024-01-20',
+        isFeatured: false
+    },
+    {
+        id: 5,
+        title: 'Таунхаус в Западном районе',
+        price: 18000000,
+        area: 120,
+        rooms: 3,
+        location: 'Западный район, ЖК "Европейский", 15',
+        type: 'house',
+        status: 'reserved',
+        description: 'Просторный таунхаус с двумя уровнями, отдельным входом и небольшим садом.',
+        image: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w-800&auto=format&fit=crop',
+        images: ['2.jpg'],
+        features: ['2 уровня', 'отдельный вход', 'сад', 'гараж'],
+        district: 'west',
+        createdAt: '2024-01-18',
+        isFeatured: false
+    },
+    {
+        id: 6,
+        title: 'Студия в Центральном районе',
+        price: 4500000,
+        area: 35,
+        rooms: 0,
+        location: 'Центральный район, ул. Центральная, 8',
+        type: 'apartment',
+        status: 'available',
+        description: 'Уютная студия в историческом центре с высокими потолками и французскими окнами.',
+        images: ['images/properties/studio.jpeg'],
+        features: ['высокие потолки', 'французские окна', 'исторический центр'],
+        district: 'central',
+        createdAt: '2024-01-22',
+        isFeatured: false
+    }
+    // ... остальные объекты
+];
