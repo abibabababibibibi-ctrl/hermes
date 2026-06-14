@@ -1,0 +1,38 @@
+<!-- Компонент панели уведомлений -->
+<div class="notifications-panel" id="notificationsPanel" style="display: none;">
+    <div class="notifications-header">
+        <h3><i class="fas fa-bell"></i> Уведомления</h3>
+        <button onclick="markAllNotificationsRead()" class="btn btn-sm btn-secondary">Прочитать все</button>
+    </div>
+    <div class="notifications-list" id="notificationsList"></div>
+</div>
+
+<script>
+function toggleNotificationsPanel() {
+    const panel = document.getElementById('notificationsPanel');
+    const history = notify.getHistory();
+    const list = document.getElementById('notificationsList');
+    
+    if (history.length === 0) {
+        list.innerHTML = '<div class="empty-state"><i class="fas fa-bell-slash"></i><p>Нет уведомлений</p></div>';
+    } else {
+        list.innerHTML = history.map(n => `
+            <div class="notification-item ${n.read ? 'read' : 'unread'}" onclick="notify.markAsRead(${n.id})">
+                <div class="notification-icon"><i class="${notify.getTypeIcon(n.type)}" style="color: ${notify.getTypeColor(n.type)}"></i></div>
+                <div class="notification-content">
+                    <div class="notification-title">${n.title || ''}</div>
+                    <div class="notification-message">${n.message}</div>
+                    <div class="notification-time">${new Date(n.timestamp).toLocaleString()}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+
+function markAllNotificationsRead() {
+    notify.markAllAsRead();
+    toggleNotificationsPanel();
+}
+</script>

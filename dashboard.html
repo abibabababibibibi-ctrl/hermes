@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - Гермес Агентство недвижимости</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <style>
+        /* Стили для личного кабинета */
+        .dashboard-page {
+            background: var(--bg-secondary);
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        /* Приветственная секция */
+        .dashboard-welcome {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-welcome::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-greeting {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .welcome-stat {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Навигация кабинета */
+        .dashboard-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .dashboard-nav-item {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .dashboard-nav-item:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .dashboard-nav-item.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        /* Секции */
+        .dashboard-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dashboard-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Карточки */
+        .dashboard-card {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .card-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Сетка объектов */
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Карточка объекта */
+        .property-item {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .property-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+
+        .property-image {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .property-info {
+            padding: 1rem;
+        }
+
+        .property-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .property-location {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .property-price {
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Таблица бронирований */
+        .bookings-table {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Форма профиля */
+        .profile-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-field.full-width {
+            grid-column: span 2;
+        }
+
+        .form-field label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-field input,
+        .form-field textarea {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .form-field input:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        /* Пустое состояние */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-tertiary);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .profile-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-field.full-width {
+                grid-column: span 1;
+            }
+            
+            .welcome-name {
+                font-size: 1.5rem;
+            }
+            
+            .welcome-stats {
+                gap: 1rem;
+            }
+            
+            .dashboard-nav-item {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h2><a href="index.html" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
+                <span>Агентство недвижимости</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="index.html#about">О нас</a></li>
+                <li><a href="index.html#services">Услуги</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="index.html#contact">Контакты</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <span class="theme-icon">🌙</span>
+                    <span class="theme-text">Темная тема</span>
+                </button>
+                <div class="nav-auth" id="authSection"></div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="dashboard-page">
+        <div class="dashboard-container">
+            <!-- Приветственная секция -->
+            <div class="dashboard-welcome" id="welcomeSection">
+                <div class="welcome-content">
+                    <div class="welcome-greeting">
+                        <i class="fas fa-hand-peace"></i> Добро пожаловать,
+                    </div>
+                    <div class="welcome-name" id="userName">Загрузка...</div>
+                    <div class="welcome-stats" id="userStats"></div>
+                </div>
+            </div>
+
+            <!-- Навигация -->
+            <div class="dashboard-nav">
+                <button class="dashboard-nav-item active" data-tab="overview">
+                    <i class="fas fa-chart-line"></i> Обзор
+                </button>
+                <button class="dashboard-nav-item" data-tab="bookings">
+                    <i class="fas fa-calendar-alt"></i> Бронирования
+                </button>
+                <button class="dashboard-nav-item" data-tab="favorites">
+                    <i class="fas fa-heart"></i> Избранное
+                </button>
+                <button class="dashboard-nav-item" data-tab="profile">
+                    <i class="fas fa-user"></i> Профиль
+                </button>
+                <button class="dashboard-nav-item" data-tab="settings">
+                    <i class="fas fa-cog"></i> Настройки
+                </button>
+            </div>
+
+            <!-- Секция: Обзор -->
+            <div class="dashboard-section active" id="overviewTab">
+                <!-- Рекомендации -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-star" style="color: #f39c12;"></i> Рекомендации для вас</h3>
+                        <a href="catalog.html" class="btn btn-sm btn-secondary">Смотреть все →</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="properties-grid" id="recommendationsGrid">
+                            <div class="empty-state">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <p>Загрузка рекомендаций...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Активные бронирования -->
+                <div class="dashboard-card" id="activeBookingsCard" style="display: none;">
+                    <div class="card-header">
+                        <h3><i class="fas fa-clock"></i> Активные бронирования</h3>
+                        <button class="btn btn-sm btn-secondary" onclick="location.href='catalog.html'">Новое бронирование</button>
+                    </div>
+                    <div class="card-body">
+                        <div id="activeBookingsList"></div>
+                    </div>
+                </div>
+
+                <!-- Недавно просмотренные -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-history"></i> Недавно просмотренные</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="properties-grid" id="recentGrid">
+                            <div class="empty-state">
+                                <i class="fas fa-eye-slash"></i>
+                                <p>Вы еще не просматривали объекты</p>
+                                <a href="catalog.html" class="btn btn-primary">Перейти в каталог</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция: Бронирования -->
+            <div class="dashboard-section" id="bookingsTab">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-calendar-check"></i> Все бронирования</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="bookings-table" id="bookingsTable">
+                            <div class="empty-state">
+                                <i class="fas fa-calendar-times"></i>
+                                <p>У вас пока нет бронирований</p>
+                                <a href="catalog.html" class="btn btn-primary">Забронировать объект</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция: Избранное -->
+            <div class="dashboard-section" id="favoritesTab">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-heart" style="color: #e74c3c;"></i> Избранные объекты</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="properties-grid" id="favoritesGrid">
+                            <div class="empty-state">
+                                <i class="fas fa-heart-broken"></i>
+                                <p>Нет избранных объектов</p>
+                                <a href="catalog.html" class="btn btn-primary">Добавить в избранное</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция: Профиль -->
+            <div class="dashboard-section" id="profileTab">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-user-edit"></i> Личная информация</h3>
+                    </div>
+                    <div class="card-body">
+                        <form class="profile-form" id="profileForm">
+                            <div class="form-field">
+                                <label>Имя *</label>
+                                <input type="text" id="firstName" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Фамилия *</label>
+                                <input type="text" id="lastName" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Email *</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Телефон</label>
+                                <input type="tel" id="phone">
+                            </div>
+                            <div class="form-field full-width">
+                                <label>О себе</label>
+                                <textarea id="bio" rows="3" placeholder="Расскажите о себе..."></textarea>
+                            </div>
+                            <div class="form-field full-width">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Сохранить изменения
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция: Настройки -->
+            <div class="dashboard-section" id="settingsTab">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-lock"></i> Безопасность</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="passwordForm" style="max-width: 400px;">
+                            <div class="form-field">
+                                <label>Текущий пароль</label>
+                                <input type="password" id="currentPassword" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Новый пароль</label>
+                                <input type="password" id="newPassword" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Подтверждение пароля</label>
+                                <input type="password" id="confirmPassword" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Сменить пароль</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bell"></i> Уведомления</h3>
+                    </div>
+                    <div class="card-body">
+                        <label class="checkbox-group" style="margin-bottom: 1rem;">
+                            <input type="checkbox" id="notifyEmail">
+                            <span>Получать уведомления на email</span>
+                        </label>
+                        <label class="checkbox-group">
+                            <input type="checkbox" id="notifySMS">
+                            <span>Получать SMS-уведомления</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Опасная зона</h3>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-danger" onclick="deleteAccount()">
+                            <i class="fas fa-trash"></i> Удалить аккаунт
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>ГЕРМЕС</h3>
+                    <p>Агентство недвижимости</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Главная</a>
+                    <a href="catalog.html">Каталог</a>
+                    <a href="news.html">Новости</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://vk.com/club233530044"><i class="fab fa-vk"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Агентство недвижимости "Гермес".</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/theme.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

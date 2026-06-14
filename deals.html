@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сделки - Гермес Агентство недвижимости</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <style>
+        .deals-page { background: var(--bg-secondary); min-height: 100vh; padding-top: 100px; padding-bottom: 60px; }
+        .deals-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+        .page-header h1 { font-size: 1.8rem; display: flex; align-items: center; gap: 0.5rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .stat-card { background: var(--bg-primary); border-radius: 15px; padding: 1.5rem; text-align: center; border: 1px solid var(--border-color); }
+        .stat-number { font-size: 2rem; font-weight: 700; color: var(--secondary-color); }
+        .stat-label { color: var(--text-secondary); font-size: 0.9rem; }
+        .filters-bar { background: var(--bg-primary); border-radius: 15px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid var(--border-color); }
+        .filters-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+        .filter-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .filter-group label { font-weight: 500; font-size: 0.9rem; }
+        .filter-group input, .filter-group select { padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 10px; background: var(--bg-secondary); color: var(--text-primary); }
+        .deals-table-container { background: var(--bg-primary); border-radius: 15px; border: 1px solid var(--border-color); overflow-x: auto; }
+        .deals-table { width: 100%; border-collapse: collapse; }
+        .deals-table th, .deals-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border-color); }
+        .deals-table th { background: var(--bg-secondary); font-weight: 600; cursor: pointer; }
+        .deals-table tr:hover { background: var(--bg-secondary); }
+        .stage-badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 500; }
+        .stage-prelim { background: #f39c12; color: white; }
+        .stage-contract { background: #3498db; color: white; }
+        .stage-payment { background: #9b59b6; color: white; }
+        .stage-registration { background: #1abc9c; color: white; }
+        .stage-completed { background: #27ae60; color: white; }
+        .stage-cancelled { background: #e74c3c; color: white; }
+        .client-link, .property-link { color: var(--secondary-color); text-decoration: none; cursor: pointer; }
+        .client-link:hover, .property-link:hover { text-decoration: underline; }
+        .action-buttons { display: flex; gap: 0.5rem; }
+        .icon-btn { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; transition: all 0.3s; }
+        .icon-btn.view { background: #3498db; color: white; }
+        .icon-btn.docs { background: #9b59b6; color: white; }
+        .pagination { display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem; }
+        .page-btn { padding: 0.5rem 1rem; border: 1px solid var(--border-color); background: var(--bg-primary); border-radius: 8px; cursor: pointer; }
+        .page-btn.active { background: var(--secondary-color); color: white; }
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; padding: 20px; }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--bg-primary); border-radius: 20px; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; }
+        .modal-header { padding: 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .modal-body { padding: 1.5rem; }
+        .modal-footer { padding: 1.5rem; border-top: 1px solid var(--border-color); display: flex; gap: 1rem; justify-content: flex-end; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 10px; background: var(--bg-secondary); color: var(--text-primary); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .commission-info { background: var(--bg-secondary); border-radius: 10px; padding: 1rem; margin: 1rem 0; }
+        .documents-list { margin-top: 1rem; }
+        .doc-item { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; border-bottom: 1px solid var(--border-color); }
+        .doc-item:last-child { border-bottom: none; }
+        .btn-download { background: none; border: none; color: var(--secondary-color); cursor: pointer; }
+        .file-upload { border: 2px dashed var(--border-color); border-radius: 10px; padding: 1rem; text-align: center; cursor: pointer; margin-top: 1rem; }
+        @media (max-width: 768px) { .filters-row { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header class="header">...</header>
+    <div class="deals-page">
+        <div class="deals-container">
+            <div class="page-header">
+                <h1><i class="fas fa-handshake"></i> Сделки</h1>
+                <button class="btn btn-primary" onclick="openDealModal()"><i class="fas fa-plus"></i> Новая сделка</button>
+            </div>
+            <div class="stats-grid" id="statsGrid"></div>
+            <div class="filters-bar">
+                <div class="filters-row">
+                    <div class="filter-group"><label>Поиск</label><input type="text" id="searchDeal" placeholder="Клиент, объект..."></div>
+                    <div class="filter-group"><label>Статус</label><select id="filterStage"><option value="">Все</option><option value="prelim">Предварительный</option><option value="contract">Договор</option><option value="payment">Оплата</option><option value="registration">Регистрация</option><option value="completed">Завершена</option><option value="cancelled">Отменена</option></select></div>
+                    <div class="filter-group"><label>Агент</label><select id="filterAgent"><option value="">Все</option></select></div>
+                    <div class="filter-group"><label>Дата от</label><input type="date" id="filterDateFrom"></div>
+                    <div class="filter-group"><label>Дата до</label><input type="date" id="filterDateTo"></div>
+                </div>
+            </div>
+            <div class="deals-table-container">
+                <table class="deals-table">
+                    <thead><tr><th>№</th><th onclick="sortTable('client')">Клиент</th><th onclick="sortTable('property')">Объект</th><th onclick="sortTable('amount')">Сумма</th><th>Комиссия</th><th onclick="sortTable('stage')">Статус</th><th>Агент</th><th>Действия</th></tr></thead>
+                    <tbody id="dealsTableBody"></tbody>
+                </table>
+            </div>
+            <div class="pagination" id="pagination"></div>
+        </div>
+    </div>
+    <div class="modal" id="dealModal"><div class="modal-content"><div class="modal-header"><h3 id="dealModalTitle">Новая сделка</h3><button class="close-modal" onclick="closeDealModal()">&times;</button></div><div class="modal-body"><form id="dealForm"><input type="hidden" id="dealId"><div class="form-row"><div class="form-group"><label>Клиент *</label><select id="dealClientId" required><option value="">Выберите клиента</option></select></div><div class="form-group"><label>Объект *</label><select id="dealPropertyId" required><option value="">Выберите объект</option></select></div></div><div class="form-row"><div class="form-group"><label>Сумма сделки (₽) *</label><input type="number" id="dealAmount" required></div><div class="form-group"><label>Комиссия (%)</label><input type="number" id="dealCommissionPercent" value="5" step="0.5"></div></div><div class="commission-info" id="commissionInfo"></div><div class="form-row"><div class="form-group"><label>Статус</label><select id="dealStage"><option value="prelim">Предварительный договор</option><option value="contract">Основной договор</option><option value="payment">Оплата</option><option value="registration">Регистрация</option><option value="completed">Завершена</option></select></div><div class="form-group"><label>Дата сделки</label><input type="date" id="dealDate"></div></div><div class="form-group"><label>Примечания</label><textarea id="dealNotes" rows="2"></textarea></div></form></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeDealModal()">Отмена</button><button class="btn btn-primary" onclick="saveDeal()">Сохранить</button></div></div></div>
+    <div class="modal" id="docsModal"><div class="modal-content"><div class="modal-header"><h3>Документы сделки</h3><button class="close-modal" onclick="closeDocsModal()">&times;</button></div><div class="modal-body" id="docsModalBody"></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeDocsModal()">Закрыть</button></div></div></div>
+    <script src="js/theme.js"></script><script src="js/auth.js"></script><script src="js/database.js"></script><script src="js/deal-manager.js"></script>
+</body>
+</html>

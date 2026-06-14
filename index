@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гермес - Агентство недвижимости</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/catalog.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Prevent flash of unstyled content */
+        html {
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        html[data-theme] {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+
+<!-- Отладочная информация (можно удалить после тестирования) -->
+<div style="position: fixed; bottom: 10px; left: 10px; background: rgba(0,0,0,0.8); color: white; padding: 10px; border-radius: 5px; font-size: 12px; z-index: 9999; display: none;" id="debugInfo">
+    Theme Debug: <span id="themeStatus">Loading...</span>
+</div>
+
+<script>
+    // Показать отладку при двойном нажатии Ctrl
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.code === 'Digit0') {
+            const debug = document.getElementById('debugInfo');
+            debug.style.display = debug.style.display === 'none' ? 'block' : 'none';
+        }
+    });
+
+    // Обновить статус темы
+    function updateDebugInfo() {
+        const theme = document.documentElement.getAttribute('data-theme') || 'not set';
+        const saved = localStorage.getItem('theme') || 'not saved';
+        document.getElementById('themeStatus').textContent =
+            `HTML: ${theme} | LocalStorage: ${saved}`;
+    }
+
+    // Обновлять при изменении темы
+    document.addEventListener('themechange', updateDebugInfo);
+    setInterval(updateDebugInfo, 1000);
+    updateDebugInfo();
+</script>
+
+<body>
+    <!-- Header -->
+<header class="header">
+    <nav class="nav">
+        <div class="nav-brand">
+            <h2><a href="index" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
+            <span>Агентство недвижимости</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Главная</a></li>
+            <li><a href="#about">О нас</a></li>
+            <li><a href="#services">Услуги</a></li>
+            <li><a href="catalog.html">Каталог</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+
+                        <div class="nav-actions">
+        <!-- Переключатель темы -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+        <span class="theme-icon">🌙</span>
+        <span class="theme-text">Темная тема</span>
+        </button>
+        
+            <!-- Кнопки авторизации -->
+            <div class="nav-auth">
+                <a href="login.html" class="auth-btn auth-login">Войти</a>
+                <a href="register.html" class="auth-btn auth-register">Регистрация</a>
+            </div>
+        </div>
+
+    </nav>
+</header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+    <div class="hero-background">
+        <div class="bg-shape shape-1"></div>
+        <div class="bg-shape shape-2"></div>
+        <div class="bg-shape shape-3"></div>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <!-- Добавляем затемненный фон для текстового контента -->
+                <div class="text-background">
+                    <h1>Найдем ваш идеальный дом</h1>
+                    <p>Профессиональные услуги по покупке, продаже и аренде недвижимости</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="scrollToSection('properties')">Смотреть объекты</button>
+                        <button class="btn btn-secondary" onclick="scrollToSection('contact')">Консультация</button>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/hero/modern-house.jpeg" alt="Современный дом" class="animated-house">
+                <div class="sparkle sparkle-1"></div>
+                <div class="sparkle sparkle-2"></div>
+                <div class="sparkle sparkle-3"></div>
+            </div>
+        </div>
+    </div>
+
+                    </div>
+                </div>
+
+</section>
+
+</section>
+
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>О компании "Гермес"</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Мы - профессиональное агентство недвижимости с 10-летним опытом работы на рынке. Наша команда поможет вам найти идеальное жилье или выгодно продать вашу недвижимость.</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <h3>500+</h3>
+                            <p>Успешных сделок</p>
+                        </div>
+                        <div class="stat">
+                            <h3>10 лет</h3>
+                            <p>Опыта работы</p>
+                        </div>
+                        <div class="stat">
+                            <h3>24/7</h3>
+                            <p>Поддержка клиентов</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Наши услуги</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Покупка недвижимости</h3>
+                    <p>Поможем найти и купить квартиру, дом или коммерческую недвижимость по лучшей цене</p>
+                </div>
+                <div class="service-card">
+                    <h3>Продажа недвижимости</h3>
+                    <p>Оценим и продадим вашу недвижимость максимально быстро и выгодно</p>
+                </div>
+                <div class="service-card">
+                    <h3>Аренда</h3>
+                    <p>Подберем оптимальные варианты для аренды жилья или коммерческих помещений</p>
+                </div>
+                <div class="service-card">
+                    <h3>Юридическое сопровождение</h3>
+                    <p>Обеспечим полное юридическое сопровождение сделки</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Properties Section -->
+<section id="properties" class="properties">
+    <div class="container">
+        <h2>Популярные объекты</h2>
+        <div class="properties-grid">
+            <!-- Объект 1 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <img src="images/properties/1.jpg" alt="3-комнатная квартира в Центральном районе">
+                </div>
+                <div class="property-info">
+                    <h3><a href="apartment1.html" class="property-title-link">3-комн. квартира</a></h3>
+                    <p class="property-location">📍 Центральный район, ул. Ленина, 15</p>
+                    <p class="property-price">12 500 000 ₽</p>
+                    <p class="property-area">🛋️ 85 м² • 🛏️ 3 комнаты</p>
+                    <div class="property-features">
+                        <span class="feature">5/9 этаж</span>
+                        <span class="feature">Евроремонт</span>
+                    </div>
+                    <a href="apartment1.html" class="btn-details">Подробнее об объекте</a>
+                </div>
+            </div>
+
+            <!-- Объект 2 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <img src="images/properties/2.jpg" alt="2-комнатная квартира в Северном районе">
+                </div>
+                <div class="property-info">
+                    <h3><a href="apartment2.html" class="property-title-link">2-комн. квартира</a></h3>
+                    <p class="property-location">📍 Северный район, пр. Мира, 42</p>
+                    <p class="property-price">8 200 000 ₽</p>
+                    <p class="property-area">🛋️ 65 м² • 🛏️ 2 комнаты</p>
+                    <div class="property-features">
+                        <span class="feature">3/5 этаж</span>
+                        <span class="feature">Чистовая</span>
+                    </div>
+                    <a href="apartment2.html" class="btn-details">Подробнее об объекте</a>
+                </div>
+            </div>
+
+            <!-- Объект 3 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <img src="images/properties/3.jpg" alt="Загородный дом в Пригороде">
+                </div>
+                <div class="property-info">
+                    <h3><a href="house1.html" class="property-title-link">Загородный дом</a></h3>
+                    <p class="property-location">📍 Пригород, с. Подгорное, ул. Садовая, 7</p>
+                    <p class="property-price">25 000 000 ₽</p>
+                    <p class="property-area">🏠 150 м² • 🌳 10 соток</p>
+                    <div class="property-features">
+                        <span class="feature">2 этажа</span>
+                        <span class="feature">Участок</span>
+                    </div>
+                    <a href="house1.html" class="btn-details">Подробнее об объекте</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Кнопка для просмотра всех объектов -->
+        <div class="properties-more">
+            <a href="catalog.html" class="btn btn-secondary">Смотреть все объекты</a>
+        </div>
+    </div>
+</section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Свяжитесь с нами</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Контакты</h3>
+                    <p>📞 +7 (495) 123-45-67</p>
+                    <p>📧 info@hermes-realty.ru</p>
+                    <p>📍 Москва, ул. Примерная, д. 123</p>
+                    <p>🕒 Пн-Пт: 9:00-20:00, Сб-Вс: 10:00-18:00</p>
+                </div>
+                <form class="contact-form">
+                    <input type="text" placeholder="Ваше имя" required>
+                    <input type="tel" placeholder="Телефон" required>
+                    <input type="email" placeholder="Email">
+                    <textarea placeholder="Сообщение" rows="5"></textarea>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>ГЕРМЕС</h3>
+                    <p>Агентство недвижимости</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index#home">Главная</a>
+                    <a href="index#about">О нас</a>
+                    <a href="index#services">Услуги</a>
+                    <a href="catalog.html">Каталог</a>
+                    <a href="index#contact">Контакты</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://vk.com/club233530044"><i class="fab fa-vk"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Агентство недвижимости "Гермес". Все права защищены.</p>
+                <p class="footer-info">
+                    Информация на сайте не является публичной офертой.
+                    <a href="privacy.html">Политика конфиденциальности</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/theme.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/catalog.js"></script>
+
+    <script>
+        // Проверяем, загрузился ли theme.js
+        if (typeof ThemeManager !== 'undefined') {
+            window.themeManager = new ThemeManager();
+        }
+    </script>
+
+</body>
+</html>

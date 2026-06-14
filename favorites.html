@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Избранное - Гермес</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <header class="header"><!-- такой же header --></header>
+    
+    <main>
+        <div class="container">
+            <h1>Избранные объекты</h1>
+            <div class="properties-grid" id="favoritesGrid"></div>
+        </div>
+    </main>
+    
+    <script src="js/theme.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/database.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = AuthService.getCurrentUser();
+            if (!user) {
+                window.location.href = 'login.html?redirect=favorites.html';
+                return;
+            }
+            
+            const favorites = JSON.parse(localStorage.getItem('hermes_favorites')) || {};
+            const userFavorites = favorites[user.id] || [];
+            const properties = database.getProperties();
+            const favoriteProperties = properties.filter(p => userFavorites.includes(p.id));
+            
+            const grid = document.getElementById('favoritesGrid');
+            
+            if (favoriteProperties.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <i class="fas fa-heart-broken fa-3x"></i>
+                        <h3>Нет избранных объектов</h3>
+                        <p>Добавляйте объекты в избранное, чтобы не потерять их</p>
+                        <a href="catalog.html" class="btn btn-primary">Перейти в каталог</a>
+                    </div>
+                `;
+            } else {
+                grid.innerHTML = favoriteProperties.map(p => `
+                    <div class="property-card">
+                        <div class="property-image">
+                            <img src="${p.image}" alt="${p.title}">
+                        </div>
+                        <div class="property-info">
+                            <h3>${p.title}</h3>
+                            <p>${p.location}</p>
+                            <div class="property-price">${new Intl.NumberFormat('ru-RU').format(p.price)} ₽</div>
+                            <a href="apartment${p.id}.html" class="btn btn-primary">Подробнее</a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        });
+    </script>
+</body>
+</html>

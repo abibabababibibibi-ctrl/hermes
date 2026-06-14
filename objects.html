@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление объектами - Гермес</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .objects-page {
+            background: var(--bg-secondary);
+            min-height: 100vh;
+            padding-top: 100px;
+            padding-bottom: 60px;
+        }
+        .objects-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+        .page-header h1 { font-size: 1.8rem; display: flex; align-items: center; gap: 0.5rem; }
+        
+        /* Фильтры */
+        .filters-bar {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .filter-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .filter-group label { font-weight: 500; font-size: 0.9rem; }
+        .filter-group input, .filter-group select {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        .filter-actions { display: flex; gap: 1rem; margin-top: 1rem; }
+        
+        /* Таблица объектов */
+        .objects-table-container {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+        .objects-table { width: 100%; border-collapse: collapse; }
+        .objects-table th, .objects-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .objects-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .objects-table tr:hover { background: var(--bg-secondary); }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .status-available { background: #d4edda; color: #155724; }
+        .status-sold { background: #f8d7da; color: #721c24; }
+        .status-booked { background: #fff3cd; color: #856404; }
+        .status-archived { background: #e2e3e5; color: #383d41; }
+        
+        .action-buttons { display: flex; gap: 0.5rem; }
+        .icon-btn {
+            width: 32px; height: 32px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; border: none; transition: all 0.3s;
+        }
+        .icon-btn.edit { background: #3498db; color: white; }
+        .icon-btn.archive { background: #f39c12; color: white; }
+        .icon-btn.delete { background: #e74c3c; color: white; }
+        .icon-btn.agent { background: #9b59b6; color: white; }
+        .icon-btn:hover { transform: scale(1.05); }
+        
+        /* Пагинация */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        .page-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .page-btn.active { background: var(--secondary-color); color: white; }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-header { padding: 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .modal-body { padding: 1.5rem; }
+        .modal-footer { padding: 1.5rem; border-top: 1px solid var(--border-color); display: flex; gap: 1rem; justify-content: flex-end; }
+        
+        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .form-field { display: flex; flex-direction: column; gap: 0.5rem; }
+        .form-field.full-width { grid-column: span 2; }
+        .form-field label { font-weight: 500; }
+        .form-field input, .form-field select, .form-field textarea {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        .image-upload {
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+        }
+        .image-preview {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .preview-item {
+            position: relative;
+            width: 80px; height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .preview-item img { width: 100%; height: 100%; object-fit: cover; }
+        .preview-item .remove {
+            position: absolute;
+            top: 2px; right: 2px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .form-field.full-width { grid-column: span 1; }
+            .filters-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h2><a href="index.html" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
+                <span>Агентство недвижимости</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="objects.html" class="active">Объекты</a></li>
+                <li><a href="clients.html">Клиенты</a></li>
+                <li><a href="deals.html">Сделки</a></li>
+                <li><a href="calendar.html">Календарь</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+                <div class="nav-auth" id="authSection"></div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="objects-page">
+        <div class="objects-container">
+            <div class="page-header">
+                <h1><i class="fas fa-building"></i> Управление объектами недвижимости</h1>
+                <button class="btn btn-primary" onclick="openObjectModal()"><i class="fas fa-plus"></i> Добавить объект</button>
+            </div>
+
+            <!-- Фильтры -->
+            <div class="filters-bar">
+                <div class="filters-grid">
+                    <div class="filter-group"><label>Поиск</label><input type="text" id="searchInput" placeholder="Название, адрес..."></div>
+                    <div class="filter-group"><label>Район</label><select id="filterDistrict"><option value="">Все</option><option value="central">Центральный</option><option value="north">Северный</option><option value="south">Южный</option><option value="east">Восточный</option><option value="west">Западный</option><option value="suburb">Пригород</option></select></div>
+                    <div class="filter-group"><label>Цена от</label><input type="number" id="filterPriceFrom" placeholder="0"></div>
+                    <div class="filter-group"><label>Цена до</label><input type="number" id="filterPriceTo" placeholder="все"></div>
+                    <div class="filter-group"><label>Комнат</label><select id="filterRooms"><option value="">Все</option><option value="1">1 комната</option><option value="2">2 комнаты</option><option value="3">3 комнаты</option><option value="4">4+ комнаты</option><option value="0">Студия</option></select></div>
+                    <div class="filter-group"><label>Статус</label><select id="filterStatus"><option value="">Все</option><option value="available">Доступен</option><option value="booked">Забронирован</option><option value="sold">Продан</option><option value="archived">В архиве</option></select></div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" onclick="applyFilters()"><i class="fas fa-search"></i> Применить</button>
+                    <button class="btn btn-secondary" onclick="resetFilters()"><i class="fas fa-redo"></i> Сбросить</button>
+                </div>
+            </div>
+
+            <!-- Таблица объектов -->
+            <div class="objects-table-container">
+                <table class="objects-table">
+                    <thead>
+                        <tr><th>Фото</th><th>Название</th><th>Тип</th><th>Площадь</th><th>Цена</th><th>Район</th><th>Комнат</th><th>Агент</th><th>Статус</th><th>Действия</th></tr>
+                    </thead>
+                    <tbody id="objectsTableBody"></tbody>
+                </table>
+            </div>
+            <div class="pagination" id="pagination"></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно объекта -->
+    <div class="modal" id="objectModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3 id="modalTitle">Добавление объекта</h3><button class="close-modal" onclick="closeModal()">&times;</button></div>
+            <div class="modal-body">
+                <form id="objectForm">
+                    <input type="hidden" id="objectId">
+                    <div class="form-grid">
+                        <div class="form-field full-width"><label>Название *</label><input type="text" id="objTitle" required></div>
+                        <div class="form-field"><label>Тип *</label><select id="objType"><option value="apartment">Квартира</option><option value="house">Дом</option><option value="commercial">Коммерческая</option></select></div>
+                        <div class="form-field"><label>Площадь (м²) *</label><input type="number" id="objArea" required></div>
+                        <div class="form-field"><label>Цена (₽) *</label><input type="number" id="objPrice" required></div>
+                        <div class="form-field"><label>Район *</label><select id="objDistrict"><option value="central">Центральный</option><option value="north">Северный</option><option value="south">Южный</option><option value="east">Восточный</option><option value="west">Западный</option><option value="suburb">Пригород</option></select></div>
+                        <div class="form-field"><label>Комнат</label><select id="objRooms"><option value="1">1 комната</option><option value="2">2 комнаты</option><option value="3">3 комнаты</option><option value="4">4+ комнаты</option><option value="0">Студия</option></select></div>
+                        <div class="form-field full-width"><label>Адрес *</label><input type="text" id="objAddress" required></div>
+                        <div class="form-field full-width"><label>Агент</label><select id="objAgent"></select></div>
+                        <div class="form-field full-width"><label>Описание</label><textarea id="objDescription" rows="3"></textarea></div>
+                        <div class="form-field full-width"><label>Фото</label>
+                            <div class="image-upload" onclick="document.getElementById('imageInput').click()"><i class="fas fa-cloud-upload-alt"></i> Нажмите для загрузки фото</div>
+                            <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="handleImageUpload(this)">
+                            <div class="image-preview" id="imagePreview"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal()">Отмена</button><button class="btn btn-primary" onclick="saveObject()">Сохранить</button></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно назначения агента -->
+    <div class="modal" id="agentModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header"><h3>Назначение агента</h3><button class="close-modal" onclick="closeAgentModal()">&times;</button></div>
+            <div class="modal-body">
+                <input type="hidden" id="agentObjectId">
+                <div class="form-field"><label>Объект</label><input type="text" id="agentObjectTitle" readonly></div>
+                <div class="form-field"><label>Ответственный агент</label><select id="agentSelect"></select></div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-secondary" onclick="closeAgentModal()">Отмена</button><button class="btn btn-primary" onclick="assignAgent()">Назначить</button></div>
+        </div>
+    </div>
+
+    <script src="js/theme.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/object-manager.js"></script>
+</body>
+</html>

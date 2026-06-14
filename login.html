@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - Гермес</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/catalog.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+        <!-- Header -->
+        <header class="header">
+            <nav class="nav">
+                <div class="nav-brand">
+                    <h2><a href="index" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
+                    <span>Агентство недвижимости</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index#home">Главная</a></li>
+                    <li><a href="index#about">О нас</a></li>
+                    <li><a href="index#services">Услуги</a></li>
+                    <li><a href="catalog.html" class="active">Каталог</a></li>
+                    <li><a href="index#contact">Контакты</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <!-- Переключатель темы -->
+                    <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                        <span class="theme-icon">🌙</span>
+                        <span class="theme-text">Темная тема</span>
+                    </button>
+                    <!-- Кнопки авторизации -->
+                    <div class="nav-auth" id="authSection">
+                        <a href="login.html" class="auth-btn auth-login">Войти</a>
+                        <a href="register.html" class="auth-btn auth-register">Регистрация</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </header>
+
+    <!-- Login Section -->
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h1>Вход в личный кабинет</h1>
+                    <p>Войдите, чтобы получить доступ к избранным объектам и управлению заявками</p>
+                </div>
+
+                <div class="auth-content">
+                    <div class="auth-form-container">
+                        <form id="loginForm" class="auth-form">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required placeholder="Ваш email">
+                                <div class="error-message" id="emailError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Пароль</label>
+                                <div class="password-input">
+                                    <input type="password" id="password" name="password" required placeholder="Ваш пароль">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('password')">
+                                        👁️
+                                    </button>
+                                </div>
+                                <div class="error-message" id="passwordError"></div>
+                            </div>
+
+                            <div class="form-options">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="remember"> Запомнить меня
+                                </label>
+                                <a href="forgot-password.html" class="forgot-password">Забыли пароль?</a>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-auth">Войти</button>
+
+                            <div class="auth-divider">
+                                <span>или</span>
+                            </div>
+
+                            <button type="button" class="btn btn-social btn-google">
+                                <img src="images/icons/google.svg" alt="Google"> Войти через Google
+                            </button>
+
+                            <div class="auth-footer">
+                                Нет аккаунта? <a href="register.html">Зарегистрироваться</a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="auth-benefits">
+                        <h3>Преимущества личного кабинета</h3>
+                        <ul class="benefits-list">
+                            <li>✅ Сохраняйте понравившиеся объекты</li>
+                            <li>✅ Получайте персональные подборки</li>
+                            <li>✅ Отслеживайте статус заявок</li>
+                            <li>✅ Записывайтесь на просмотры онлайн</li>
+                            <li>✅ Общайтесь с риелторами</li>
+                            <li>✅ Получайте уведомления о новых объектах</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>ГЕРМЕС</h3>
+                    <p>Агентство недвижимости</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index#home">Главная</a>
+                    <a href="index#about">О нас</a>
+                    <a href="index#services">Услуги</a>
+                    <a href="catalog.html">Каталог</a>
+                    <a href="index#contact">Контакты</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://vk.com/club233530044"><i class="fab fa-vk"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Агентство недвижимости "Гермес". Все права защищены.</p>
+                <p class="footer-info">
+                    Информация на сайте не является публичной офертой.
+                    <a href="privacy.html">Политика конфиденциальности</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

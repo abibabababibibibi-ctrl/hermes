@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог недвижимости - Гермес</title>
+    <link rel="stylesheet" href="css/catalog.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        html { visibility: hidden; opacity: 0; }
+        html[data-theme] { visibility: visible; opacity: 1; transition: opacity 0.3s ease; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h2><a href="index" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
+                <span>Агентство недвижимости</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index#home">Главная</a></li>
+                <li><a href="index#about">О нас</a></li>
+                <li><a href="index#services">Услуги</a></li>
+                <li><a href="catalog.html" class="active">Каталог</a></li>
+                <li><a href="index#contact">Контакты</a></li>
+            </ul>
+            <div class="nav-actions">
+                <!-- Переключатель темы -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                    <span class="theme-icon">🌙</span>
+                    <span class="theme-text">Темная тема</span>
+                </button>
+                <!-- Кнопки авторизации -->
+                <div class="nav-auth" id="authSection">
+                    <a href="login.html" class="auth-btn auth-login">Войти</a>
+                    <a href="register.html" class="auth-btn auth-register">Регистрация</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Кнопка открытия фильтров -->
+<button class="filter-toggle-btn" id="filterToggleBtn">
+    <i class="fas fa-sliders-h"></i>
+</button>
+
+<!-- Оверлей затемнения -->
+<div class="filter-overlay" id="filterOverlay"></div>
+
+<!-- Раздвижная панель фильтров -->
+<div class="filter-slide-panel" id="filterSlidePanel">
+    <div class="filter-panel-header">
+        <h3>
+            <i class="fas fa-filter"></i>
+            Фильтры
+            <span id="activeFiltersCount" class="filter-count-badge" style="display: none;">0</span>
+        </h3>
+        <button class="close-filter-panel" id="closeFilterPanel">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    
+    <div class="filter-panel-body">
+        <!-- Тип недвижимости -->
+        <div class="filter-group">
+            <div class="filter-group-title">
+                <i class="fas fa-building"></i>
+                Тип недвижимости
+            </div>
+            <div class="filter-options">
+                <label class="filter-option">
+                    <input type="checkbox" name="filter_type" value="apartment" checked>
+                    <span class="option-checkmark"></span>
+                    <span>Квартиры</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" name="filter_type" value="house">
+                    <span class="option-checkmark"></span>
+                    <span>Дома</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" name="filter_type" value="commercial">
+                    <span class="option-checkmark"></span>
+                    <span>Коммерческая</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" name="filter_type" value="land">
+                    <span class="option-checkmark"></span>
+                    <span>Участки</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Цена -->
+        <div class="filter-group">
+            <div class="filter-group-title">
+                <i class="fas fa-ruble-sign"></i>
+                Цена
+            </div>
+            <div class="price-range-inputs">
+                <div class="input-group">
+                    <label>От</label>
+                    <input type="number" id="filterMinPrice" placeholder="1 000 000" value="0">
+                </div>
+                <div class="input-group">
+                    <label>До</label>
+                    <input type="number" id="filterMaxPrice" placeholder="50 000 000" value="50000000">
+                </div>
+            </div>
+            <div class="price-slider-container">
+                <div class="price-slider">
+                    <div class="slider-track" id="sliderTrack"></div>
+                    <input type="range" id="priceSliderMin" min="0" max="100000000" step="500000" value="0">
+                    <input type="range" id="priceSliderMax" min="0" max="100000000" step="500000" value="50000000">
+                </div>
+            </div>
+        </div>
+
+        <!-- Комнаты -->
+        <div class="filter-group">
+            <div class="filter-group-title">
+                <i class="fas fa-bed"></i>
+                Количество комнат
+            </div>
+            <div class="rooms-grid">
+                <label class="room-option">
+                    <input type="checkbox" name="filter_rooms" value="1">
+                    <span class="room-box">1</span>
+                </label>
+                <label class="room-option">
+                    <input type="checkbox" name="filter_rooms" value="2">
+                    <span class="room-box">2</span>
+                </label>
+                <label class="room-option">
+                    <input type="checkbox" name="filter_rooms" value="3">
+                    <span class="room-box">3</span>
+                </label>
+                <label class="room-option">
+                    <input type="checkbox" name="filter_rooms" value="4">
+                    <span class="room-box">4+</span>
+                </label>
+                <label class="room-option">
+                    <input type="checkbox" name="filter_rooms" value="studio">
+                    <span class="room-box">Студия</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Площадь -->
+        <div class="filter-group">
+            <div class="filter-group-title">
+                <i class="fas fa-vector-square"></i>
+                Площадь, м²
+            </div>
+            <div class="area-inputs">
+                <div class="input-group">
+                    <label>От</label>
+                    <input type="number" id="filterMinArea" placeholder="20" value="0">
+                </div>
+                <div class="input-group">
+                    <label>До</label>
+                    <input type="number" id="filterMaxArea" placeholder="200" value="500">
+                </div>
+            </div>
+        </div>
+
+        <!-- Район -->
+        <div class="filter-group">
+            <div class="filter-group-title">
+                <i class="fas fa-map-marker-alt"></i>
+                Район
+            </div>
+            <select class="filter-select" id="filterDistrict">
+                <option value="">Все районы</option>
+                <option value="central">Центральный</option>
+                <option value="north">Северный</option>
+                <option value="south">Южный</option>
+                <option value="east">Восточный</option>
+                <option value="west">Западный</option>
+                <option value="suburb">Пригород</option>
+            </select>
+        </div>
+
+        <!-- Статус -->
+        <div class="filter-group">
+            <div class="filter-group-title">
+                <i class="fas fa-info-circle"></i>
+                Статус объекта
+            </div>
+            <div class="status-options">
+                <label class="status-option">
+                    <input type="radio" name="filter_status" value="all" checked>
+                    <span class="status-dot all"></span>
+                    <span>Все</span>
+                </label>
+                <label class="status-option">
+                    <input type="radio" name="filter_status" value="available">
+                    <span class="status-dot available"></span>
+                    <span>В наличии</span>
+                </label>
+                <label class="status-option">
+                    <input type="radio" name="filter_status" value="reserved">
+                    <span class="status-dot reserved"></span>
+                    <span>Забронировано</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="filter-panel-footer">
+        <button class="btn btn-secondary" id="resetFiltersBtn">
+            <i class="fas fa-redo"></i> Сбросить
+        </button>
+        <button class="btn btn-primary" id="applyFiltersBtn">
+            <i class="fas fa-search"></i> Применить
+        </button>
+    </div>
+</div>
+
+    <!-- Catalog Hero -->
+    <section class="catalog-hero">
+        <div class="container">
+            <div class="catalog-hero-content">
+                <h1>Каталог недвижимости</h1>
+                <p>Найдите свой идеальный дом среди 100+ проверенных объектов</p>
+                <div class="search-box">
+                    <input type="text" placeholder="Введите район, улицу или метро..." id="searchInput">
+                    <button class="btn btn-primary" onclick="performSearch()">
+                        <i class="fas fa-search"></i> Найти
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">24</span>
+                        <span class="stat-label">Объекта онлайн</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">18</span>
+                        <span class="stat-label">Квартиры</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">6</span>
+                        <span class="stat-label">Дома</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">156</span>
+                        <span class="stat-label">Довольных клиентов</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-container">
+                <div class="filters-header">
+                    <h2><i class="fas fa-filter"></i> Фильтры поиска</h2>
+                    <button class="btn btn-secondary btn-sm" onclick="resetFilters()">
+                        <i class="fas fa-redo"></i> Сбросить фильтры
+                    </button>
+                </div>
+
+                <div class="filters-grid">
+                    <!-- Type Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">Тип недвижимости</label>
+                        <div class="filter-options">
+                            <label class="filter-option">
+                                <input type="checkbox" name="type" value="apartment" checked>
+                                <span class="checkmark"></span>
+                                <i class="fas fa-building"></i>
+                                <span>Квартиры</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" name="type" value="house">
+                                <span class="checkmark"></span>
+                                <i class="fas fa-home"></i>
+                                <span>Дома</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" name="type" value="commercial">
+                                <span class="checkmark"></span>
+                                <i class="fas fa-store"></i>
+                                <span>Коммерческая</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" name="type" value="land">
+                                <span class="checkmark"></span>
+                                <i class="fas fa-mountain"></i>
+                                <span>Участки</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Price Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">Цена, ₽</label>
+                        <div class="price-range">
+                            <div class="price-inputs">
+                                <input type="number" id="minPrice" placeholder="от 1 000 000" min="0" max="100000000">
+                                <span class="price-separator">—</span>
+                                <input type="number" id="maxPrice" placeholder="до 50 000 000" min="0" max="100000000">
+                            </div>
+                            <div class="price-slider">
+                                <input type="range" id="priceRangeMin" min="0" max="100000000" step="1000000" value="0">
+                                <input type="range" id="priceRangeMax" min="0" max="100000000" step="1000000" value="50000000">
+                            </div>
+                            <div class="price-labels">
+                                <span>0 ₽</span>
+                                <span>100 млн ₽</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rooms Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">Количество комнат</label>
+                        <div class="rooms-filter">
+                            <label class="room-option">
+                                <input type="checkbox" name="rooms" value="1">
+                                <span class="room-box">1</span>
+                            </label>
+                            <label class="room-option">
+                                <input type="checkbox" name="rooms" value="2">
+                                <span class="room-box">2</span>
+                            </label>
+                            <label class="room-option">
+                                <input type="checkbox" name="rooms" value="3">
+                                <span class="room-box">3</span>
+                            </label>
+                            <label class="room-option">
+                                <input type="checkbox" name="rooms" value="4">
+                                <span class="room-box">4+</span>
+                            </label>
+                            <label class="room-option">
+                                <input type="checkbox" name="rooms" value="studio">
+                                <span class="room-box">Студия</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Area Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">Площадь, м²</label>
+                        <div class="area-filter">
+                            <div class="area-inputs">
+                                <input type="number" id="minArea" placeholder="от 20" min="0" max="500">
+                                <span>—</span>
+                                <input type="number" id="maxArea" placeholder="до 200" min="0" max="500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- District Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">Район</label>
+                        <select class="district-select" id="districtSelect">
+                            <option value="">Все районы</option>
+                            <option value="central">Центральный</option>
+                            <option value="north">Северный</option>
+                            <option value="south">Южный</option>
+                            <option value="east">Восточный</option>
+                            <option value="west">Западный</option>
+                            <option value="suburb">Пригород</option>
+                        </select>
+                    </div>
+
+                    <!-- Status Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">Статус</label>
+                        <div class="status-filter">
+                            <label class="status-option">
+                                <input type="radio" name="status" value="all" checked>
+                                <span class="status-dot all"></span>
+                                <span>Все</span>
+                            </label>
+                            <label class="status-option">
+                                <input type="radio" name="status" value="available">
+                                <span class="status-dot available"></span>
+                                <span>В наличии</span>
+                            </label>
+                            <label class="status-option">
+                                <input type="radio" name="status" value="reserved">
+                                <span class="status-dot reserved"></span>
+                                <span>Забронировано</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filters-footer">
+                    <button class="btn btn-primary" onclick="applyFilters()">
+                        <i class="fas fa-search"></i> Применить фильтры
+                    </button>
+                    <div class="filter-count">
+                        Найдено: <span id="filterCount">24</span> объектов
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Content -->
+    <section class="catalog-content">
+        <div class="container">
+            <div class="catalog-header">
+                <div class="catalog-sorting">
+                    <label>Сортировка:</label>
+                    <select class="sort-select" id="sortSelect" onchange="sortProperties()">
+                        <option value="price_asc">По цене (дешевле сначала)</option>
+                        <option value="price_desc">По цене (дороже сначала)</option>
+                        <option value="area_desc">По площади (больше сначала)</option>
+                        <option value="date_desc">По дате (новые сначала)</option>
+                        <option value="popular">По популярности</option>
+                    </select>
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="grid" onclick="changeView('grid')">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="view-btn" data-view="list" onclick="changeView('list')">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="catalog-actions">
+                    <button class="btn btn-secondary" onclick="saveSearch()">
+                        <i class="fas fa-save"></i> Сохранить поиск
+                    </button>
+                    <button class="btn btn-secondary" onclick="shareCatalog()">
+                        <i class="fas fa-share-alt"></i> Поделиться
+                    </button>
+                </div>
+            </div>
+
+            <!-- Properties Grid -->
+            <div class="properties-container" id="propertiesContainer">
+                <div class="properties-grid" id="propertiesGrid">
+                    <!-- Properties will be loaded here -->
+                </div>
+
+                <!-- List View (hidden by default) -->
+                <div class="properties-list" id="propertiesList" style="display: none;">
+                    <!-- List view will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-state" id="loadingState" style="display: none;">
+                <div class="spinner"></div>
+                <p>Загружаем объекты...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <i class="fas fa-home fa-3x"></i>
+                <h3>Объекты не найдены</h3>
+                <p>Попробуйте изменить параметры поиска</p>
+                <button class="btn btn-primary" onclick="resetFilters()">
+                    Сбросить фильтры
+                </button>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <button class="page-btn prev" onclick="prevPage()" disabled>
+                    <i class="fas fa-chevron-left"></i> Назад
+                </button>
+                <div class="page-numbers" id="pageNumbers">
+                    <span class="page-number active">1</span>
+                    <span class="page-number">2</span>
+                    <span class="page-number">3</span>
+                    <span class="page-dots">...</span>
+                    <span class="page-number">5</span>
+                </div>
+                <button class="page-btn next" onclick="nextPage()">
+                    Далее <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Properties -->
+    <section class="featured-properties">
+        <div class="container">
+            <div class="section-header">
+                <h2>Рекомендуем посмотреть</h2>
+                <p>Самые популярные объекты этой недели</p>
+            </div>
+            <div class="featured-grid" id="featuredGrid">
+                <!-- Featured properties will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Не нашли подходящий вариант?</h2>
+                <p>Оставьте заявку и мы подберем для вас идеальное жилье по вашим критериям</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="window.location.href='index#contact'">
+                        <i class="fas fa-edit"></i> Оставить заявку
+                    </button>
+                    <button class="btn btn-secondary" onclick="window.open('tel:+74951234567')">
+                        <i class="fas fa-phone"></i> Позвонить нам
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>ГЕРМЕС</h3>
+                    <p>Агентство недвижимости</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index#home">Главная</a>
+                    <a href="index#about">О нас</a>
+                    <a href="index#services">Услуги</a>
+                    <a href="catalog.html">Каталог</a>
+                    <a href="index#contact">Контакты</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://vk.com/club233530044"><i class="fab fa-vk"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Агентство недвижимости "Гермес". Все права защищены.</p>
+                <p class="footer-info">
+                    Информация на сайте не является публичной офертой.
+                    <a href="privacy.html">Политика конфиденциальности</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/theme.js"></script>
+    <script src="js/catalog.js"></script>
+    <script>
+        // Initialize catalog when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load properties
+            loadProperties();
+            loadFeaturedProperties();
+
+            // Update auth UI
+            updateAuthUI();
+
+            // Initialize price range slider
+            initPriceSlider();
+
+            // Load saved filters if any
+            loadSavedFilters();
+        });
+
+        function updateAuthUI() {
+            const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            const authSection = document.getElementById('authSection');
+
+            if (user && authSection) {
+                authSection.innerHTML = `
+                    <div class="user-menu">
+                        <div class="user-avatar">${user.firstName.charAt(0)}${user.lastName.charAt(0)}</div>
+                        <span class="user-name">${user.firstName}</span>
+                        <div class="dropdown">
+                            <a href="dashboard.html">Личный кабинет</a>
+                            <a href="#" onclick="logout()">Выйти</a>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>

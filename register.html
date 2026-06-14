@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - Гермес</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/catalog.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+        <!-- Header -->
+        <header class="header">
+            <nav class="nav">
+                <div class="nav-brand">
+                    <h2><a href="index" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
+                    <span>Агентство недвижимости</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index#home">Главная</a></li>
+                    <li><a href="index#about">О нас</a></li>
+                    <li><a href="index#services">Услуги</a></li>
+                    <li><a href="catalog.html" class="active">Каталог</a></li>
+                    <li><a href="index#contact">Контакты</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <!-- Переключатель темы -->
+                    <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                        <span class="theme-icon">🌙</span>
+                        <span class="theme-text">Темная тема</span>
+                    </button>
+                    <!-- Кнопки авторизации -->
+                    <div class="nav-auth" id="authSection">
+                        <a href="login.html" class="auth-btn auth-login">Войти</a>
+                        <a href="register.html" class="auth-btn auth-register">Регистрация</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+    <!-- Register Section -->
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h1>Регистрация</h1>
+                    <p>Создайте аккаунт для доступа ко всем возможностям нашего сервиса</p>
+                </div>
+
+                <div class="auth-content">
+                    <div class="auth-form-container">
+                        <form id="registerForm" class="auth-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">Имя *</label>
+                                    <input type="text" id="firstName" name="firstName" required placeholder="Ваше имя">
+                                    <div class="error-message" id="firstNameError"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lastName">Фамилия *</label>
+                                    <input type="text" id="lastName" name="lastName" required placeholder="Ваша фамилия">
+                                    <div class="error-message" id="lastNameError"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="regEmail">Email *</label>
+                                <input type="email" id="regEmail" name="email" required placeholder="example@mail.ru">
+                                <div class="error-message" id="regEmailError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Телефон *</label>
+                                <input type="tel" id="phone" name="phone" required placeholder="+7 (999) 999-99-99">
+                                <div class="error-message" id="phoneError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="regPassword">Пароль *</label>
+                                <div class="password-input">
+                                    <input type="password" id="regPassword" name="password" required placeholder="Придумайте пароль">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">
+                                        👁️
+                                    </button>
+                                </div>
+                                <div class="password-requirements">
+                                    <p>Пароль должен содержать:</p>
+                                    <ul>
+                                        <li id="length">Минимум 8 символов</li>
+                                        <li id="uppercase">Заглавную букву</li>
+                                        <li id="number">Цифру</li>
+                                        <li id="special">Специальный символ</li>
+                                    </ul>
+                                </div>
+                                <div class="error-message" id="regPasswordError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmPassword">Подтверждение пароля *</label>
+                                <div class="password-input">
+                                    <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Повторите пароль">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword')">
+                                        👁️
+                                    </button>
+                                </div>
+                                <div class="error-message" id="confirmPasswordError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="userType" id="isRealtor">
+                                    Я риелтор / представитель агентства
+                                </label>
+                            </div>
+
+                            <div class="form-group" id="agencyField" style="display: none;">
+                                <label for="agency">Название агентства</label>
+                                <input type="text" id="agency" name="agency" placeholder="Название вашего агентства">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="terms" required>
+                                    Я согласен с <a href="terms.html">условиями использования</a> и
+                                    <a href="privacy.html">политикой конфиденциальности</a> *
+                                </label>
+                                <div class="error-message" id="termsError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="newsletter">
+                                    Подписаться на рассылку новых объектов и акций
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-auth">Зарегистрироваться</button>
+
+                            <div class="auth-divider">
+                                <span>или</span>
+                            </div>
+
+                            <button type="button" class="btn btn-social btn-google">
+                                <img src="images/icons/google.svg" alt="Google"> Зарегистрироваться через Google
+                            </button>
+
+                            <div class="auth-footer">
+                                Уже есть аккаунт? <a href="login.html">Войти</a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="auth-benefits">
+                        <h3>Почему стоит зарегистрироваться?</h3>
+                        <ul class="benefits-list">
+                            <li>🔒 Безопасное хранение данных</li>
+                            <li>⭐ Избранные объекты в одном месте</li>
+                            <li>📅 Онлайн запись на просмотры</li>
+                            <li>💬 Прямой чат с риелторами</li>
+                            <li>🔔 Персональные уведомления</li>
+                            <li>📊 История просмотров и заявок</li>
+                            <li>🎁 Специальные предложения</li>
+                            <li>📈 Отслеживание цен на объекты</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>ГЕРМЕС</h3>
+                    <p>Агентство недвижимости</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index#home">Главная</a>
+                    <a href="index#about">О нас</a>
+                    <a href="index#services">Услуги</a>
+                    <a href="catalog.html">Каталог</a>
+                    <a href="index#contact">Контакты</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://vk.com/club233530044"><i class="fab fa-vk"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Агентство недвижимости "Гермес". Все права защищены.</p>
+                <p class="footer-info">
+                    Информация на сайте не является публичной офертой.
+                    <a href="privacy.html">Политика конфиденциальности</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

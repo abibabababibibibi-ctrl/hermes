@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Загородный дом в Пригороде - Гермес</title>
+    <link rel="stylesheet" href="css/house.css">
+    <link rel="stylesheet" href="css/catalog.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+        <!-- Header -->
+        <header class="header">
+            <nav class="nav">
+                <div class="nav-brand">
+                    <h2><a href="index" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
+                    <span>Агентство недвижимости</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index#home">Главная</a></li>
+                    <li><a href="index#about">О нас</a></li>
+                    <li><a href="index#services">Услуги</a></li>
+                    <li><a href="catalog.html" class="active">Каталог</a></li>
+                    <li><a href="index#contact">Контакты</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <!-- Переключатель темы -->
+                    <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                        <span class="theme-icon">🌙</span>
+                        <span class="theme-text">Темная тема</span>
+                    </button>
+                    <!-- Кнопки авторизации -->
+                    <div class="nav-auth" id="authSection">
+                        <a href="login.html" class="auth-btn auth-login">Войти</a>
+                        <a href="register.html" class="auth-btn auth-register">Регистрация</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+    <!-- Property Details Section -->
+    <section class="property-details">
+        <div class="container">
+            <div class="property-header">
+                <h1>Загородный дом в живописном пригороде</h1>
+                <p class="property-price-main">25 000 000 ₽</p>
+                <p class="property-address">📍 с. Подгорное, ул. Садовая, 7 (25 км от города)</p>
+            </div>
+
+            <div class="property-content">
+                <div class="property-gallery">
+                    <div class="main-image">
+                        <img src="images/properties/3.jpg" alt="Загородный дом в Пригороде">
+                    </div>
+                    <div class="image-thumbnails">
+                        <img src="images/properties/3-1.jpg" alt="Фасад дома" onclick="changeMainImage(this.src)">
+                        <img src="images/properties/3-2.jpg" alt="Территория участка" onclick="changeMainImage(this.src)">
+                        <img src="images/properties/3-3.jpg" alt="Гостиная" onclick="changeMainImage(this.src)">
+                        <img src="images/properties/3-4.jpg" alt="Кухня" onclick="changeMainImage(this.src)">
+                        <img src="images/properties/3-5.jpg" alt="Спальня" onclick="changeMainImage(this.src)">
+                        <img src="images/properties/3-6.jpg" alt="Вид из окна" onclick="changeMainImage(this.src)">
+                    </div>
+                </div>
+
+                <div class="property-info-details">
+                    <div class="info-card">
+                        <h3>🏠 Основная информация</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Площадь дома:</span>
+                                <span class="info-value">150 м²</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Участок:</span>
+                                <span class="info-value">10 соток</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Этажность:</span>
+                                <span class="info-value">2 этажа</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Комнат:</span>
+                                <span class="info-value">4 спальни</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Санузлов:</span>
+                                <span class="info-value">3</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Год постройки:</span>
+                                <span class="info-value">2019</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Материал:</span>
+                                <span class="info-value">Кирпич</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Отопление:</span>
+                                <span class="info-value">Газовое</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>📝 Описание объекта</h3>
+                        <p>Просторный загородный дом в живописном пригороде, всего в 25 км от города. Дом построен из
+                           качественного кирпича по современным технологиям, что обеспечивает excellent теплоизоляцию
+                           и долговечность.</p>
+                        <p>На первом этаже расположены просторная гостиная с камином, современная кухня-столовая,
+                           гостевая спальня и санузел. На втором этаже - три изолированные спальни и два санузла.
+                           Дом идеально подходит для постоянного проживания или отдыха на выходных.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>✅ Особенности дома</h3>
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🔥</span>
+                                <span class="feature-text">Камин в гостиной</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🌡️</span>
+                                <span class="feature-text">Теплые полы</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💧</span>
+                                <span class="feature-text">Свой колодец</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">⚡</span>
+                                <span class="feature-text">Резервный генератор</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🛁</span>
+                                <span class="feature-text">Джакузи</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🍳</span>
+                                <span class="feature-text">Кухня-остров</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>🌳 Территория участка</h3>
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🏡</span>
+                                <span class="feature-text">Благоустроенный сад</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🍎</span>
+                                <span class="feature-text">Фруктовые деревья</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🚗</span>
+                                <span class="feature-text">Гараж на 2 авто</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏐</span>
+                                <span class="feature-text">Спортивная площадка</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔥</span>
+                                <span class="feature-text">Зона барбекю</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏊</span>
+                                <span class="feature-text">Место под бассейн</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>📊 Планировка</h3>
+                        <div class="layout-info">
+                            <div class="layout-floor">
+                                <h4>Первый этаж (80 м²):</h4>
+                                <ul>
+                                    <li>Гостиная с камином - 25 м²</li>
+                                    <li>Кухня-столовая - 18 м²</li>
+                                    <li>Гостевая спальня - 15 м²</li>
+                                    <li>Санузел - 8 м²</li>
+                                    <li>Прихожая - 10 м²</li>
+                                    <li>Кладовка - 4 м²</li>
+                                </ul>
+                            </div>
+                            <div class="layout-floor">
+                                <h4>Второй этаж (70 м²):</h4>
+                                <ul>
+                                    <li>Мастер-спальня - 20 м²</li>
+                                    <li>Две детские спальни - по 12 м²</li>
+                                    <li>Санузел с джакузи - 10 м²</li>
+                                    <li>Гардеробная - 8 м²</li>
+                                    <li>Холл - 8 м²</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>🏘️ Инфраструктура поселка</h3>
+                        <div class="infrastructure-list">
+                            <div class="infrastructure-item">
+                                <strong>Безопасность:</strong> КПП, круглосуточная охрана, видеонаблюдение
+                            </div>
+                            <div class="infrastructure-item">
+                                <strong>Коммуникации:</strong> Центральный газ, электричество 15 кВт, интернет
+                            </div>
+                            <div class="infrastructure-item">
+                                <strong>Транспорт:</strong> Регулярный автобус до города (30 мин), хорошие дороги
+                            </div>
+                            <div class="infrastructure-item">
+                                <strong>Торговля:</strong> Продуктовый магазин в поселке (500 м), супермаркет в 5 км
+                            </div>
+                            <div class="infrastructure-item">
+                                <strong>Медицина:</strong> Фельдшерский пункт в поселке, больница в 10 км
+                            </div>
+                            <div class="infrastructure-item">
+                                <strong>Образование:</strong> Школа и детский сад в соседнем поселке (3 км)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-widget">
+    <h3>💬 Хотите купить этот объект?</h3>
+    <p>Оформите покупку прямо сейчас или получите консультацию</p>
+
+    <div class="purchase-buttons">
+        <button class="btn btn-success" onclick="buyWithoutRegistration()">
+            <i class="fas fa-shopping-cart"></i> Купить без регистрации
+        </button>
+        <button class="btn btn-primary" onclick="openQuickOrderForm()">
+            <i class="fas fa-file-contract"></i> Быстрый заказ
+        </button>
+        <button class="btn btn-secondary" onclick="window.open('tel:+74951234567')">
+            <i class="fas fa-phone"></i> Консультация
+        </button>
+    </div>
+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>ГЕРМЕС</h3>
+                    <p>Агентство недвижимости</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index#home">Главная</a>
+                    <a href="index#about">О нас</a>
+                    <a href="index#services">Услуги</a>
+                    <a href="catalog.html">Каталог</a>
+                    <a href="index#contact">Контакты</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://vk.com/club233530044"><i class="fab fa-vk"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Агентство недвижимости "Гермес". Все права защищены.</p>
+                <p class="footer-info">
+                    Информация на сайте не является публичной офертой.
+                    <a href="privacy.html">Политика конфиденциальности</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Функция для смены главного изображения
+        function changeMainImage(src) {
+            document.querySelector('.main-image img').src = src;
+        }
+
+        // Функция для показа карты
+        function showMap() {
+            const mapUrl = 'https://yandex.ru/maps/?text=с.+Подгорное,+ул.+Садовая,+7';
+            window.open(mapUrl, '_blank');
+        }
+
+        // Функция для плавной прокрутки
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Добавляем активный класс к миниатюрам при клике
+        document.addEventListener('DOMContentLoaded', function() {
+            const thumbnails = document.querySelectorAll('.image-thumbnails img');
+            thumbnails.forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Активируем первую миниатюру
+            if (thumbnails.length > 0) {
+                thumbnails[0].classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

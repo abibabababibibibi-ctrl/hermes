@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Клиенты - Гермес Агентство недвижимости</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .clients-page {
+            background: var(--bg-secondary);
+            min-height: 100vh;
+            padding-top: 100px;
+            padding-bottom: 60px;
+        }
+        .clients-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Шапка */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .page-header h1 { font-size: 1.8rem; display: flex; align-items: center; gap: 0.5rem; }
+        
+        /* Статистика */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        .stat-label { color: var(--text-secondary); font-size: 0.9rem; }
+        
+        /* Фильтры */
+        .filters-bar {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .filter-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .filter-group label { font-weight: 500; font-size: 0.9rem; }
+        .filter-group input, .filter-group select {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        .filter-actions { display: flex; gap: 1rem; margin-top: 1rem; }
+        
+        /* Карточки клиентов */
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        .client-card {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .client-card:hover { transform: translateY(-5px); }
+        
+        .client-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.5rem;
+            color: white;
+        }
+        .client-avatar {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .client-name { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .client-type {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 0.7rem;
+        }
+        .client-body { padding: 1.5rem; }
+        .client-info { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+        .info-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-secondary); }
+        .info-row i { width: 20px; color: var(--secondary-color); }
+        
+        .interested-properties { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
+        .interested-title { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .property-tag {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            font-size: 0.7rem;
+            margin: 0.2rem;
+            cursor: pointer;
+        }
+        .property-tag:hover { background: var(--secondary-color); color: white; }
+        
+        .client-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-header { padding: 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .modal-body { padding: 1.5rem; }
+        .modal-footer { padding: 1.5rem; border-top: 1px solid var(--border-color); display: flex; gap: 1rem; justify-content: flex-end; }
+        
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        
+        /* История */
+        .history-list { max-height: 300px; overflow-y: auto; }
+        .history-item {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 0.75rem;
+        }
+        .history-icon {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .history-icon.call { background: #3498db; color: white; }
+        .history-icon.meeting { background: #27ae60; color: white; }
+        .history-icon.viewing { background: #f39c12; color: white; }
+        .history-icon.note { background: #9b59b6; color: white; }
+        .history-content { flex: 1; }
+        .history-text { font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .history-date { font-size: 0.7rem; color: var(--text-tertiary); }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        .page-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .page-btn.active { background: var(--secondary-color); color: white; }
+        
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            .filters-grid { grid-template-columns: 1fr; }
+            .clients-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h2><a href="index.html" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
+                <span>Агентство недвижимости</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="objects.html">Объекты</a></li>
+                <li><a href="clients.html" class="active">Клиенты</a></li>
+                <li><a href="deals.html">Сделки</a></li>
+                <li><a href="calendar.html">Календарь</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+                <div class="nav-auth" id="authSection"></div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="clients-page">
+        <div class="clients-container">
+            <div class="page-header">
+                <h1><i class="fas fa-users"></i> Управление клиентами</h1>
+                <button class="btn btn-primary" onclick="openClientModal()"><i class="fas fa-plus"></i> Добавить клиента</button>
+            </div>
+
+            <!-- Статистика -->
+            <div class="stats-grid" id="statsGrid"></div>
+
+            <!-- Фильтры -->
+            <div class="filters-bar">
+                <div class="filters-grid">
+                    <div class="filter-group"><label>Поиск</label><input type="text" id="searchClient" placeholder="Имя, телефон, email..."></div>
+                    <div class="filter-group"><label>Тип клиента</label><select id="filterType"><option value="">Все</option><option value="buyer">Покупатель</option><option value="tenant">Арендатор</option></select></div>
+                    <div class="filter-group"><label>Статус</label><select id="filterStatus"><option value="">Все</option><option value="active">Активный</option><option value="inactive">Неактивный</option><option value="completed">Сделка завершена</option></select></div>
+                    <div class="filter-group"><label>Бюджет до</label><input type="number" id="filterBudget" placeholder="Макс. бюджет"></div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" onclick="applyFilters()"><i class="fas fa-search"></i> Применить</button>
+                    <button class="btn btn-secondary" onclick="resetFilters()"><i class="fas fa-redo"></i> Сбросить</button>
+                </div>
+            </div>
+
+            <!-- Список клиентов -->
+            <div class="clients-grid" id="clientsGrid"></div>
+            <div class="pagination" id="pagination"></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно клиента -->
+    <div class="modal" id="clientModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3 id="clientModalTitle">Добавление клиента</h3><button class="close-modal" onclick="closeClientModal()">&times;</button></div>
+            <div class="modal-body">
+                <form id="clientForm">
+                    <input type="hidden" id="clientId">
+                    <div class="form-row">
+                        <div class="form-group"><label>Имя *</label><input type="text" id="clientFirstName" required></div>
+                        <div class="form-group"><label>Фамилия *</label><input type="text" id="clientLastName" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Телефон *</label><input type="tel" id="clientPhone" required></div>
+                        <div class="form-group"><label>Email</label><input type="email" id="clientEmail"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Тип клиента</label><select id="clientType"><option value="buyer">Покупатель</option><option value="tenant">Арендатор</option></select></div>
+                        <div class="form-group"><label>Бюджет (₽)</label><input type="number" id="clientBudget" placeholder="Максимальный бюджет"></div>
+                    </div>
+                    <div class="form-group"><label>Предпочтения</label><textarea id="clientPreferences" rows="2" placeholder="Район, количество комнат, дополнительные пожелания..."></textarea></div>
+                    <div class="form-group"><label>Примечания</label><textarea id="clientNotes" rows="2" placeholder="Дополнительная информация..."></textarea></div>
+                </form>
+            </div>
+            <div class="modal-footer"><button class="btn btn-secondary" onclick="closeClientModal()">Отмена</button><button class="btn btn-primary" onclick="saveClient()">Сохранить</button></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно добавления истории -->
+    <div class="modal" id="historyModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3>Добавить запись</h3><button class="close-modal" onclick="closeHistoryModal()">&times;</button></div>
+            <div class="modal-body">
+                <input type="hidden" id="historyClientId">
+                <div class="form-group"><label>Тип</label><select id="historyType"><option value="call">📞 Звонок</option><option value="meeting">🤝 Встреча</option><option value="viewing">🏠 Показ объекта</option><option value="note">📝 Заметка</option></select></div>
+                <div class="form-group"><label>Описание</label><textarea id="historyDescription" rows="3" placeholder="Что обсуждали, результаты..."></textarea></div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-secondary" onclick="closeHistoryModal()">Отмена</button><button class="btn btn-primary" onclick="addHistory()">Добавить</button></div>
+        </div>
+    </div>
+
+    <script src="js/theme.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/client-manager.js"></script>
+</body>
+</html>

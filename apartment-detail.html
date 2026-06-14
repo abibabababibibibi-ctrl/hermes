@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карточка объекта - Гермес Агентство недвижимости</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <style>
+        .property-detail-page {
+            background: var(--bg-secondary);
+            min-height: 100vh;
+            padding-top: 100px;
+            padding-bottom: 60px;
+        }
+        .detail-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Хлебные крошки */
+        .breadcrumbs { margin-bottom: 1.5rem; color: var(--text-tertiary); font-size: 0.85rem; }
+        .breadcrumbs a { color: var(--secondary-color); text-decoration: none; }
+        .breadcrumbs span { margin: 0 0.5rem; }
+        
+        /* Основная информация */
+        .property-header { background: var(--bg-primary); border-radius: 20px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color); }
+        .property-title { font-size: 1.8rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .property-price { font-size: 2rem; font-weight: 700; color: var(--accent-color); }
+        .property-address { color: var(--text-secondary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .status-badge { display: inline-block; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 500; }
+        .status-sale { background: #27ae60; color: white; }
+        .status-rent { background: #3498db; color: white; }
+        .status-booked { background: #f39c12; color: white; }
+        .status-sold { background: #95a5a6; color: white; }
+        
+        /* Раскрывающиеся блоки */
+        .accordion-section { background: var(--bg-primary); border-radius: 20px; margin-bottom: 1rem; border: 1px solid var(--border-color); overflow: hidden; }
+        .accordion-header { padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.3s; background: var(--bg-primary); }
+        .accordion-header:hover { background: var(--bg-secondary); }
+        .accordion-header h3 { margin: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .accordion-header i { transition: transform 0.3s; }
+        .accordion-header.open i { transform: rotate(180deg); }
+        .accordion-body { display: none; padding: 1.5rem; border-top: 1px solid var(--border-color); }
+        .accordion-body.open { display: block; }
+        
+        /* Характеристики */
+        .chars-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+        .char-item { display: flex; justify-content: space-between; padding: 0.75rem; background: var(--bg-secondary); border-radius: 10px; }
+        .char-label { font-weight: 500; color: var(--text-secondary); }
+        .char-value { font-weight: 600; color: var(--text-primary); }
+        
+        /* Фотогалерея */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+        .gallery-item { position: relative; border-radius: 10px; overflow: hidden; cursor: pointer; aspect-ratio: 1; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-item .delete-photo { position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.6); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: opacity 0.3s; }
+        .gallery-item:hover .delete-photo { opacity: 1; }
+        .add-photo { border: 2px dashed var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; aspect-ratio: 1; border-radius: 10px; flex-direction: column; gap: 0.5rem; color: var(--text-tertiary); }
+        .add-photo:hover { border-color: var(--secondary-color); color: var(--secondary-color); }
+        
+        /* История показов */
+        .showings-list { display: flex; flex-direction: column; gap: 1rem; }
+        .showing-item { background: var(--bg-secondary); border-radius: 10px; padding: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .showing-date { font-weight: 600; color: var(--secondary-color); }
+        .showing-client { cursor: pointer; color: var(--secondary-color); }
+        .showing-client:hover { text-decoration: underline; }
+        .showing-status { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 15px; font-size: 0.7rem; }
+        .showing-status.completed { background: #d4edda; color: #155724; }
+        .showing-status.scheduled { background: #fff3cd; color: #856404; }
+        .showing-status.cancelled { background: #f8d7da; color: #721c24; }
+        
+        /* Заметки */
+        .notes-list { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+        .note-item { background: var(--bg-secondary); border-radius: 10px; padding: 1rem; }
+        .note-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.8rem; color: var(--text-tertiary); }
+        .note-text { color: var(--text-primary); line-height: 1.5; }
+        .add-note { display: flex; gap: 0.5rem; }
+        .add-note textarea { flex: 1; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 10px; background: var(--bg-secondary); color: var(--text-primary); resize: vertical; }
+        
+        /* Документы */
+        .docs-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .doc-item { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--bg-secondary); border-radius: 10px; }
+        .doc-name { display: flex; align-items: center; gap: 0.5rem; }
+        .doc-name i { color: var(--secondary-color); }
+        .doc-actions { display: flex; gap: 0.5rem; }
+        .doc-actions button { background: none; border: none; cursor: pointer; color: var(--text-secondary); }
+        .doc-actions button:hover { color: var(--secondary-color); }
+        .upload-doc { border: 2px dashed var(--border-color); border-radius: 10px; padding: 1rem; text-align: center; cursor: pointer; margin-top: 1rem; }
+        
+        /* Кнопки действий для агента */
+        .agent-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
+        .agent-actions select, .agent-actions input { padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); }
+        
+        /* Модальное окно фото */
+        .lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 10001; align-items: center; justify-content: center; }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 90%; max-height: 90%; }
+        .lightbox-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 2rem; cursor: pointer; }
+        
+        @media (max-width: 768px) {
+            .property-title { font-size: 1.3rem; flex-direction: column; align-items: flex-start; }
+            .chars-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">...</header>
+    <div class="property-detail-page">
+        <div class="detail-container">
+            <div class="breadcrumbs"><a href="index.html">Главная</a> <span>/</span> <a href="catalog.html">Каталог</a> <span>/</span> <span id="breadcrumbTitle">Карточка объекта</span></div>
+            <div class="property-header" id="propertyHeader"></div>
+            <div id="accordionContainer"></div>
+            <div class="agent-actions" id="agentActions" style="display: none;"></div>
+        </div>
+    </div>
+    <div class="lightbox" id="lightbox"><span class="lightbox-close" onclick="closeLightbox()">&times;</span><img id="lightboxImg" src=""></div>
+    <script src="js/theme.js"></script><script src="js/auth.js"></script><script src="js/database.js"></script><script src="js/property-detail.js"></script>
+</body>
+</html>
