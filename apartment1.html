@@ -356,27 +356,27 @@
                 <!-- Галерея -->
                 <div class="property-gallery">
                     <div class="main-image" id="mainImage">
-                        <img src="https://img.freepik.com/free-photo/modern-living-room-interior-with-sofa-chair_23-2150838458.jpg" 
+                        <img src="https://cdn.culture.ru/images/6a9c6c3d-24b6-5b43-8b63-b319cf6e0067" 
                              alt="3-комнатная квартира" 
                              id="mainImageDisplay"
                              onerror="this.src='https://avatars.mds.yandex.net/get-altay/11645449/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
                         <span class="image-badge"><i class="fas fa-camera"></i> 4 фото</span>
                     </div>
                     <div class="image-thumbnails" id="thumbnails">
-                        <img src="https://img.freepik.com/free-photo/modern-living-room-interior-with-sofa-chair_23-2150838458.jpg" 
+                        <img src="https://cdn.culture.ru/images/6a9c6c3d-24b6-5b43-8b63-b319cf6e0067" 
                              alt="Гостиная" 
                              class="active" 
                              data-index="0"
                              onerror="this.src='https://avatars.mds.yandex.net/get-altay/11645449/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
-                        <img src="https://img.freepik.com/free-photo/kitchen-interior-with-modern-furniture_23-2150838279.jpg" 
+                        <img src="https://avatars.mds.yandex.net/get-altay/10185742/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
                              alt="Кухня" 
                              data-index="1"
                              onerror="this.src='https://avatars.mds.yandex.net/get-altay/10185742/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
-                        <img src="https://img.freepik.com/free-photo/beautiful-bedroom-interior-design_23-2150838220.jpg" 
+                        <img src="https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
                              alt="Спальня" 
                              data-index="2"
                              onerror="this.src='https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
-                        <img src="https://img.freepik.com/free-photo/modern-bathroom-interior-with-marble-tiles_23-2150838959.jpg" 
+                        <img src="https://avatars.mds.yandex.net/get-altay/12462523/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
                              alt="Ванная" 
                              data-index="3"
                              onerror="this.src='https://avatars.mds.yandex.net/get-altay/12462523/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
@@ -495,16 +495,16 @@
         // ============================================
         // ГАЛЕРЕЯ ИЗОБРАЖЕНИЙ
         // ============================================
-        // Массив изображений с fallback на Яндекс.Картинки
+        // Изображения из доступных источников в РФ
         const images = [
-            'https://img.freepik.com/free-photo/modern-living-room-interior-with-sofa-chair_23-2150838458.jpg',
-            'https://img.freepik.com/free-photo/modern-living-room-interior-with-sofa-chair_23-2150838458.jpg',
-            'https://img.freepik.com/free-photo/kitchen-interior-with-modern-furniture_23-2150838279.jpg',
-            'https://img.freepik.com/free-photo/beautiful-bedroom-interior-design_23-2150838220.jpg',
-            'https://img.freepik.com/free-photo/modern-bathroom-interior-with-marble-tiles_23-2150838959.jpg'
+            'https://cdn.culture.ru/images/6a9c6c3d-24b6-5b43-8b63-b319cf6e0067',
+            'https://cdn.culture.ru/images/6a9c6c3d-24b6-5b43-8b63-b319cf6e0067',
+            'https://avatars.mds.yandex.net/get-altay/10185742/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
+            'https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
+            'https://avatars.mds.yandex.net/get-altay/12462523/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'
         ];
 
-        // Яндекс.Картинки как fallback
+        // Яндекс.Картинки как резерв
         const fallbackImages = [
             'https://avatars.mds.yandex.net/get-altay/11645449/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
             'https://avatars.mds.yandex.net/get-altay/11645449/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
@@ -517,7 +517,6 @@
         let isUsingFallback = false;
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Клик по миниатюрам
             document.querySelectorAll('.image-thumbnails img').forEach(img => {
                 img.addEventListener('click', function() {
                     const index = parseInt(this.dataset.index);
@@ -525,7 +524,6 @@
                 });
             });
 
-            // Клик по главному изображению
             document.getElementById('mainImage').addEventListener('click', function() {
                 openModal(currentIndex);
             });
@@ -542,18 +540,6 @@
                     img.classList.add('active');
                 }
             });
-        }
-
-        function handleImageError(imgElement) {
-            const index = parseInt(imgElement.dataset.index);
-            imgElement.src = fallbackImages[index];
-            isUsingFallback = true;
-            
-            // Обновляем главное изображение, если оно тоже с ошибкой
-            const mainImg = document.getElementById('mainImageDisplay');
-            if (mainImg && mainImg.src === images[currentIndex]) {
-                mainImg.src = fallbackImages[currentIndex];
-            }
         }
 
         function openModal(index) {
