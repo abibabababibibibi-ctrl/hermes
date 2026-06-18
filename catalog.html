@@ -589,5 +589,306 @@
             window.location.reload();
         }
     </script>
+
+<script>
+    // ============================================
+    // УПРАВЛЕНИЕ РАЗДВИЖНОЙ ПАНЕЛЬЮ ФИЛЬТРОВ
+    // ============================================
+    (function() {
+        'use strict';
+
+        // Элементы
+        const filterToggleBtn = document.getElementById('filterToggleBtn');
+        const filterSlidePanel = document.getElementById('filterSlidePanel');
+        const filterOverlay = document.getElementById('filterOverlay');
+        const closeFilterPanel = document.getElementById('closeFilterPanel');
+        const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+        const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+        const activeFiltersCount = document.getElementById('activeFiltersCount');
+
+        let isPanelOpen = false;
+
+        // Открыть панель
+        function openPanel() {
+            filterSlidePanel.classList.add('open');
+            filterOverlay.classList.add('active');
+            filterToggleBtn.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            isPanelOpen = true;
+            
+            // Меняем иконку на крестик
+            filterToggleBtn.innerHTML = '<i class="fas fa-times"></i>';
+        }
+
+        // Закрыть панель
+        function closePanel() {
+            filterSlidePanel.classList.remove('open');
+            filterOverlay.classList.remove('active');
+            filterToggleBtn.classList.remove('active');
+            document.body.style.overflow = '';
+            isPanelOpen = false;
+            
+            // Возвращаем иконку фильтра
+            filterToggleBtn.innerHTML = '<i class="fas fa-sliders-h"></i>';
+        }
+
+        // Переключить панель
+        function togglePanel() {
+            if (isPanelOpen) {
+                closePanel();
+            } else {
+                openPanel();
+            }
+        }
+
+        // Обновить счетчик активных фильтров
+        function updateActiveFiltersCount() {
+            let count = 0;
+            
+            // Проверяем типы
+            const types = document.querySelectorAll('input[name="filter_type"]:checked');
+            if (types.length !== 2 || !document.querySelector('input[name="filter_type"][value="apartment"]:checked') || !document.querySelector('input[name="filter_type"][value="house"]:checked')) {
+                count += types.length;
+            }
+            
+            // Проверяем цену
+            const minPrice = parseInt(document.getElementById('filterMinPrice').value) || 0;
+            const maxPrice = parseInt(document.getElementById('filterMaxPrice').value) || 50000000;
+            if (minPrice > 0 || maxPrice < 50000000) count++;
+            
+            // Проверяем комнаты
+            const rooms = document.querySelectorAll('input[name="filter_rooms"]:checked');
+            if (rooms.length > 0) count += rooms.length;
+            
+            // Проверяем площадь
+            const minArea = parseInt(document.getElementById('filterMinArea').value) || 0;
+            const maxArea = parseInt(document.getElementById('filterMaxArea').value) || 500;
+            if (minArea > 0 || maxArea < 500) count++;
+            
+            // Проверяем район
+            const district = document.getElementById('filterDistrict').value;
+            if (district) count++;
+            
+            // Проверяем статус
+            const status = document.querySelector('input[name="filter_status"]:checked');
+            if (status && status.value !== 'all') count++;
+            
+            if (count > 0) {
+                activeFiltersCount.textContent = count;
+                activeFiltersCount.style.display = 'inline-block';
+                filterToggleBtn.style.background = 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)';
+            } else {
+                activeFiltersCount.style.display = 'none';
+                filterToggleBtn.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            }
+        }
+
+        // Применить фильтры
+        function applyFiltersFromPanel() {
+            // Синхронизируем значения с основной формой фильтров
+            const types = document.querySelectorAll('input[name="filter_type"]:checked');
+            document.querySelectorAll('input[name="type"]').forEach(cb => {
+                cb.checked = Array.from(types).some(t => t.value === cb.value);
+            });
+            
+            // Цена
+            const minPrice = document.getElementById('filterMinPrice').value;
+            const maxPrice = document.getElementById('filterMaxPrice').value;
+            document.getElementById('minPrice').value = minPrice;
+            document.getElementById('maxPrice').value = maxPrice;
+            document.getElementById('priceRangeMin').value = minPrice || 0;
+            document.getElementById('priceRangeMax').value = maxPrice || 50000000;
+            
+            // Комнаты
+            const rooms = document.querySelectorAll('input[name="filter_rooms"]:checked');
+            document.querySelectorAll('input[name="rooms"]').forEach(cb => {
+                cb.checked = Array.from(rooms).some(r => r.value === cb.value);
+            });
+            
+            // Площадь
+            document.getElementById('minArea').value = document.getElementById('filterMinArea').value;
+            document.getElementById('maxArea').value = document.getElementById('filterMaxArea').value;
+            
+            // Район
+            document.getElementById('districtSelect').value = document.getElementById('filterDistrict').value;
+            
+            // Статус
+            const status = document.querySelector('input[name="filter_status"]:checked');
+            if (status) {
+                document.querySelector(`input[name="status"][value="${status.value}"]`).checked = true;
+            }
+            
+            // Вызываем применение фильтров
+            if (typeof applyFilters === 'function') {
+                applyFilters();
+            }
+            
+            // Закрываем панель
+            closePanel();
+            updateActiveFiltersCount();
+        }
+
+        // Сбросить фильтры
+        function resetFiltersFromPanel() {
+            // Сбрасываем типы
+            document.querySelectorAll('input[name="filter_type"]').forEach(cb => {
+                cb.checked = cb.value === 'apartment' || cb.value === 'house';
+            });
+            
+            // Сбрасываем цену
+            document.getElementById('filterMinPrice').value = '0';
+            document.getElementById('filterMaxPrice').value = '50000000';
+            document.getElementById('priceSliderMin').value = '0';
+            document.getElementById('priceSliderMax').value = '50000000';
+            updateSliderTrack();
+            
+            // Сбрасываем комнаты
+            document.querySelectorAll('input[name="filter_rooms"]').forEach(cb => cb.checked = false);
+            
+            // Сбрасываем площадь
+            document.getElementById('filterMinArea').value = '0';
+            document.getElementById('filterMaxArea').value = '500';
+            
+            // Сбрасываем район
+            document.getElementById('filterDistrict').value = '';
+            
+            // Сбрасываем статус
+            document.querySelector('input[name="filter_status"][value="all"]').checked = true;
+            
+            // Применяем сброс
+            if (typeof resetFilters === 'function') {
+                resetFilters();
+            }
+            
+            closePanel();
+            updateActiveFiltersCount();
+        }
+
+        // Обновить ползунок цены
+        function updateSliderTrack() {
+            const min = parseInt(document.getElementById('priceSliderMin').value) || 0;
+            const max = parseInt(document.getElementById('priceSliderMax').value) || 50000000;
+            const track = document.getElementById('sliderTrack');
+            if (track) {
+                const percentMin = (min / 100000000) * 100;
+                const percentMax = (max / 100000000) * 100;
+                track.style.left = percentMin + '%';
+                track.style.width = (percentMax - percentMin) + '%';
+            }
+        }
+
+        // Настройка ползунка цены
+        function initPriceSliderPanel() {
+            const minSlider = document.getElementById('priceSliderMin');
+            const maxSlider = document.getElementById('priceSliderMax');
+            const minInput = document.getElementById('filterMinPrice');
+            const maxInput = document.getElementById('filterMaxPrice');
+            
+            if (!minSlider || !maxSlider) return;
+            
+            function updateFromSlider() {
+                let min = parseInt(minSlider.value) || 0;
+                let max = parseInt(maxSlider.value) || 50000000;
+                
+                if (min > max) {
+                    [min, max] = [max, min];
+                    minSlider.value = min;
+                    maxSlider.value = max;
+                }
+                
+                minInput.value = min;
+                maxInput.value = max;
+                updateSliderTrack();
+                updateActiveFiltersCount();
+            }
+            
+            function updateFromInput() {
+                let min = parseInt(minInput.value) || 0;
+                let max = parseInt(maxInput.value) || 50000000;
+                
+                if (min > max) {
+                    [min, max] = [max, min];
+                    minInput.value = min;
+                    maxInput.value = max;
+                }
+                if (min < 0) min = 0;
+                if (max > 100000000) max = 100000000;
+                
+                minSlider.value = min;
+                maxSlider.value = max;
+                updateSliderTrack();
+                updateActiveFiltersCount();
+            }
+            
+            minSlider.addEventListener('input', updateFromSlider);
+            maxSlider.addEventListener('input', updateFromSlider);
+            minInput.addEventListener('change', updateFromInput);
+            maxInput.addEventListener('change', updateFromInput);
+            
+            updateSliderTrack();
+        }
+
+        // Следить за изменениями фильтров
+        function watchFilterChanges() {
+            const inputs = document.querySelectorAll('.filter-option input, .room-option input, .status-option input, #filterDistrict, #filterMinArea, #filterMaxArea, #filterMinPrice, #filterMaxPrice');
+            inputs.forEach(input => {
+                input.addEventListener('change', updateActiveFiltersCount);
+                input.addEventListener('input', updateActiveFiltersCount);
+            });
+        }
+
+        // ========== ИНИЦИАЛИЗАЦИЯ ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // Кнопка открытия/закрытия
+            if (filterToggleBtn) {
+                filterToggleBtn.addEventListener('click', togglePanel);
+            }
+            
+            // Крестик закрытия
+            if (closeFilterPanel) {
+                closeFilterPanel.addEventListener('click', closePanel);
+            }
+            
+            // Оверлей (закрытие по клику)
+            if (filterOverlay) {
+                filterOverlay.addEventListener('click', closePanel);
+            }
+            
+            // Кнопка "Применить"
+            if (applyFiltersBtn) {
+                applyFiltersBtn.addEventListener('click', applyFiltersFromPanel);
+            }
+            
+            // Кнопка "Сбросить"
+            if (resetFiltersBtn) {
+                resetFiltersBtn.addEventListener('click', resetFiltersFromPanel);
+            }
+            
+            // Закрытие по Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isPanelOpen) {
+                    closePanel();
+                }
+            });
+            
+            // Инициализация ползунка цены
+            initPriceSliderPanel();
+            
+            // Отслеживание изменений фильтров
+            watchFilterChanges();
+            
+            // Обновление счетчика при загрузке
+            setTimeout(updateActiveFiltersCount, 500);
+        });
+
+        // Экспортируем функции для использования из других скриптов
+        window.openFilterPanel = openPanel;
+        window.closeFilterPanel = closePanel;
+        window.toggleFilterPanel = togglePanel;
+        window.updateActiveFiltersCount = updateActiveFiltersCount;
+
+    })();
+</script>
+    
 </body>
 </html>
