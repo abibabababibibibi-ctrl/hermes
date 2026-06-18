@@ -595,50 +595,6 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="js/theme.js"></script>
-    <script src="js/catalog.js"></script>
-    <script>
-        // Initialize catalog when DOM is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            // Load properties
-            loadProperties();
-            loadFeaturedProperties();
-
-            // Update auth UI
-            updateAuthUI();
-
-            // Initialize price range slider
-            initPriceSlider();
-
-            // Load saved filters if any
-            loadSavedFilters();
-        });
-
-        function updateAuthUI() {
-            const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
-            const authSection = document.getElementById('authSection');
-
-            if (user && authSection) {
-                authSection.innerHTML = `
-                    <div class="user-menu">
-                        <div class="user-avatar">${user.firstName.charAt(0)}${user.lastName.charAt(0)}</div>
-                        <span class="user-name">${user.firstName}</span>
-                        <div class="dropdown">
-                            <a href="dashboard.html">Личный кабинет</a>
-                            <a href="#" onclick="logout()">Выйти</a>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem('currentUser');
-            window.location.reload();
-        }
-    </script>
-
 <script>
     // ============================================
     // УПРАВЛЕНИЕ РАЗДВИЖНОЙ ПАНЕЛЬЮ ФИЛЬТРОВ
