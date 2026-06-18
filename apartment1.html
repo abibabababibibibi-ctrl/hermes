@@ -98,14 +98,6 @@
             border-radius: 20px;
             font-size: 0.8rem;
         }
-        .main-image .image-loader {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2rem;
-            color: var(--text-tertiary);
-        }
 
         .image-thumbnails {
             display: grid;
@@ -129,13 +121,6 @@
         }
         .image-thumbnails img.active {
             border-color: var(--secondary-color);
-        }
-        .image-thumbnails .thumb-loader {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            color: var(--text-tertiary);
         }
 
         .property-info-details {
@@ -366,30 +351,30 @@
             <div class="property-content">
                 <div class="property-gallery">
                     <div class="main-image" id="mainImage">
-                        <img src="https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
+                        <img src="https://i.pinimg.com/736x/0b/d4/63/0bd46394c7c5981bbd8a4e780f5b00e5.jpg" 
                              alt="Современная квартира с панорамными окнами" 
                              id="mainImageDisplay"
-                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22 viewBox=%220 0 800 500%22%3E%3Crect width=%22800%22 height=%22500%22 fill=%22%23667eea%22/%3E%3Ctext x=%22400%22 y=%22230%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🏠%3C/text%3E%3Ctext x=%22400%22 y=%22300%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.8)%22 font-size=%2220%22 font-family=%22Arial%22%3E3-комнатная квартира%3C/text%3E%3C/svg%3E'">
+                             onerror="this.src='https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
                         <span class="image-badge"><i class="fas fa-camera"></i> 4 фото</span>
                     </div>
                     <div class="image-thumbnails" id="thumbnails">
-                        <img src="https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
-                             alt="Современная гостиная с диваном" 
+                        <img src="https://i.pinimg.com/736x/0b/d4/63/0bd46394c7c5981bbd8a4e780f5b00e5.jpg" 
+                             alt="Современная гостиная" 
                              class="active" 
                              data-index="0"
-                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%23667eea%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2240%22 font-family=%22Arial%22%3E🛋️%3C/text%3E%3C/svg%3E'">
-                        <img src="https://avatars.mds.yandex.net/get-altay/10185742/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
-                             alt="Современная кухня с островом" 
+                             onerror="this.src='https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
+                        <img src="https://i.pinimg.com/736x/6d/04/2b/6d042b3bef37f8337c191c353fdd9c46.jpg" 
+                             alt="Современная кухня" 
                              data-index="1"
-                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%23764ba2%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2240%22 font-family=%22Arial%22%3E🍳%3C/text%3E%3C/svg%3E'">
-                        <img src="https://avatars.mds.yandex.net/get-altay/12462523/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
-                             alt="Уютная спальня с кроватью" 
+                             onerror="this.src='https://avatars.mds.yandex.net/get-altay/10185742/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
+                        <img src="https://i.pinimg.com/736x/7e/be/2d/7ebe2df1fc0f77780bb8335918eb7ec1.jpg" 
+                             alt="Уютная спальня" 
                              data-index="2"
-                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%233498db%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2240%22 font-family=%22Arial%22%3E🛏️%3C/text%3E%3C/svg%3E'">
-                        <img src="https://avatars.mds.yandex.net/get-altay/11645449/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
-                             alt="Ванная комната с мрамором" 
+                             onerror="this.src='https://avatars.mds.yandex.net/get-altay/12462523/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
+                        <img src="https://i.pinimg.com/736x/62/42/66/624266e622ac6318510102d178fdac85.jpg" 
+                             alt="Современная ванная" 
                              data-index="3"
-                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%2327ae60%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2240%22 font-family=%22Arial%22%3E🛁%3C/text%3E%3C/svg%3E'">
+                             onerror="this.src='https://avatars.mds.yandex.net/get-altay/11645449/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
                     </div>
                 </div>
 
@@ -499,8 +484,17 @@
         // ============================================
         // ГАЛЕРЕЯ ИЗОБРАЖЕНИЙ
         // ============================================
-        // Реальные изображения интерьеров (Яндекс.Картинки - доступны в РФ)
+        // Реальные фотографии интерьеров (Pinterest - доступен в РФ)
         const images = [
+            'https://i.pinimg.com/736x/0b/d4/63/0bd46394c7c5981bbd8a4e780f5b00e5.jpg',
+            'https://i.pinimg.com/736x/0b/d4/63/0bd46394c7c5981bbd8a4e780f5b00e5.jpg',
+            'https://i.pinimg.com/736x/6d/04/2b/6d042b3bef37f8337c191c353fdd9c46.jpg',
+            'https://i.pinimg.com/736x/7e/be/2d/7ebe2df1fc0f77780bb8335918eb7ec1.jpg',
+            'https://i.pinimg.com/736x/62/42/66/624266e622ac6318510102d178fdac85.jpg'
+        ];
+
+        // Резервные изображения (Яндекс.Картинки)
+        const fallbackImages = [
             'https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
             'https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
             'https://avatars.mds.yandex.net/get-altay/10185742/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
@@ -508,29 +502,10 @@
             'https://avatars.mds.yandex.net/get-altay/11645449/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'
         ];
 
-        // Описания для ALT-текстов
-        const imageAlt = [
-            'Современная квартира с панорамными окнами и светлым интерьером',
-            'Современная гостиная с большим диваном и телевизором',
-            'Современная кухня с островом и светлыми фасадами',
-            'Уютная спальня с большой кроватью и панорамными окнами',
-            'Ванная комната с мраморной отделкой и современной сантехникой'
-        ];
-
-        // Резервные SVG
-        const fallbackImages = [
-            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22 viewBox=%220 0 800 500%22%3E%3Crect width=%22800%22 height=%22500%22 fill=%22%23667eea%22/%3E%3Ctext x=%22400%22 y=%22230%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🏠%3C/text%3E%3Ctext x=%22400%22 y=%22300%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.8)%22 font-size=%2220%22 font-family=%22Arial%22%3E3-комнатная квартира%3C/text%3E%3C/svg%3E',
-            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%23667eea%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2240%22 font-family=%22Arial%22%3E🛋️%3C/text%3E%3C/svg%3E',
-            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%23764ba2%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2240%22 font-family=%22Arial%22%3E🍳%3C/text%3E%3C/svg%3E',
-            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%233498db%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2240%22 font-family=%22Arial%22%3E🛏️%3C/text%3E%3C/svg%3E',
-            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%2327ae60%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2240%22 font-family=%22Arial%22%3E🛁%3C/text%3E%3C/svg%3E'
-        ];
-
         let currentIndex = 0;
         let isUsingFallback = false;
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Обработчики клика по миниатюрам
             document.querySelectorAll('.image-thumbnails img').forEach(img => {
                 img.addEventListener('click', function() {
                     const index = parseInt(this.dataset.index);
@@ -538,23 +513,15 @@
                 });
             });
 
-            // Клик по главному изображению - открыть модальное окно
             document.getElementById('mainImage').addEventListener('click', function() {
                 openModal(currentIndex);
             });
-
-            // Устанавливаем ALT для изображений
-            document.querySelectorAll('.image-thumbnails img').forEach((img, i) => {
-                img.alt = imageAlt[i] || 'Интерьер квартиры';
-            });
-            document.getElementById('mainImageDisplay').alt = imageAlt[0] || '3-комнатная квартира';
         });
 
         function setMainImage(index) {
             currentIndex = index;
             const img = document.getElementById('mainImageDisplay');
             img.src = isUsingFallback ? fallbackImages[index] : images[index];
-            img.alt = imageAlt[index] || 'Интерьер квартиры';
             
             document.querySelectorAll('.image-thumbnails img').forEach(img => {
                 img.classList.remove('active');
@@ -564,11 +531,23 @@
             });
         }
 
+        function handleImageError(imgElement) {
+            const index = parseInt(imgElement.dataset.index);
+            if (!isNaN(index)) {
+                imgElement.src = fallbackImages[index];
+                isUsingFallback = true;
+                
+                const mainImg = document.getElementById('mainImageDisplay');
+                if (mainImg && mainImg.src === images[currentIndex]) {
+                    mainImg.src = fallbackImages[currentIndex];
+                }
+            }
+        }
+
         function openModal(index) {
             currentIndex = index;
             const modalImg = document.getElementById('modalImage');
             modalImg.src = isUsingFallback ? fallbackImages[index] : images[index];
-            modalImg.alt = imageAlt[index] || 'Просмотр фото';
             document.getElementById('imageModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -582,7 +561,6 @@
             currentIndex = (currentIndex + direction + images.length) % images.length;
             const modalImg = document.getElementById('modalImage');
             modalImg.src = isUsingFallback ? fallbackImages[currentIndex] : images[currentIndex];
-            modalImg.alt = imageAlt[currentIndex] || 'Просмотр фото';
         }
 
         document.addEventListener('keydown', function(e) {
