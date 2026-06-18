@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Гермес - Агентство недвижимости</title>
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/catalog.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/auth.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html { visibility: hidden; opacity: 0; }
+        html[data-theme] { visibility: visible; opacity: 1; transition: opacity 0.3s ease; }
+    </style>
 </head>
 
 <body>
@@ -300,10 +304,49 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="js/theme.js"></script>
-    <script src="js/script.js"></script>
     <script src="js/catalog.js"></script>
+    <script>
+        // Initialize catalog when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load properties
+            loadProperties();
+            loadFeaturedProperties();
 
+            // Update auth UI
+            updateAuthUI();
+
+            // Initialize price range slider
+            initPriceSlider();
+
+            // Load saved filters if any
+            loadSavedFilters();
+        });
+
+        function updateAuthUI() {
+            const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            const authSection = document.getElementById('authSection');
+
+            if (user && authSection) {
+                authSection.innerHTML = `
+                    <div class="user-menu">
+                        <div class="user-avatar">${user.firstName.charAt(0)}${user.lastName.charAt(0)}</div>
+                        <span class="user-name">${user.firstName}</span>
+                        <div class="dropdown">
+                            <a href="dashboard.html">Личный кабинет</a>
+                            <a href="#" onclick="logout()">Выйти</a>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.reload();
+        }
+    </script>
 
 </body>
 </html>
