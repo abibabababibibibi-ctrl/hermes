@@ -595,6 +595,24 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="js/theme.js"></script>
+    <script src="js/catalog.js"></script>
+    <script>
+        // Initialize catalog when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load properties
+            loadProperties();
+            loadFeaturedProperties();
+
+            // Initialize price range slider
+            initPriceSlider();
+
+            // Load saved filters if any
+            loadSavedFilters();
+        });
+</script>
+    
 <script>
     // ============================================
     // УПРАВЛЕНИЕ РАЗДВИЖНОЙ ПАНЕЛЬЮ ФИЛЬТРОВ
