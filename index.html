@@ -11,29 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<script>
-    // Показать отладку при двойном нажатии Ctrl
-    document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && e.code === 'Digit0') {
-            const debug = document.getElementById('debugInfo');
-            debug.style.display = debug.style.display === 'none' ? 'block' : 'none';
-        }
-    });
-
-    // Обновить статус темы
-    function updateDebugInfo() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'not set';
-        const saved = localStorage.getItem('theme') || 'not saved';
-        document.getElementById('themeStatus').textContent =
-            `HTML: ${theme} | LocalStorage: ${saved}`;
-    }
-
-    // Обновлять при изменении темы
-    document.addEventListener('themechange', updateDebugInfo);
-    setInterval(updateDebugInfo, 1000);
-    updateDebugInfo();
-</script>
-
 <body>
     <!-- Header -->
 <header class="header">
