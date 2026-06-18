@@ -2487,3 +2487,27 @@ th, td {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.2); }
 }
+
+/* Стили для уведомлений */
+.notification-item:hover {
+    background: var(--bg-secondary, #f8f9fa);
+}
+
+.notification-item.unread {
+    background: rgba(52, 152, 219, 0.05);
+    border-left: 3px solid #3498db;
+}
+
+.notification-item.unread:hover {
+    background: rgba(52, 152, 219, 0.1);
+}
+
+/* Анимация бейджа */
+@keyframes badgePulse {
+    0%, 100% { transform: translate(4px, -4px) scale(1); }
+    50% { transform: translate(4px, -4px) scale(1.1); }
+}
+
+#notificationsBadge {
+    animation: badgePulse 2s ease-in-out infinite;
+}
