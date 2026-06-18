@@ -69,7 +69,6 @@
         }
         @media (max-width: 992px) { .property-content { grid-template-columns: 1fr; } }
 
-        /* Галерея */
         .property-gallery {
             background: var(--bg-primary);
             border-radius: 20px;
@@ -123,7 +122,6 @@
             border-color: var(--secondary-color);
         }
 
-        /* Информация */
         .property-info-details {
             display: flex;
             flex-direction: column;
@@ -176,7 +174,6 @@
         }
         .features-list li i { color: var(--secondary-color); width: 20px; }
 
-        /* Виджет покупки */
         .purchase-widget {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 16px;
@@ -234,7 +231,6 @@
         .agent-info h4 { margin: 0; font-size: 1rem; }
         .agent-info p { margin: 0; font-size: 0.85rem; color: var(--text-secondary); }
 
-        /* Модальное окно */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -300,7 +296,6 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <nav class="nav">
             <div class="nav-brand">
@@ -313,7 +308,7 @@
                 <li><a href="index.html#services">Услуги</a></li>
                 <li><a href="catalog.html">Каталог</a></li>
                 <li><a href="index.html#contact">Контакты</a></li>
-                <li><a href="news.html" class="active">Новости</a></li>
+                <li><a href="news.html">Новости</a></li>
             </ul>
             <div class="nav-actions">
                 <button class="theme-toggle" id="themeToggle">🌙</button>
@@ -353,37 +348,35 @@
             </div>
 
             <div class="property-content">
-                <!-- Галерея -->
                 <div class="property-gallery">
                     <div class="main-image" id="mainImage">
-                        <img src="https://cdn.culture.ru/images/6a9c6c3d-24b6-5b43-8b63-b319cf6e0067" 
+                        <img src="https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
                              alt="3-комнатная квартира" 
                              id="mainImageDisplay"
-                             onerror="this.src='https://avatars.mds.yandex.net/get-altay/11645449/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22 viewBox=%220 0 800 500%22%3E%3Crect width=%22800%22 height=%22500%22 fill=%22%23667eea22/%3E%3Ctext x=%22400%22 y=%22230%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🏠%3C/text%3E%3Ctext x=%22400%22 y=%22300%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.8)%22 font-size=%2220%22 font-family=%22Arial%22%3E3-комнатная квартира%3C/text%3E%3C/svg%3E'">
                         <span class="image-badge"><i class="fas fa-camera"></i> 4 фото</span>
                     </div>
                     <div class="image-thumbnails" id="thumbnails">
-                        <img src="https://cdn.culture.ru/images/6a9c6c3d-24b6-5b43-8b63-b319cf6e0067" 
+                        <img src="https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
                              alt="Гостиная" 
                              class="active" 
                              data-index="0"
-                             onerror="this.src='https://avatars.mds.yandex.net/get-altay/11645449/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%23667eea22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🛋️%3C/text%3E%3C/svg%3E'">
                         <img src="https://avatars.mds.yandex.net/get-altay/10185742/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
                              alt="Кухня" 
                              data-index="1"
-                             onerror="this.src='https://avatars.mds.yandex.net/get-altay/10185742/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
-                        <img src="https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%23764ba2%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🍳%3C/text%3E%3C/svg%3E'">
+                        <img src="https://avatars.mds.yandex.net/get-altay/12462523/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
                              alt="Спальня" 
                              data-index="2"
-                             onerror="this.src='https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
-                        <img src="https://avatars.mds.yandex.net/get-altay/12462523/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%233498db%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🛏️%3C/text%3E%3C/svg%3E'">
+                        <img src="https://avatars.mds.yandex.net/get-altay/11645449/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL" 
                              alt="Ванная" 
                              data-index="3"
-                             onerror="this.src='https://avatars.mds.yandex.net/get-altay/12462523/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'">
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%2327ae60%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🛁%3C/text%3E%3C/svg%3E'">
                     </div>
                 </div>
 
-                <!-- Информация -->
                 <div class="property-info-details">
                     <div class="info-card">
                         <h3><i class="fas fa-info-circle"></i> Основная информация</h3>
@@ -456,7 +449,6 @@
         </div>
     </section>
 
-    <!-- Модальное окно просмотра фото -->
     <div class="modal-overlay" id="imageModal">
         <span class="modal-close" onclick="closeModal()">&times;</span>
         <span class="modal-nav prev" onclick="changeImage(-1)">&#10094;</span>
@@ -464,7 +456,6 @@
         <img id="modalImage" src="" alt="Просмотр фото">
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -474,10 +465,7 @@
                 </div>
                 <div class="footer-links">
                     <a href="index.html">Главная</a>
-                    <a href="index.html#about">О нас</a>
-                    <a href="index.html#services">Услуги</a>
                     <a href="catalog.html">Каталог</a>
-                    <a href="news.html">Новости</a>
                     <a href="index.html#contact">Контакты</a>
                 </div>
                 <div class="footer-social">
@@ -495,22 +483,22 @@
         // ============================================
         // ГАЛЕРЕЯ ИЗОБРАЖЕНИЙ
         // ============================================
-        // Изображения из доступных источников в РФ
+        // Изображения с Яндекс.Картинок (доступны в РФ)
         const images = [
-            'https://cdn.culture.ru/images/6a9c6c3d-24b6-5b43-8b63-b319cf6e0067',
-            'https://cdn.culture.ru/images/6a9c6c3d-24b6-5b43-8b63-b319cf6e0067',
-            'https://avatars.mds.yandex.net/get-altay/10185742/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
             'https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
-            'https://avatars.mds.yandex.net/get-altay/12462523/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'
+            'https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
+            'https://avatars.mds.yandex.net/get-altay/10185742/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
+            'https://avatars.mds.yandex.net/get-altay/12462523/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
+            'https://avatars.mds.yandex.net/get-altay/11645449/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'
         ];
 
-        // Яндекс.Картинки как резерв
+        // Резервные SVG (если изображения не загрузятся)
         const fallbackImages = [
-            'https://avatars.mds.yandex.net/get-altay/11645449/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
-            'https://avatars.mds.yandex.net/get-altay/11645449/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
-            'https://avatars.mds.yandex.net/get-altay/10185742/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
-            'https://avatars.mds.yandex.net/get-altay/10877897/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL',
-            'https://avatars.mds.yandex.net/get-altay/12462523/2a0000018ec5b2c0f2f5d7b3a0c3e4b5f6d7/XXL'
+            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22 viewBox=%220 0 800 500%22%3E%3Crect width=%22800%22 height=%22500%22 fill=%22%23667eea%22/%3E%3Ctext x=%22400%22 y=%22230%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🏠%3C/text%3E%3Ctext x=%22400%22 y=%22300%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.8)%22 font-size=%2220%22 font-family=%22Arial%22%3E3-комнатная квартира%3C/text%3E%3C/svg%3E',
+            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%23667eea%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🛋️%3C/text%3E%3C/svg%3E',
+            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%23764ba2%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🍳%3C/text%3E%3C/svg%3E',
+            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%233498db%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🛏️%3C/text%3E%3C/svg%3E',
+            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%2327ae60%22/%3E%3Ctext x=%22150%22 y=%22100%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🛁%3C/text%3E%3C/svg%3E'
         ];
 
         let currentIndex = 0;
@@ -540,6 +528,20 @@
                     img.classList.add('active');
                 }
             });
+        }
+
+        function handleImageError(imgElement) {
+            const index = parseInt(imgElement.dataset.index);
+            if (!isNaN(index)) {
+                imgElement.src = fallbackImages[index];
+                isUsingFallback = true;
+                
+                // Обновляем главное изображение
+                const mainImg = document.getElementById('mainImageDisplay');
+                if (mainImg && mainImg.src === images[currentIndex]) {
+                    mainImg.src = fallbackImages[currentIndex];
+                }
+            }
         }
 
         function openModal(index) {
