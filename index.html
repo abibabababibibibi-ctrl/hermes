@@ -37,6 +37,10 @@
                 <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
                     <span class="theme-icon">🌙</span>
                 </button>
+
+<!-- Кнопка уведомлений (будет добавлена через JS) -->
+    <div id="notificationsPlaceholder"></div>
+            
                 <!-- Кнопки авторизации -->
                 <div class="nav-auth" id="authSection">
                     <a href="login.html" class="auth-btn auth-login">Войти</a>
@@ -348,5 +352,8 @@
         }
     </script>
 
+<!-- Подключение системы уведомлений -->
+<script src="js/notifications.js"></script>
+    
 </body>
 </html>
