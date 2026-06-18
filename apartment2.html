@@ -4,227 +4,440 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2-комн. квартира в Северном районе - Гермес</title>
-    <link rel="stylesheet" href="css/2komnat.css">
-    <link rel="stylesheet" href="css/catalog.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/catalog.css">
     <link rel="stylesheet" href="css/login.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .property-details {
+            padding-top: 100px;
+            padding-bottom: 60px;
+            background: var(--bg-secondary);
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .breadcrumbs {
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+        }
+        .breadcrumbs a { color: var(--secondary-color); text-decoration: none; }
+        .breadcrumbs a:hover { text-decoration: underline; }
+        .breadcrumbs span { margin: 0 0.5rem; }
 
+        .property-header {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+        .property-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .property-price-main {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        .property-address {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .property-status {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+        .status-available { background: #d4edda; color: #155724; }
+
+        .property-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        @media (max-width: 992px) { .property-content { grid-template-columns: 1fr; } }
+
+        .property-gallery {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        .main-image {
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+            background: var(--bg-secondary);
+        }
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .main-image:hover img { transform: scale(1.03); }
+        .main-image .image-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .image-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            padding: 0.5rem;
+        }
+        .image-thumbnails img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            background: var(--bg-secondary);
+        }
+        .image-thumbnails img:hover {
+            transform: scale(1.05);
+            border-color: var(--secondary-color);
+        }
+        .image-thumbnails img.active {
+            border-color: var(--secondary-color);
+        }
+
+        .property-info-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .info-card {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+        .info-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .info-card h3 i { color: var(--secondary-color); }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .info-item:last-child { border-bottom: none; }
+        .info-label { color: var(--text-secondary); font-size: 0.9rem; }
+        .info-value { font-weight: 600; color: var(--text-primary); }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+        .features-list li {
+            padding: 0.4rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .features-list li i { color: var(--secondary-color); width: 20px; }
+
+        .purchase-widget {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            color: white;
+        }
+        .purchase-widget h3 { color: white; margin-bottom: 0.5rem; }
+        .purchase-widget p { opacity: 0.9; margin-bottom: 1rem; }
+
+        .purchase-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .purchase-buttons .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+            justify-content: center;
+            min-width: 140px;
+        }
+        .purchase-buttons .btn:hover { transform: translateY(-2px); }
+        .btn-success { background: #27ae60; color: white; }
+        .btn-success:hover { background: #1e8449; }
+        .btn-primary { background: white; color: #667eea; }
+        .btn-primary:hover { background: #f0f0f0; }
+        .btn-secondary { background: rgba(255,255,255,0.2); color: white; backdrop-filter: blur(10px); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.3); }
+
+        .agent-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 0;
+        }
+        .agent-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .agent-info h4 { margin: 0; font-size: 1rem; }
+        .agent-info p { margin: 0; font-size: 0.85rem; color: var(--text-secondary); }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .modal-close:hover { transform: rotate(90deg); }
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 10px 15px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        .modal-nav:hover { background: rgba(0,0,0,0.8); }
+        .modal-nav.prev { left: 20px; }
+        .modal-nav.next { right: 20px; }
+
+        @media (max-width: 768px) {
+            .property-header h1 { font-size: 1.5rem; }
+            .property-price-main { font-size: 1.6rem; }
+            .main-image { height: 250px; }
+            .image-thumbnails img { height: 70px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .features-list { grid-template-columns: 1fr; }
+            .purchase-buttons { flex-direction: column; }
+            .purchase-buttons .btn { min-width: auto; }
+        }
+        @media (max-width: 480px) {
+            .property-header { padding: 1rem; }
+            .main-image { height: 200px; }
+            .image-thumbnails img { height: 55px; }
+            .info-card { padding: 1rem; }
+        }
+    </style>
 </head>
 <body>
-        <!-- Header -->
-        <header class="header">
-            <nav class="nav">
-                <div class="nav-brand">
-                    <h2><a href="index.html" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
-                    <span>Агентство недвижимости</span>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h2><a href="index.html" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
+                <span>Агентство недвижимости</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="index.html#about">О нас</a></li>
+                <li><a href="index.html#services">Услуги</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="index.html#contact">Контакты</a></li>
+                <li><a href="news.html">Новости</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+                <div class="nav-auth" id="authSection">
+                    <a href="login.html" class="auth-btn auth-login">Войти</a>
+                    <a href="register.html" class="auth-btn auth-register">Регистрация</a>
                 </div>
-                <ul class="nav-links">
-                    <li><a href="index#home">Главная</a></li>
-                    <li><a href="index#about">О нас</a></li>
-                    <li><a href="index#services">Услуги</a></li>
-                    <li><a href="catalog.html" class="active">Каталог</a></li>
-                    <li><a href="index#contact">Контакты</a></li>
-                </ul>
-                <div class="nav-actions">
-    <button class="theme-toggle" id="themeToggle">🌙</button>
-    
-    <!-- Кнопки авторизации -->
-    <div class="nav-auth" id="authSection">
-        <a href="login.html" class="auth-btn auth-login">Войти</a>
-        <a href="register.html" class="auth-btn auth-register">Регистрация</a>
-    </div>
-</div>
+            </div>
+        </nav>
+    </header>
 
-<!-- После body добавить скрипт -->
-<script>
-    // Проверка авторизации и обновление UI
-    (function() {
-        const user = JSON.parse(localStorage.getItem('currentUser') || 
-            localStorage.getItem('hermes_session') || 
-            sessionStorage.getItem('hermes_current_user') || 'null');
-        
-        const authSection = document.getElementById('authSection');
-        if (authSection && user) {
-            authSection.innerHTML = `
-                <div class="user-menu" style="position: relative;">
-                    <div class="user-avatar" style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; cursor: pointer;">
-                        ${user.firstName ? user.firstName.charAt(0).toUpperCase() : 'U'}
-                    </div>
-                    <div class="user-dropdown" style="display: none; position: absolute; top: 45px; right: 0; background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); min-width: 200px; padding: 8px 0; z-index: 1000;">
-                        <a href="profile.html" style="display: block; padding: 8px 16px; color: #333; text-decoration: none;">👤 Профиль</a>
-                        <a href="dashboard.html" style="display: block; padding: 8px 16px; color: #333; text-decoration: none;">📊 Личный кабинет</a>
-                        <a href="favorites.html" style="display: block; padding: 8px 16px; color: #333; text-decoration: none;">❤️ Избранное</a>
-                        <div style="height: 1px; background: #eee; margin: 4px 0;"></div>
-                        <a href="#" onclick="logout()" style="display: block; padding: 8px 16px; color: #e74c3c; text-decoration: none;">🚪 Выйти</a>
-                    </div>
-                </div>
-            `;
-            
-            // Переключение меню
-            const avatar = document.querySelector('.user-avatar');
-            const dropdown = document.querySelector('.user-dropdown');
-            if (avatar && dropdown) {
-                avatar.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-                });
-                document.addEventListener('click', function() {
-                    dropdown.style.display = 'none';
-                });
-            }
-        }
-    })();
-    
-    function logout() {
-        localStorage.removeItem('currentUser');
-        localStorage.removeItem('hermes_session');
-        localStorage.removeItem('hermes_remember');
-        sessionStorage.removeItem('hermes_current_user');
-        window.location.reload();
-    }
-</script>
-                </div>
-            </nav>
-        </header>
-
-    <!-- Property Details Section -->
     <section class="property-details">
         <div class="container">
+            <div class="breadcrumbs">
+                <a href="index.html">Главная</a>
+                <span>/</span>
+                <a href="catalog.html">Каталог</a>
+                <span>/</span>
+                <span>2-комнатная квартира в Северном районе</span>
+            </div>
+
             <div class="property-header">
-                <h1>2-комнатная квартира в Северном районе</h1>
-                <p class="property-price-main">8 200 000 ₽</p>
-                <p class="property-address">📍 пр. Мира, 42, Северный район</p>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <h1>2-комнатная квартира в Северном районе</h1>
+                        <div class="property-address">
+                            <i class="fas fa-map-marker-alt"></i> ул. Академика Королева, 12, Северный район
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="property-price-main">8 200 000 ₽</div>
+                        <span class="property-status status-available">
+                            <i class="fas fa-check-circle"></i> В наличии
+                        </span>
+                    </div>
+                </div>
             </div>
 
             <div class="property-content">
                 <div class="property-gallery">
-                    <div class="main-image">
-                        <img src="images/properties/2.jpg" alt="2-комнатная квартира в Северном районе">
+                    <div class="main-image" id="mainImage">
+                        <img src="images/properties/2.jpg" 
+                             alt="2-комнатная квартира" 
+                             id="mainImageDisplay">
+                        <span class="image-badge"><i class="fas fa-camera"></i> 4 фото</span>
                     </div>
-                    <div class="image-thumbnails">
-                        <img src="images/properties/2-1.jpg" alt="Гостиная" onclick="changeMainImage(this.src)">
-                        <img src="images/properties/2-2.jpg" alt="Кухня" onclick="changeMainImage(this.src)">
-                        <img src="images/properties/2-3.jpg" alt="Спальня" onclick="changeMainImage(this.src)">
-                        <img src="images/properties/2-4.jpg" alt="Вид из окна" onclick="changeMainImage(this.src)">
+                    <div class="image-thumbnails" id="thumbnails">
+                        <img src="images/properties/146-knyaginiskaja4.jpg" 
+                             alt="Современная гостиная" 
+                             class="active" 
+                             data-index="0">
+                        <img src="images/properties/14.jpg" 
+                             alt="Современная кухня" 
+                             data-index="1">
+                        <img src="images/properties/1500-588c9b2b81506e515f78b6aef1512e41.jpg" 
+                             alt="Уютная спальня" 
+                             data-index="2">
+                        <img src="images/properties/dizajn-interera-dvuhkomnatnoj-kvartiry-po-cvetu-otdelki08-05-2023-22-35.jpg" 
+                             alt="Современная ванная" 
+                             data-index="3">
                     </div>
                 </div>
 
                 <div class="property-info-details">
                     <div class="info-card">
-                        <h3>📊 Основная информация</h3>
+                        <h3><i class="fas fa-info-circle"></i> Основная информация</h3>
                         <div class="info-grid">
-                            <div class="info-item">
-                                <span class="info-label">Общая площадь:</span>
-                                <span class="info-value">65 м²</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Жилая площадь:</span>
-                                <span class="info-value">42 м²</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Кухня:</span>
-                                <span class="info-value">12 м²</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Комнат:</span>
-                                <span class="info-value">2</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Этаж:</span>
-                                <span class="info-value">3/5</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Год постройки:</span>
-                                <span class="info-value">2018</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Ремонт:</span>
-                                <span class="info-value">Чистовая отделка</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Санузел:</span>
-                                <span class="info-value">Совмещенный</span>
-                            </div>
+                            <div class="info-item"><span class="info-label">Площадь</span><span class="info-value">65 м²</span></div>
+                            <div class="info-item"><span class="info-label">Комнат</span><span class="info-value">2</span></div>
+                            <div class="info-item"><span class="info-label">Этаж</span><span class="info-value">7 / 12</span></div>
+                            <div class="info-item"><span class="info-label">Ремонт</span><span class="info-value">Чистовая отделка</span></div>
+                            <div class="info-item"><span class="info-label">Санузел</span><span class="info-value">Раздельный</span></div>
+                            <div class="info-item"><span class="info-label">Балкон</span><span class="info-value">1 лоджия</span></div>
+                            <div class="info-item"><span class="info-label">Год постройки</span><span class="info-value">2019</span></div>
+                            <div class="info-item"><span class="info-label">Вид из окон</span><span class="info-value">Парковый</span></div>
                         </div>
                     </div>
 
                     <div class="info-card">
-                        <h3>📝 Описание объекта</h3>
-                        <p>Уютная 2-комнатная квартира в современном кирпичном доме в развивающемся Северном районе.
-                           Квартира с чистовой отделкой идеально подходит для комфортного проживания молодой семьи
-                           или инвестирования. Большие окна обеспечивают excellent естественное освещение в течение всего дня.</p>
-                        <p>Дом расположен в экологически чистом районе с развитой инфраструктурой. В пешей доступности
-                           находятся школы, детские сады, поликлиника и торговый центр.</p>
+                        <h3><i class="fas fa-align-left"></i> Описание</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.6;">
+                            Уютная 2-комнатная квартира в современном жилом комплексе в Северном районе.
+                            Светлая и просторная квартира с балконом, из которого открывается вид на парк.
+                            Чистовая отделка выполнена с использованием качественных материалов.
+                            Рядом школа, детский сад, продуктовые магазины и остановка общественного транспорта.
+                            Отличный вариант для семьи с одним ребенком или для молодой пары.
+                        </p>
                     </div>
 
                     <div class="info-card">
-                        <h3>✅ Особенности и преимущества</h3>
-                        <div class="features-grid">
-                            <div class="feature-item">
-                                <span class="feature-icon">🪟</span>
-                                <span class="feature-text">Панорамные окна</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon">🧱</span>
-                                <span class="feature-text">Кирпичный дом</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon">🛗</span>
-                                <span class="feature-text">Лифт</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon">🚗</span>
-                                <span class="feature-text">Парковка</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon">🏢</span>
-                                <span class="feature-text">Новый дом</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon">🌳</span>
-                                <span class="feature-text">Двор без машин</span>
+                        <h3><i class="fas fa-star"></i> Особенности</h3>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> Вид на парк</li>
+                            <li><i class="fas fa-check-circle"></i> Чистовая отделка</li>
+                            <li><i class="fas fa-check-circle"></i> Встроенная кухня</li>
+                            <li><i class="fas fa-check-circle"></i> Кондиционер</li>
+                            <li><i class="fas fa-check-circle"></i> Охраняемая территория</li>
+                            <li><i class="fas fa-check-circle"></i> Подземный паркинг</li>
+                            <li><i class="fas fa-check-circle"></i> Домофон</li>
+                            <li><i class="fas fa-check-circle"></i> Лифт</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h3><i class="fas fa-user-tie"></i> Ответственный агент</h3>
+                        <div class="agent-card">
+                            <div class="agent-avatar">МВ</div>
+                            <div class="agent-info">
+                                <h4>Мария Волкова</h4>
+                                <p><i class="fas fa-phone"></i> +7 (999) 234-56-78</p>
+                                <p><i class="fas fa-envelope"></i> m.volkova@hermes.ru</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="info-card">
-                        <h3>🏙️ Инфраструктура района</h3>
-                        <div class="infrastructure-list">
-                            <div class="infrastructure-item">
-                                <strong>Образование:</strong> Школа №15 (300 м), Детский сад "Солнышко" (200 м)
-                            </div>
-                            <div class="infrastructure-item">
-                                <strong>Медицина:</strong> Городская поликлиника №3 (500 м)
-                            </div>
-                            <div class="infrastructure-item">
-                                <strong>Транспорт:</strong> Автобусная остановка (100 м), Метро "Северная" (15 мин пешком)
-                            </div>
-                            <div class="infrastructure-item">
-                                <strong>Торговля:</strong> Супермаркет "Магнит" (200 м), ТЦ "Северный" (800 м)
-                            </div>
-                            <div class="infrastructure-item">
-                                <strong>Отдых:</strong> Парк "Северное сияние" (1 км), Спортивная площадка (400 м)
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="contact-widget">
-    <h3>💬 Хотите купить этот объект?</h3>
-    <p>Оформите покупку прямо сейчас или получите консультацию</p>
-
-    <div class="purchase-buttons">
-        <button class="btn btn-success" onclick="buyWithoutRegistration()">
-            <i class="fas fa-shopping-cart"></i> Купить без регистрации
-        </button>
-        <button class="btn btn-primary" onclick="openQuickOrderForm()">
-            <i class="fas fa-file-contract"></i> Быстрый заказ
-        </button>
-        <button class="btn btn-secondary" onclick="window.open('tel:+74951234567')">
-            <i class="fas fa-phone"></i> Консультация
-        </button>
-    </div>
-</div>
+                    <div class="purchase-widget">
+                        <h3>🏠 Хотите купить этот объект?</h3>
+                        <p>Оформите покупку прямо сейчас или получите консультацию</p>
+                        <div class="purchase-buttons">
+                            <button class="btn btn-success" onclick="buyNow()">
+                                <i class="fas fa-shopping-cart"></i> Купить
+                            </button>
+                            <button class="btn btn-primary" onclick="bookViewing()">
+                                <i class="fas fa-calendar-alt"></i> Записаться на просмотр
+                            </button>
+                            <button class="btn btn-secondary" onclick="window.location.href='tel:+74951234567'">
+                                <i class="fas fa-phone"></i> Консультация
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -232,7 +445,13 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <div class="modal-overlay" id="imageModal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <span class="modal-nav prev" onclick="changeImage(-1)">&#10094;</span>
+        <span class="modal-nav next" onclick="changeImage(1)">&#10095;</span>
+        <img id="modalImage" src="" alt="Просмотр фото">
+    </div>
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -241,38 +460,166 @@
                     <p>Агентство недвижимости</p>
                 </div>
                 <div class="footer-links">
-                    <a href="index#home">Главная</a>
-                    <a href="index#about">О нас</a>
-                    <a href="index#services">Услуги</a>
+                    <a href="index.html">Главная</a>
                     <a href="catalog.html">Каталог</a>
-                    <a href="index#contact">Контакты</a>
+                    <a href="index.html#contact">Контакты</a>
                 </div>
                 <div class="footer-social">
                     <a href="https://vk.com/club233530044"><i class="fab fa-vk"></i></a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Агентство недвижимости "Гермес". Все права защищены.</p>
-                <p class="footer-info">
-                    Информация на сайте не является публичной офертой.
-                    <a href="privacy.html">Политика конфиденциальности</a>
-                </p>
+                <p>&copy; 2025-2026 Агентство недвижимости "Гермес". Все права защищены.</p>
             </div>
         </div>
     </footer>
 
+    <script src="js/theme.js"></script>
     <script>
-        // Функция для смены главного изображения
-        function changeMainImage(src) {
-            document.querySelector('.main-image img').src = src;
+
+
+        let currentIndex = 0;
+        let isUsingFallback = false;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.image-thumbnails img').forEach(img => {
+                img.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    setMainImage(index);
+                });
+            });
+
+            document.getElementById('mainImage').addEventListener('click', function() {
+                openModal(currentIndex);
+            });
+        });
+
+        function setMainImage(index) {
+            currentIndex = index;
+            const img = document.getElementById('mainImageDisplay');
+            img.src = isUsingFallback ? fallbackImages[index] : images[index];
+            
+            document.querySelectorAll('.image-thumbnails img').forEach(img => {
+                img.classList.remove('active');
+                if (parseInt(img.dataset.index) === index) {
+                    img.classList.add('active');
+                }
+            });
         }
 
-        // Функция для плавной прокрутки
-        function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
+        function openModal(index) {
+            currentIndex = index;
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = isUsingFallback ? fallbackImages[index] : images[index];
+            document.getElementById('imageModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function changeImage(direction) {
+            currentIndex = (currentIndex + direction + images.length) % images.length;
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = isUsingFallback ? fallbackImages[currentIndex] : images[currentIndex];
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') changeImage(-1);
+            if (e.key === 'ArrowRight') changeImage(1);
+        });
+
+        // ============================================
+        // ДЕЙСТВИЯ
+        // ============================================
+        function buyNow() {
+            const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            if (user) {
+                if (confirm('Вы уверены, что хотите купить этот объект?')) {
+                    alert('Заявка на покупку отправлена! Наш менеджер свяжется с вами.');
+                }
+            } else {
+                if (confirm('Для покупки необходимо войти. Перейти на страницу входа?')) {
+                    window.location.href = 'login.html';
+                }
             }
+        }
+
+        function bookViewing() {
+            const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            if (user) {
+                const date = prompt('Введите удобную дату для просмотра (ДД.ММ.ГГГГ):');
+                if (date) {
+                    const time = prompt('Введите удобное время:');
+                    if (time) {
+                        alert(`Заявка на просмотр отправлена!\nДата: ${date}\nВремя: ${time}\nНаш менеджер свяжется с вами.`);
+                    }
+                }
+            } else {
+                if (confirm('Для записи на просмотр необходимо войти. Перейти на страницу входа?')) {
+                    window.location.href = 'login.html';
+                }
+            }
+        }
+
+        // ============================================
+        // АВТОРИЗАЦИЯ
+        // ============================================
+        (function() {
+            const user = JSON.parse(localStorage.getItem('currentUser') || 
+                localStorage.getItem('hermes_session') || 
+                sessionStorage.getItem('hermes_current_user') || 'null');
+            
+            const authSection = document.getElementById('authSection');
+            if (authSection && user) {
+                authSection.innerHTML = `
+                    <div class="user-menu" style="position: relative;">
+                        <div class="user-avatar" style="
+                            width: 38px; height: 38px; border-radius: 50%;
+                            background: linear-gradient(135deg, #667eea, #764ba2);
+                            display: flex; align-items: center; justify-content: center;
+                            color: white; font-weight: 600; cursor: pointer;
+                        ">
+                            ${user.firstName ? user.firstName.charAt(0).toUpperCase() : 'U'}
+                        </div>
+                        <div class="user-dropdown" style="
+                            display: none; position: absolute; top: 45px; right: 0;
+                            background: var(--bg-primary); border-radius: 12px;
+                            box-shadow: 0 10px 30px rgba(0,0,0,0.2); min-width: 200px;
+                            padding: 8px 0; z-index: 1000; border: 1px solid var(--border-color);
+                        ">
+                            <a href="profile.html" style="display:block;padding:8px 16px;color:var(--text-primary);text-decoration:none;">👤 Профиль</a>
+                            <a href="dashboard.html" style="display:block;padding:8px 16px;color:var(--text-primary);text-decoration:none;">📊 Личный кабинет</a>
+                            <a href="favorites.html" style="display:block;padding:8px 16px;color:var(--text-primary);text-decoration:none;">❤️ Избранное</a>
+                            <div style="height:1px;background:var(--border-color);margin:4px 0;"></div>
+                            <a href="#" onclick="logout()" style="display:block;padding:8px 16px;color:#e74c3c;text-decoration:none;">🚪 Выйти</a>
+                        </div>
+                    </div>
+                `;
+                
+                const avatar = document.querySelector('.user-avatar');
+                const dropdown = document.querySelector('.user-dropdown');
+                if (avatar && dropdown) {
+                    avatar.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+                    });
+                    document.addEventListener('click', function() {
+                        dropdown.style.display = 'none';
+                    });
+                }
+            }
+        })();
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('hermes_session');
+            localStorage.removeItem('hermes_remember');
+            sessionStorage.removeItem('hermes_current_user');
+            window.location.reload();
         }
     </script>
 </body>
