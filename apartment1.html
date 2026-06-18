@@ -86,16 +86,6 @@
             color: #155724;
         }
 
-        .status-sold {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .status-booked {
-            background: #fff3cd;
-            color: #856404;
-        }
-
         /* Основной контент */
         .property-content {
             display: grid;
@@ -121,6 +111,7 @@
             height: 400px;
             overflow: hidden;
             position: relative;
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
         }
 
         .main-image img {
@@ -145,6 +136,21 @@
             font-size: 0.8rem;
         }
 
+        .main-image .placeholder-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--text-tertiary);
+        }
+
+        .main-image .placeholder-text i {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
         .image-thumbnails {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -160,6 +166,7 @@
             cursor: pointer;
             transition: all 0.3s;
             border: 2px solid transparent;
+            background: var(--bg-secondary);
         }
 
         .image-thumbnails img:hover {
@@ -168,6 +175,24 @@
         }
 
         .image-thumbnails img.active {
+            border-color: var(--secondary-color);
+        }
+
+        .image-thumbnails .placeholder-thumb {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            height: 100px;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .image-thumbnails .placeholder-thumb:hover {
             border-color: var(--secondary-color);
         }
 
@@ -432,7 +457,8 @@
                 grid-template-columns: repeat(4, 1fr);
             }
             
-            .image-thumbnails img {
+            .image-thumbnails img,
+            .image-thumbnails .placeholder-thumb {
                 height: 70px;
             }
             
@@ -468,7 +494,8 @@
                 padding: 0.3rem;
             }
             
-            .image-thumbnails img {
+            .image-thumbnails img,
+            .image-thumbnails .placeholder-thumb {
                 height: 55px;
             }
             
@@ -541,14 +568,30 @@
                 <!-- Галерея -->
                 <div class="property-gallery">
                     <div class="main-image" id="mainImage">
-                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop" alt="3-комнатная квартира" id="mainImageDisplay">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'%3E%3Crect width='800' height='500' fill='%23667eea'/%3E%3Ctext x='50%25' y='45%25' text-anchor='middle' dy='.3em' fill='white' font-size='48' font-family='Arial'%3E🏠%3C/text%3E%3Ctext x='50%25' y='60%25' text-anchor='middle' dy='.3em' fill='rgba(255,255,255,0.8)' font-size='20' font-family='Arial'%3E3-комнатная квартира%3C/text%3E%3C/svg%3E" 
+                             alt="3-комнатная квартира" 
+                             id="mainImageDisplay"
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22 viewBox=%220 0 800 500%22%3E%3Crect width=%22800%22 height=%22500%22 fill=%22%23667eea%22/%3E%3Ctext x=%2250%25%22 y=%2245%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🏠%3C/text%3E%3Ctext x=%2250%25%22 y=%2260%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.8)%22 font-size=%2220%22 font-family=%22Arial%22%3E3-комнатная квартира%3C/text%3E%3C/svg%3E'">
                         <span class="image-badge"><i class="fas fa-camera"></i> 4 фото</span>
                     </div>
                     <div class="image-thumbnails" id="thumbnails">
-                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=300&h=200&fit=crop" alt="Гостиная" class="active" data-index="0">
-                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=300&h=200&fit=crop" alt="Кухня" data-index="1">
-                        <img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=300&h=200&fit=crop" alt="Спальня" data-index="2">
-                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=300&h=200&fit=crop" alt="Ванная" data-index="3">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23667eea'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='48' font-family='Arial'%3E🛋️%3C/text%3E%3C/svg%3E" 
+                             alt="Гостиная" 
+                             class="active" 
+                             data-index="0"
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%23667eea%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🛋️%3C/text%3E%3C/svg%3E'">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23764ba2'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='48' font-family='Arial'%3E🍳%3C/text%3E%3C/svg%3E" 
+                             alt="Кухня" 
+                             data-index="1"
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%23764ba2%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🍳%3C/text%3E%3C/svg%3E'">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%233498db'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='48' font-family='Arial'%3E🛏️%3C/text%3E%3C/svg%3E" 
+                             alt="Спальня" 
+                             data-index="2"
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%233498db%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🛏️%3C/text%3E%3C/svg%3E'">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%2327ae60'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='48' font-family='Arial'%3E🛁%3C/text%3E%3C/svg%3E" 
+                             alt="Ванная" 
+                             data-index="3"
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%2327ae60%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🛁%3C/text%3E%3C/svg%3E'">
                     </div>
                 </div>
 
@@ -680,7 +723,6 @@
                 </div>
                 <div class="footer-social">
                     <a href="https://vk.com/club233530044"><i class="fab fa-vk"></i></a>
-
                 </div>
             </div>
             <div class="footer-bottom">
@@ -694,11 +736,13 @@
         // ============================================
         // ГАЛЕРЕЯ ИЗОБРАЖЕНИЙ
         // ============================================
+        // Используем SVG изображения как fallback
         const images = [
-            'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop',
-            'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=500&fit=crop',
-            'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800&h=500&fit=crop',
-            'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop'
+            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22 viewBox=%220 0 800 500%22%3E%3Crect width=%22800%22 height=%22500%22 fill=%22%23667eea%22/%3E%3Ctext x=%2250%25%22 y=%2245%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🏠%3C/text%3E%3Ctext x=%2250%25%22 y=%2260%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.8)%22 font-size=%2220%22 font-family=%22Arial%22%3E3-комнатная квартира%3C/text%3E%3C/svg%3E',
+            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22 viewBox=%220 0 800 500%22%3E%3Crect width=%22800%22 height=%22500%22 fill=%22%23667eea%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🛋️%3C/text%3E%3Ctext x=%2250%25%22 y=%2265%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.8)%22 font-size=%2220%22 font-family=%22Arial%22%3EГостиная%3C/text%3E%3C/svg%3E',
+            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22 viewBox=%220 0 800 500%22%3E%3Crect width=%22800%22 height=%22500%22 fill=%22%23764ba2%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🍳%3C/text%3E%3Ctext x=%2250%25%22 y=%2265%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.8)%22 font-size=%2220%22 font-family=%22Arial%22%3EКухня%3C/text%3E%3C/svg%3E',
+            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22 viewBox=%220 0 800 500%22%3E%3Crect width=%22800%22 height=%22500%22 fill=%22%233498db%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🛏️%3C/text%3E%3Ctext x=%2250%25%22 y=%2265%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.8)%22 font-size=%2220%22 font-family=%22Arial%22%3EСпальня%3C/text%3E%3C/svg%3E',
+            'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22 viewBox=%220 0 800 500%22%3E%3Crect width=%22800%22 height=%22500%22 fill=%22%2327ae60%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2248%22 font-family=%22Arial%22%3E🛁%3C/text%3E%3Ctext x=%2250%25%22 y=%2265%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.8)%22 font-size=%2220%22 font-family=%22Arial%22%3EВанная%3C/text%3E%3C/svg%3E'
         ];
 
         let currentIndex = 0;
