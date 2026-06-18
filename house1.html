@@ -27,15 +27,63 @@
                     <li><a href="index#contact">Контакты</a></li>
                 </ul>
                 <div class="nav-actions">
-                    <!-- Переключатель темы -->
-                    <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
-                        <span class="theme-icon">🌙</span>
-                        <span class="theme-text">Темная тема</span>
-                    </button>
-                    <!-- Кнопки авторизации -->
-                    <div class="nav-auth" id="authSection">
-                        <a href="login.html" class="auth-btn auth-login">Войти</a>
-                        <a href="register.html" class="auth-btn auth-register">Регистрация</a>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+    
+    <!-- Кнопки авторизации -->
+    <div class="nav-auth" id="authSection">
+        <a href="login.html" class="auth-btn auth-login">Войти</a>
+        <a href="register.html" class="auth-btn auth-register">Регистрация</a>
+    </div>
+</div>
+
+<!-- После body добавить скрипт -->
+<script>
+    // Проверка авторизации и обновление UI
+    (function() {
+        const user = JSON.parse(localStorage.getItem('currentUser') || 
+            localStorage.getItem('hermes_session') || 
+            sessionStorage.getItem('hermes_current_user') || 'null');
+        
+        const authSection = document.getElementById('authSection');
+        if (authSection && user) {
+            authSection.innerHTML = `
+                <div class="user-menu" style="position: relative;">
+                    <div class="user-avatar" style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; cursor: pointer;">
+                        ${user.firstName ? user.firstName.charAt(0).toUpperCase() : 'U'}
+                    </div>
+                    <div class="user-dropdown" style="display: none; position: absolute; top: 45px; right: 0; background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); min-width: 200px; padding: 8px 0; z-index: 1000;">
+                        <a href="profile.html" style="display: block; padding: 8px 16px; color: #333; text-decoration: none;">👤 Профиль</a>
+                        <a href="dashboard.html" style="display: block; padding: 8px 16px; color: #333; text-decoration: none;">📊 Личный кабинет</a>
+                        <a href="favorites.html" style="display: block; padding: 8px 16px; color: #333; text-decoration: none;">❤️ Избранное</a>
+                        <div style="height: 1px; background: #eee; margin: 4px 0;"></div>
+                        <a href="#" onclick="logout()" style="display: block; padding: 8px 16px; color: #e74c3c; text-decoration: none;">🚪 Выйти</a>
+                    </div>
+                </div>
+            `;
+            
+            // Переключение меню
+            const avatar = document.querySelector('.user-avatar');
+            const dropdown = document.querySelector('.user-dropdown');
+            if (avatar && dropdown) {
+                avatar.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+                });
+                document.addEventListener('click', function() {
+                    dropdown.style.display = 'none';
+                });
+            }
+        }
+    })();
+    
+    function logout() {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('hermes_session');
+        localStorage.removeItem('hermes_remember');
+        sessionStorage.removeItem('hermes_current_user');
+        window.location.reload();
+    }
+</script>
                     </div>
                 </div>
             </nav>
