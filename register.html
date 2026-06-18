@@ -3,203 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация - Гермес</title>
-    <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/catalog.css">
+    <title>Регистрация - Гермес Агентство недвижимости</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <style>
+        body { margin: 0; padding: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    </style>
 </head>
 <body>
-        <!-- Header -->
-        <header class="header">
-            <nav class="nav">
-                <div class="nav-brand">
-                    <h2><a href="index" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
-                    <span>Агентство недвижимости</span>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="index#home">Главная</a></li>
-                    <li><a href="index#about">О нас</a></li>
-                    <li><a href="index#services">Услуги</a></li>
-                    <li><a href="catalog.html" class="active">Каталог</a></li>
-                    <li><a href="index#contact">Контакты</a></li>
-                </ul>
-                <div class="nav-actions">
-                    <!-- Переключатель темы -->
-                    <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
-                        <span class="theme-icon">🌙</span>
-                        <span class="theme-text">Темная тема</span>
-                    </button>
-                    <!-- Кнопки авторизации -->
-                    <div class="nav-auth" id="authSection">
-                        <a href="login.html" class="auth-btn auth-login">Войти</a>
-                        <a href="register.html" class="auth-btn auth-register">Регистрация</a>
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-    <!-- Register Section -->
-    <section class="auth-section">
-        <div class="container">
-            <div class="auth-container">
+    <div class="auth-page">
+        <div class="auth-container">
+            <div class="auth-card">
                 <div class="auth-header">
-                    <h1>Регистрация</h1>
-                    <p>Создайте аккаунт для доступа ко всем возможностям нашего сервиса</p>
+                    <div class="logo">ГЕРМЕС</div>
+                    <div class="subtitle">Создайте аккаунт</div>
                 </div>
-
-                <div class="auth-content">
-                    <div class="auth-form-container">
-                        <form id="registerForm" class="auth-form">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="firstName">Имя *</label>
-                                    <input type="text" id="firstName" name="firstName" required placeholder="Ваше имя">
-                                    <div class="error-message" id="firstNameError"></div>
+                
+                <div class="auth-body">
+                    <form class="auth-form" id="registerForm">
+                        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label>Имя <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="regFirstName" placeholder="Иван" required>
                                 </div>
+                                <div class="error-message" id="firstNameError"></div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="lastName">Фамилия *</label>
-                                    <input type="text" id="lastName" name="lastName" required placeholder="Ваша фамилия">
-                                    <div class="error-message" id="lastNameError"></div>
+                            <div class="form-group">
+                                <label>Фамилия <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="regLastName" placeholder="Иванов" required>
                                 </div>
+                                <div class="error-message" id="lastNameError"></div>
                             </div>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="regEmail">Email *</label>
-                                <input type="email" id="regEmail" name="email" required placeholder="example@mail.ru">
-                                <div class="error-message" id="regEmailError"></div>
+                        <div class="form-group">
+                            <label>Email <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="regEmail" placeholder="ivan@example.com" required>
                             </div>
+                            <div class="error-message" id="emailError"></div>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="phone">Телефон *</label>
-                                <input type="tel" id="phone" name="phone" required placeholder="+7 (999) 999-99-99">
-                                <div class="error-message" id="phoneError"></div>
+                        <div class="form-group">
+                            <label>Телефон <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="regPhone" placeholder="+7 (999) 123-45-67" required>
                             </div>
+                            <div class="error-message" id="phoneError"></div>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="regPassword">Пароль *</label>
-                                <div class="password-input">
-                                    <input type="password" id="regPassword" name="password" required placeholder="Придумайте пароль">
-                                    <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">
-                                        👁️
-                                    </button>
+                        <div class="form-group">
+                            <label>Пароль <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="regPassword" placeholder="Минимум 6 символов" required>
+                                <i class="fas fa-eye toggle-password" onclick="togglePassword('regPassword')"></i>
+                            </div>
+                            <div class="password-strength" id="passwordStrength">
+                                <div class="strength-bar">
+                                    <div class="strength-bar-fill" id="strengthFill"></div>
                                 </div>
-                                <div class="password-requirements">
-                                    <p>Пароль должен содержать:</p>
-                                    <ul>
-                                        <li id="length">Минимум 8 символов</li>
-                                        <li id="uppercase">Заглавную букву</li>
-                                        <li id="number">Цифру</li>
-                                        <li id="special">Специальный символ</li>
-                                    </ul>
-                                </div>
-                                <div class="error-message" id="regPasswordError"></div>
+                                <div class="strength-text" id="strengthText"></div>
                             </div>
+                            <div class="error-message" id="passwordError"></div>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="confirmPassword">Подтверждение пароля *</label>
-                                <div class="password-input">
-                                    <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Повторите пароль">
-                                    <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword')">
-                                        👁️
-                                    </button>
-                                </div>
-                                <div class="error-message" id="confirmPasswordError"></div>
+                        <div class="form-group">
+                            <label>Подтверждение пароля <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="regConfirmPassword" placeholder="Повторите пароль" required>
+                                <i class="fas fa-eye toggle-password" onclick="togglePassword('regConfirmPassword')"></i>
                             </div>
+                            <div class="error-message" id="confirmError"></div>
+                        </div>
 
-                            <div class="form-group">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="userType" id="isRealtor">
-                                    Я риелтор / представитель агентства
-                                </label>
-                            </div>
+                        <div class="form-group">
+                            <label class="checkbox-group">
+                                <input type="checkbox" id="agreeTerms" required>
+                                <span>Я соглашаюсь с <a href="#" onclick="alert('Условия использования')">условиями</a> и <a href="#" onclick="alert('Политика конфиденциальности')">политикой</a></span>
+                            </label>
+                        </div>
 
-                            <div class="form-group" id="agencyField" style="display: none;">
-                                <label for="agency">Название агентства</label>
-                                <input type="text" id="agency" name="agency" placeholder="Название вашего агентства">
-                            </div>
+                        <button type="submit" class="btn-auth" id="registerBtn">
+                            <i class="fas fa-user-plus"></i> Зарегистрироваться
+                        </button>
 
-                            <div class="form-group">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="terms" required>
-                                    Я согласен с <a href="terms.html">условиями использования</a> и
-                                    <a href="privacy.html">политикой конфиденциальности</a> *
-                                </label>
-                                <div class="error-message" id="termsError"></div>
-                            </div>
+                        <div class="auth-divider">
+                            <span>или</span>
+                        </div>
 
-                            <div class="form-group">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="newsletter">
-                                    Подписаться на рассылку новых объектов и акций
-                                </label>
-                            </div>
+                        <button type="button" class="btn-google" onclick="alert('Вход через Google будет доступен позже')">
+                            <i class="fab fa-google"></i> Регистрация через Google
+                        </button>
 
-                            <button type="submit" class="btn btn-primary btn-auth">Зарегистрироваться</button>
-
-                            <div class="auth-divider">
-                                <span>или</span>
-                            </div>
-
-                            <button type="button" class="btn btn-social btn-google">
-                                <img src="images/icons/google.svg" alt="Google"> Зарегистрироваться через Google
-                            </button>
-
-                            <div class="auth-footer">
-                                Уже есть аккаунт? <a href="login.html">Войти</a>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="auth-benefits">
-                        <h3>Почему стоит зарегистрироваться?</h3>
-                        <ul class="benefits-list">
-                            <li>🔒 Безопасное хранение данных</li>
-                            <li>⭐ Избранные объекты в одном месте</li>
-                            <li>📅 Онлайн запись на просмотры</li>
-                            <li>💬 Прямой чат с риелторами</li>
-                            <li>🔔 Персональные уведомления</li>
-                            <li>📊 История просмотров и заявок</li>
-                            <li>🎁 Специальные предложения</li>
-                            <li>📈 Отслеживание цен на объекты</li>
-                        </ul>
-                    </div>
+                        <div class="auth-footer">
+                            Уже есть аккаунт? <a href="login.html">Войти</a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3>ГЕРМЕС</h3>
-                    <p>Агентство недвижимости</p>
-                </div>
-                <div class="footer-links">
-                    <a href="index#home">Главная</a>
-                    <a href="index#about">О нас</a>
-                    <a href="index#services">Услуги</a>
-                    <a href="catalog.html">Каталог</a>
-                    <a href="index#contact">Контакты</a>
-                </div>
-                <div class="footer-social">
-                    <a href="https://vk.com/club233530044"><i class="fab fa-vk"></i></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Агентство недвижимости "Гермес". Все права защищены.</p>
-                <p class="footer-info">
-                    Информация на сайте не является публичной офертой.
-                    <a href="privacy.html">Политика конфиденциальности</a>
-                </p>
-            </div>
-        </div>
-    </footer>
+    <script>
+        // Автоматическая маска телефона
+        const phoneInput = document.getElementById('regPhone');
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+            
+            let formatted = '';
+            if (value.length > 0) {
+                formatted = '+7';
+                if (value.length > 1) {
+                    formatted += ' (' + value.slice(1, 4);
+                    if (value.length >= 5) formatted += ') ' + value.slice(4, 7);
+                    if (value.length >= 8) formatted += '-' + value.slice(7, 9);
+                    if (value.length >= 10) formatted += '-' + value.slice(9, 11);
+                }
+            }
+            e.target.value = formatted;
+        });
 
-    <script src="js/auth.js"></script>
+        // Проверка силы пароля
+        document.getElementById('regPassword').addEventListener('input', function() {
+            const password = this.value;
+            const strength = checkPasswordStrength(password);
+            
+            document.getElementById('strengthFill').className = 'strength-bar-fill ' + strength.class;
+            document.getElementById('strengthFill').style.width = strength.percent + '%';
+            document.getElementById('strengthText').textContent = strength.text;
+        });
+
+        function checkPasswordStrength(password) {
+            let score = 0;
+            if (password.length >= 6) score++;
+            if (password.length >= 10) score++;
+            if (/[A-Z]/.test(password)) score++;
+            if (/[a-z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++;
+            if (/[^A-Za-z0-9]/.test(password)) score++;
+            
+            if (score <= 2) return { class: 'weak', percent: 25, text: 'Слабый пароль' };
+            if (score <= 3) return { class: 'medium', percent: 50, text: 'Средний пароль' };
+            if (score <= 4) return { class: 'good', percent: 75, text: 'Хороший пароль' };
+            return { class: 'strong', percent: 100, text: 'Сильный пароль' };
+        }
+
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = field.nextElementSibling;
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Обработка формы регистрации
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Сбор данных
+            const userData = {
+                firstName: document.getElementById('regFirstName').value.trim(),
+                lastName: document.getElementById('regLastName').value.trim(),
+                email: document.getElementById('regEmail').value.trim(),
+                phone: document.getElementById('regPhone').value.trim(),
+                password: document.getElementById('regPassword').value,
+                confirmPassword: document.getElementById('regConfirmPassword').value
+            };
+            
+            // Очистка ошибок
+            clearErrors();
+            
+            // Валидация
+            let isValid = true;
+            
+            if (!userData.firstName) {
+                showFieldError('regFirstName', 'Введите имя');
+                isValid = false;
+            }
+            
+            if (!userData.lastName) {
+                showFieldError('regLastName', 'Введите фамилию');
+                isValid = false;
+            }
+            
+            if (!userData.email) {
+                showFieldError('regEmail', 'Введите email');
+                isValid = false;
+            } else if (!isValidEmail(userData.email)) {
+                showFieldError('regEmail', 'Введите корректный email');
+                isValid = false;
+            }
+            
+            if (!userData.phone) {
+                showFieldError('regPhone', 'Введите телефон');
+                isValid = false;
+            } else if (userData.phone.replace(/\D/g, '').length !== 11) {
+                showFieldError('regPhone', 'Введите корректный номер телефона');
+                isValid = false;
+            }
+            
+            if (!userData.password) {
+                showFieldError('regPassword', 'Введите пароль');
+                isValid = false;
+            } else if (userData.password.length < 6) {
+                showFieldError('regPassword', 'Пароль должен быть не менее 6 символов');
+                isValid = false;
+            }
+            
+            if (!userData.confirmPassword) {
+                showFieldError('regConfirmPassword', 'Подтвердите пароль');
+                isValid = false;
+            } else if (userData.password !== userData.confirmPassword) {
+                showFieldError('regConfirmPassword', 'Пароли не совпадают');
+                isValid = false;
+            }
+            
+            if (!document.getElementById('agreeTerms').checked) {
+                showNotification('Подтвердите согласие с условиями', 'warning');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Отправка на сервер (имитация)
+            const btn = document.getElementById('registerBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner"></div> Регистрация...';
+            
+            // Имитация запроса к серверу
+            setTimeout(() => {
+                const users = JSON.parse(localStorage.getItem('hermes_users') || '[]');
+                
+                // Проверка на существующего пользователя
+                if (users.find(u => u.email === userData.email)) {
+                    showNotification('Пользователь с таким email уже существует', 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-user-plus"></i> Зарегистрироваться';
+                    return;
+                }
+                
+                // Создание нового пользователя
+                const newUser = {
+                    id: Date.now(),
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    email: userData.email,
+                    phone: userData.phone,
+                    password: btoa(userData.password), // Простое шифрование для демо
+                    role: 'user',
+                    status: 'active',
+                    createdAt: new Date().toISOString()
+                };
+                
+                users.push(newUser);
+                localStorage.setItem('hermes_users', JSON.stringify(users));
+                
+                showNotification('Регистрация прошла успешно!', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+                
+            }, 1000);
+        });
+
+        // Вспомогательные функции
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function clearErrors() {
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.classList.remove('show');
+                el.textContent = '';
+            });
+            document.querySelectorAll('.input-wrapper input').forEach(el => {
+                el.classList.remove('error');
+            });
+        }
+
+        function showFieldError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            const errorDiv = document.getElementById(fieldId.replace('reg', '') + 'Error');
+            
+            if (field) field.classList.add('error');
+            if (errorDiv) {
+                errorDiv.textContent = message;
+                errorDiv.classList.add('show');
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `auth-notification ${type}`;
+            notification.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i> ${message}`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.remove(), 3000);
+        }
+    </script>
 </body>
 </html>
