@@ -354,6 +354,55 @@
 
 <!-- Подключение системы уведомлений -->
 <script src="js/notifications.js"></script>
+
+<!-- Инициализация с задержкой для гарантии -->
+<script>
+    // Проверяем, что уведомления созданы
+    setTimeout(function() {
+        // Если кнопка не создалась, создаем вручную
+        if (!document.getElementById('notificationsBtn')) {
+            const navActions = document.querySelector('.nav-actions');
+            if (navActions) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'notifications-wrapper';
+                wrapper.style.cssText = 'position: relative; display: inline-block;';
+                wrapper.innerHTML = `
+                    <button class="notifications-btn" id="notificationsBtn" title="Уведомления" style="
+                        background: none;
+                        border: none;
+                        cursor: pointer;
+                        font-size: 1.2rem;
+                        color: var(--text-primary, #333);
+                        padding: 8px 12px;
+                        border-radius: 8px;
+                        position: relative;
+                        transition: all 0.3s;
+                    ">
+                        <i class="fas fa-bell"></i>
+                        <span id="notificationsBadge" style="
+                            position: absolute;
+                            top: -2px;
+                            right: -2px;
+                            background: #e74c3c;
+                            color: white;
+                            font-size: 0.6rem;
+                            font-weight: 700;
+                            padding: 2px 6px;
+                            border-radius: 50%;
+                            min-width: 18px;
+                            height: 18px;
+                            display: none;
+                            align-items: center;
+                            justify-content: center;
+                            transform: translate(4px, -4px);
+                        ">0</span>
+                    </button>
+                `;
+                navActions.insertBefore(wrapper, navActions.querySelector('.nav-auth'));
+            }
+        }
+    }, 500);
+</script>
     
 </body>
 </html>
