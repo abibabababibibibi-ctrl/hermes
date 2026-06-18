@@ -44,17 +44,6 @@
             border-radius: 50%;
         }
 
-        .dashboard-welcome::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -10%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-        }
-
         .welcome-content {
             position: relative;
             z-index: 1;
@@ -86,13 +75,6 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .welcome-stat:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
         }
 
         /* Навигация кабинета */
@@ -114,10 +96,6 @@
             transition: all 0.3s;
             border-radius: 12px;
             font-weight: 500;
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .dashboard-nav-item:hover {
@@ -128,22 +106,6 @@
         .dashboard-nav-item.active {
             background: var(--secondary-color);
             color: white;
-        }
-
-        .dashboard-nav-item .nav-badge {
-            background: #e74c3c;
-            color: white;
-            font-size: 0.6rem;
-            padding: 2px 6px;
-            border-radius: 50%;
-            margin-left: 4px;
-            display: none;
-            min-width: 18px;
-            text-align: center;
-        }
-
-        .dashboard-nav-item .nav-badge.show {
-            display: inline-block;
         }
 
         /* Секции */
@@ -196,16 +158,16 @@
         /* Сетка объектов */
         .properties-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
         }
 
+        /* Карточка объекта */
         .property-item {
             background: var(--bg-secondary);
             border-radius: 15px;
             overflow: hidden;
             transition: all 0.3s;
-            border: 1px solid var(--border-color);
         }
 
         .property-item:hover {
@@ -231,7 +193,6 @@
         .property-title {
             font-weight: 600;
             margin-bottom: 0.25rem;
-            font-size: 0.95rem;
         }
 
         .property-location {
@@ -243,153 +204,133 @@
         .property-price {
             font-weight: 700;
             color: var(--accent-color);
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
 
-   
+        /* Таблица бронирований */
+        .bookings-table {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Форма профиля */
+        .profile-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-field.full-width {
+            grid-column: span 2;
+        }
+
+        .form-field label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-field input,
+        .form-field textarea {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .form-field input:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
 
         /* Пустое состояние */
         .empty-state {
             text-align: center;
-            padding: 3rem 1rem;
+            padding: 3rem;
             color: var(--text-tertiary);
         }
 
         .empty-state i {
             font-size: 3rem;
             margin-bottom: 1rem;
-            display: block;
-        }
-
-        .empty-state p {
-            margin-bottom: 1rem;
-        }
-
-        /* Форма профиля */
-        .profile-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .profile-form .form-field {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .profile-form .form-field.full-width {
-            grid-column: span 2;
-        }
-
-        .profile-form .form-field label {
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .profile-form .form-field input,
-        .profile-form .form-field textarea {
-            padding: 0.75rem;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            font-size: 0.95rem;
-        }
-
-        .profile-form .form-field input:focus,
-        .profile-form .form-field textarea:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-        }
-
-        /* Кнопки */
-        .btn-sm {
-            padding: 6px 14px;
-            font-size: 0.85rem;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: var(--secondary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .btn-danger {
-            background: #e74c3c;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #c0392b;
         }
 
         /* Адаптивность */
         @media (max-width: 768px) {
-            .dashboard-welcome {
-                padding: 1.5rem;
-            }
-            .welcome-name {
-                font-size: 1.5rem;
-            }
-            .welcome-stats {
-                gap: 1rem;
-            }
-            .dashboard-nav-item {
-                padding: 0.5rem 1rem;
-                font-size: 0.85rem;
-            }
-            .properties-grid {
-                grid-template-columns: 1fr;
-            }
             .profile-form {
                 grid-template-columns: 1fr;
             }
-            .profile-form .form-field.full-width {
+            
+            .form-field.full-width {
                 grid-column: span 1;
             }
-        }
-
-        @media (max-width: 480px) {
-            .dashboard-container {
-                padding: 1rem 12px;
+            
+            .welcome-name {
+                font-size: 1.5rem;
             }
-            .dashboard-nav {
-                gap: 0.25rem;
+            
+            .welcome-stats {
+                gap: 1rem;
             }
+            
             .dashboard-nav-item {
-                padding: 0.4rem 0.7rem;
-                font-size: 0.75rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
             }
-            .card-header {
-                padding: 1rem;
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .card-body {
-                padding: 1rem;
+            
+            .properties-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -411,7 +352,6 @@
                 <li><a href="index.html#contact">Контакты</a></li>
             </ul>
             <div class="nav-actions">
-                <button class="theme-toggle" id="themeToggle">
     <button class="theme-toggle" id="themeToggle">🌙</button>
     
     <!-- Кнопки авторизации -->
@@ -473,7 +413,6 @@
         </nav>
     </header>
 
-    <!-- Основной контент -->
     <div class="dashboard-page">
         <div class="dashboard-container">
             <!-- Приветственная секция -->
@@ -501,18 +440,18 @@
                 <button class="dashboard-nav-item" data-tab="profile">
                     <i class="fas fa-user"></i> Профиль
                 </button>
-                <button class="dashboard-nav-item" data-tab="notifications" id="notificationsTabBtn">
-                    <i class="fas fa-bell"></i> Уведомления
-                    <span class="nav-badge" id="navBadge">0</span>
+                <button class="dashboard-nav-item" data-tab="settings">
+                    <i class="fas fa-cog"></i> Настройки
                 </button>
             </div>
 
             <!-- Секция: Обзор -->
             <div class="dashboard-section active" id="overviewTab">
+                <!-- Рекомендации -->
                 <div class="dashboard-card">
                     <div class="card-header">
                         <h3><i class="fas fa-star" style="color: #f39c12;"></i> Рекомендации для вас</h3>
-                        <a href="catalog.html" class="btn-sm btn-secondary">Смотреть все →</a>
+                        <a href="catalog.html" class="btn btn-sm btn-secondary">Смотреть все →</a>
                     </div>
                     <div class="card-body">
                         <div class="properties-grid" id="recommendationsGrid">
@@ -525,15 +464,28 @@
                 </div>
 
                 <!-- Активные бронирования -->
-                <div class="dashboard-card" id="activeBookingsCard">
+                <div class="dashboard-card" id="activeBookingsCard" style="display: none;">
                     <div class="card-header">
                         <h3><i class="fas fa-clock"></i> Активные бронирования</h3>
+                        <button class="btn btn-sm btn-secondary" onclick="location.href='catalog.html'">Новое бронирование</button>
                     </div>
-                    <div class="card-body" id="activeBookingsList">
-                        <div class="empty-state">
-                            <i class="fas fa-calendar-check"></i>
-                            <p>Нет активных бронирований</p>
-                            <a href="catalog.html" class="btn-sm btn-primary">Забронировать объект</a>
+                    <div class="card-body">
+                        <div id="activeBookingsList"></div>
+                    </div>
+                </div>
+
+                <!-- Недавно просмотренные -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-history"></i> Недавно просмотренные</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="properties-grid" id="recentGrid">
+                            <div class="empty-state">
+                                <i class="fas fa-eye-slash"></i>
+                                <p>Вы еще не просматривали объекты</p>
+                                <a href="catalog.html" class="btn btn-primary">Перейти в каталог</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -545,11 +497,13 @@
                     <div class="card-header">
                         <h3><i class="fas fa-calendar-check"></i> Все бронирования</h3>
                     </div>
-                    <div class="card-body" id="bookingsList">
-                        <div class="empty-state">
-                            <i class="fas fa-calendar-times"></i>
-                            <p>У вас пока нет бронирований</p>
-                            <a href="catalog.html" class="btn-sm btn-primary">Перейти в каталог</a>
+                    <div class="card-body">
+                        <div class="bookings-table" id="bookingsTable">
+                            <div class="empty-state">
+                                <i class="fas fa-calendar-times"></i>
+                                <p>У вас пока нет бронирований</p>
+                                <a href="catalog.html" class="btn btn-primary">Забронировать объект</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -566,7 +520,7 @@
                             <div class="empty-state">
                                 <i class="fas fa-heart-broken"></i>
                                 <p>Нет избранных объектов</p>
-                                <a href="catalog.html" class="btn-sm btn-primary">Добавить в избранное</a>
+                                <a href="catalog.html" class="btn btn-primary">Добавить в избранное</a>
                             </div>
                         </div>
                     </div>
@@ -583,90 +537,89 @@
                         <form class="profile-form" id="profileForm">
                             <div class="form-field">
                                 <label>Имя *</label>
-                                <input type="text" id="profileFirstName" required>
+                                <input type="text" id="firstName" required>
                             </div>
                             <div class="form-field">
                                 <label>Фамилия *</label>
-                                <input type="text" id="profileLastName" required>
+                                <input type="text" id="lastName" required>
                             </div>
                             <div class="form-field">
                                 <label>Email *</label>
-                                <input type="email" id="profileEmail" required>
+                                <input type="email" id="email" required>
                             </div>
                             <div class="form-field">
                                 <label>Телефон</label>
-                                <input type="tel" id="profilePhone">
+                                <input type="tel" id="phone">
                             </div>
                             <div class="form-field full-width">
-                                <button type="submit" class="btn-sm btn-primary" style="padding: 10px 20px;">
+                                <label>О себе</label>
+                                <textarea id="bio" rows="3" placeholder="Расскажите о себе..."></textarea>
+                            </div>
+                            <div class="form-field full-width">
+                                <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save"></i> Сохранить изменения
                                 </button>
                             </div>
                         </form>
                     </div>
                 </div>
+            </div>
 
+            <!-- Секция: Настройки -->
+            <div class="dashboard-section" id="settingsTab">
                 <div class="dashboard-card">
                     <div class="card-header">
                         <h3><i class="fas fa-lock"></i> Безопасность</h3>
                     </div>
                     <div class="card-body">
-                        <form id="passwordForm" style="display: flex; flex-direction: column; gap: 1rem; max-width: 400px;">
+                        <form id="passwordForm" style="max-width: 400px;">
                             <div class="form-field">
                                 <label>Текущий пароль</label>
-                                <input type="password" id="currentPassword" placeholder="Введите текущий пароль">
+                                <input type="password" id="currentPassword" required>
                             </div>
                             <div class="form-field">
                                 <label>Новый пароль</label>
-                                <input type="password" id="newPassword" placeholder="Введите новый пароль">
+                                <input type="password" id="newPassword" required>
                             </div>
                             <div class="form-field">
                                 <label>Подтверждение пароля</label>
-                                <input type="password" id="confirmPassword" placeholder="Подтвердите новый пароль">
+                                <input type="password" id="confirmPassword" required>
                             </div>
-                            <button type="submit" class="btn-sm btn-primary" style="padding: 10px 20px;">
-                                <i class="fas fa-key"></i> Сменить пароль
-                            </button>
+                            <button type="submit" class="btn btn-primary">Сменить пароль</button>
                         </form>
                     </div>
                 </div>
 
                 <div class="dashboard-card">
                     <div class="card-header">
-                        <h3><i class="fas fa-exclamation-triangle"></i> Действия с аккаунтом</h3>
+                        <h3><i class="fas fa-bell"></i> Уведомления</h3>
                     </div>
-                    <div class="card-body" style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <button class="btn-sm btn-secondary" onclick="alert('Данные экспортированы')">
-                            <i class="fas fa-download"></i> Экспорт данных
-                        </button>
-                        <button class="btn-sm btn-danger" onclick="if(confirm('Удалить аккаунт?')){alert('Аккаунт удален');}">
-                            <i class="fas fa-trash"></i> Удалить аккаунт
-                        </button>
+                    <div class="card-body">
+                        <label class="checkbox-group" style="margin-bottom: 1rem;">
+                            <input type="checkbox" id="notifyEmail">
+                            <span>Получать уведомления на email</span>
+                        </label>
+                        <label class="checkbox-group">
+                            <input type="checkbox" id="notifySMS">
+                            <span>Получать SMS-уведомления</span>
+                        </label>
                     </div>
                 </div>
-            </div>
 
-            <!-- Секция: Уведомления -->
-            <div class="dashboard-section" id="notificationsTab">
                 <div class="dashboard-card">
                     <div class="card-header">
-                        <h3><i class="fas fa-bell"></i> Все уведомления</h3>
-                        <button class="btn-sm btn-secondary" id="markAllReadBtn">
-                            <i class="fas fa-check-double"></i> Прочитать все
-                        </button>
+                        <h3><i class="fas fa-exclamation-triangle"></i> Опасная зона</h3>
                     </div>
-                    <div class="card-body" id="notificationsFullList">
-                        <div class="empty-state">
-                            <i class="fas fa-bell-slash"></i>
-                            <p>Нет уведомлений</p>
-                        </div>
+                    <div class="card-body">
+                        <button class="btn btn-danger" onclick="deleteAccount()">
+                            <i class="fas fa-trash"></i> Удалить аккаунт
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -677,449 +630,21 @@
                 <div class="footer-links">
                     <a href="index.html">Главная</a>
                     <a href="catalog.html">Каталог</a>
-                    <a href="objects.html">Объекты</a>
-                    <a href="clients.html">Клиенты</a>
-                    <a href="deals.html">Сделки</a>
+                    <a href="news.html">Новости</a>
                 </div>
                 <div class="footer-social">
                     <a href="https://vk.com/club233530044"><i class="fab fa-vk"></i></a>
-                    <a href="#"><i class="fab fa-telegram"></i></a>
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Агентство недвижимости "Гермес". Все права защищены.</p>
+                <p>&copy; 2025-2026 Агентство недвижимости "Гермес".</p>
             </div>
         </div>
     </footer>
 
-    <!-- Подключение скриптов -->
     <script src="js/theme.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/database.js"></script>
-    
-    <script>
-        // ============================================
-        // ЛИЧНЫЙ КАБИНЕТ - ПОЛНАЯ ЛОГИКА
-        // ============================================
-        
-        class Dashboard {
-            constructor() {
-                this.currentUser = null;
-                this.properties = [];
-                this.init();
-            }
-
-            init() {
-                // Получаем текущего пользователя
-                this.currentUser = AuthService.getCurrentUser();
-                
-                if (!this.currentUser) {
-                    sessionStorage.setItem('redirectAfterLogin', window.location.pathname);
-                    window.location.href = 'login.html';
-                    return;
-                }
-
-                // Загружаем данные
-                this.loadProperties();
-                this.loadUserData();
-                this.loadFavorites();
-                this.loadBookings();
-                this.setupNavigation();
-                this.setupForms();
-                this.updateAuthUI();
-                
-
-            loadProperties() {
-                const saved = localStorage.getItem('hermes_objects');
-                if (saved) {
-                    this.properties = JSON.parse(saved);
-                } else {
-                    // Демо-данные
-                    this.properties = [
-                        { id: 1, title: '3-комнатная квартира в центре', price: 12500000, area: 85, location: 'ул. Тверская, 15', image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400' },
-                        { id: 2, title: '2-комнатная квартира в спальном районе', price: 8200000, area: 65, location: 'ул. Академика Королева, 12', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400' },
-                        { id: 3, title: 'Загородный дом с участком', price: 25000000, area: 150, location: 'Новорижское шоссе, 25 км', image: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=400' }
-                    ];
-                }
-            }
-
-            loadUserData() {
-                const user = this.currentUser;
-                document.getElementById('userName').textContent = `${user.firstName} ${user.lastName}`;
-                
-                // Заполняем форму профиля
-                document.getElementById('profileFirstName').value = user.firstName || '';
-                document.getElementById('profileLastName').value = user.lastName || '';
-                document.getElementById('profileEmail').value = user.email || '';
-                document.getElementById('profilePhone').value = user.phone || '';
-                
-                // Статистика
-                const favorites = this.getFavorites();
-                const bookings = this.getBookings();
-                
-                document.getElementById('userStats').innerHTML = `
-                    <div class="welcome-stat" onclick="document.querySelector('[data-tab=\'favorites\']').click()">
-                        <i class="fas fa-heart"></i> ${favorites.length} в избранном
-                    </div>
-                    <div class="welcome-stat" onclick="document.querySelector('[data-tab=\'bookings\']').click()">
-                        <i class="fas fa-calendar-check"></i> ${bookings.length} бронирований
-                    </div>
-                    <div class="welcome-stat" onclick="document.querySelector('[data-tab=\'notifications\']').click()">
-                        <i class="fas fa-bell"></i> ${this.getUnreadCount()} уведомлений
-                    </div>
-                `;
-
-                // Рекомендации
-                this.loadRecommendations();
-                
-                // Активные бронирования
-                this.loadActiveBookings();
-            }
-
-            getFavorites() {
-                const favorites = JSON.parse(localStorage.getItem('hermes_favorites')) || {};
-                return favorites[this.currentUser.id] || [];
-            }
-
-            getBookings() {
-                const bookings = JSON.parse(localStorage.getItem('hermes_bookings')) || [];
-                return bookings.filter(b => b.userId === this.currentUser.id);
-            }
-
-            getUnreadCount() {
-                if (window.notificationSystem) {
-                    return notificationSystem.getUnreadCount();
-                }
-                return 0;
-            }
-
-            loadFavorites() {
-                const favorites = this.getFavorites();
-                const grid = document.getElementById('favoritesGrid');
-                
-                if (favorites.length === 0) {
-                    grid.innerHTML = `
-                        <div class="empty-state" style="grid-column: 1/-1;">
-                            <i class="fas fa-heart-broken"></i>
-                            <p>Нет избранных объектов</p>
-                            <a href="catalog.html" class="btn-sm btn-primary">Добавить в избранное</a>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                const favoriteProps = this.properties.filter(p => favorites.includes(p.id));
-                
-                if (favoriteProps.length === 0) {
-                    grid.innerHTML = `
-                        <div class="empty-state" style="grid-column: 1/-1;">
-                            <i class="fas fa-heart-broken"></i>
-                            <p>Нет избранных объектов</p>
-                            <a href="catalog.html" class="btn-sm btn-primary">Добавить в избранное</a>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                grid.innerHTML = favoriteProps.map(prop => `
-                    <div class="property-item">
-                        <div class="property-image">
-                            <img src="${prop.image}" alt="${prop.title}" onerror="this.src='https://via.placeholder.com/400x300?text=Нет+фото'">
-                        </div>
-                        <div class="property-info">
-                            <div class="property-title">${prop.title}</div>
-                            <div class="property-location"><i class="fas fa-map-marker-alt"></i> ${prop.location}</div>
-                            <div class="property-price">${this.formatPrice(prop.price)}</div>
-                            <a href="apartment-detail.html?id=${prop.id}" class="btn-sm btn-primary">Подробнее</a>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            loadBookings() {
-                const bookings = this.getBookings();
-                const container = document.getElementById('bookingsList');
-                
-                if (bookings.length === 0) {
-                    container.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-calendar-times"></i>
-                            <p>У вас пока нет бронирований</p>
-                            <a href="catalog.html" class="btn-sm btn-primary">Перейти в каталог</a>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                container.innerHTML = bookings.map(booking => {
-                    const property = this.properties.find(p => p.id === booking.propertyId);
-                    const statusText = {
-                        active: 'Активно',
-                        pending: 'Ожидает оплаты',
-                        completed: 'Завершено',
-                        cancelled: 'Отменено'
-                    }[booking.status] || booking.status;
-                    
-                    return `
-                        <div style="
-                            padding: 1rem;
-                            border-bottom: 1px solid var(--border-color);
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            flex-wrap: wrap;
-                            gap: 1rem;
-                        ">
-                            <div>
-                                <strong>${property ? property.title : 'Объект'}</strong>
-                                <div style="font-size: 0.85rem; color: var(--text-secondary);">
-                                    ${booking.date} в ${booking.time}
-                                </div>
-                            </div>
-                            <div>
-                                <span style="
-                                    display: inline-block;
-                                    padding: 0.2rem 0.8rem;
-                                    border-radius: 20px;
-                                    font-size: 0.75rem;
-                                    font-weight: 500;
-                                    background: ${booking.status === 'active' ? '#d4edda' : '#f8d7da'};
-                                    color: ${booking.status === 'active' ? '#155724' : '#721c24'};
-                                ">${statusText}</span>
-                                <a href="apartment-detail.html?id=${booking.propertyId}" class="btn-sm btn-secondary" style="margin-left: 0.5rem;">Просмотр</a>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            loadActiveBookings() {
-                const bookings = this.getBookings();
-                const active = bookings.filter(b => b.status === 'active');
-                const container = document.getElementById('activeBookingsList');
-                
-                if (active.length === 0) {
-                    container.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-calendar-check"></i>
-                            <p>Нет активных бронирований</p>
-                            <a href="catalog.html" class="btn-sm btn-primary">Забронировать объект</a>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                container.innerHTML = active.slice(0, 3).map(booking => {
-                    const property = this.properties.find(p => p.id === booking.propertyId);
-                    return `
-                        <div style="
-                            padding: 0.75rem 0;
-                            border-bottom: 1px solid var(--border-color);
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            flex-wrap: wrap;
-                            gap: 0.5rem;
-                        ">
-                            <div>
-                                <strong>${property ? property.title : 'Объект'}</strong>
-                                <div style="font-size: 0.8rem; color: var(--text-secondary);">
-                                    ${booking.date} в ${booking.time}
-                                </div>
-                            </div>
-                            <a href="apartment-detail.html?id=${booking.propertyId}" class="btn-sm btn-secondary">Подробнее</a>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            loadRecommendations() {
-                const grid = document.getElementById('recommendationsGrid');
-                const recommendations = this.properties.slice(0, 3);
-                
-                if (recommendations.length === 0) {
-                    grid.innerHTML = `
-                        <div class="empty-state" style="grid-column: 1/-1;">
-                            <i class="fas fa-home"></i>
-                            <p>Скоро появятся рекомендации</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                grid.innerHTML = recommendations.map(prop => `
-                    <div class="property-item">
-                        <div class="property-image">
-                            <img src="${prop.image}" alt="${prop.title}" onerror="this.src='https://via.placeholder.com/400x300?text=Нет+фото'">
-                        </div>
-                        <div class="property-info">
-                            <div class="property-title">${prop.title}</div>
-                            <div class="property-location"><i class="fas fa-map-marker-alt"></i> ${prop.location}</div>
-                            <div class="property-price">${this.formatPrice(prop.price)}</div>
-                            <a href="apartment-detail.html?id=${prop.id}" class="btn-sm btn-primary">Подробнее</a>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-       
-
-            getTimeAgo(timestamp) {
-                const now = new Date();
-                const date = new Date(timestamp);
-                const diff = Math.floor((now - date) / 1000);
-                
-                if (diff < 60) return 'только что';
-                if (diff < 3600) return `${Math.floor(diff / 60)} мин назад`;
-                if (diff < 86400) return `${Math.floor(diff / 3600)} ч назад`;
-                if (diff < 604800) return `${Math.floor(diff / 86400)} дн назад`;
-                return date.toLocaleDateString('ru-RU');
-            }
-
-
-            setupNavigation() {
-                const navItems = document.querySelectorAll('.dashboard-nav-item');
-                const sections = document.querySelectorAll('.dashboard-section');
-                
-                navItems.forEach(item => {
-                    item.addEventListener('click', () => {
-                        const tab = item.dataset.tab;
-                        
-                        navItems.forEach(n => n.classList.remove('active'));
-                        item.classList.add('active');
-                        
-                        sections.forEach(s => s.classList.remove('active'));
-                        const target = document.getElementById(`${tab}Tab`);
-                        if (target) target.classList.add('active');
-                    });
-                });
-            }
-
-            setupForms() {
-                // Форма профиля
-                document.getElementById('profileForm').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const data = {
-                        firstName: document.getElementById('profileFirstName').value,
-                        lastName: document.getElementById('profileLastName').value,
-                        email: document.getElementById('profileEmail').value,
-                        phone: document.getElementById('profilePhone').value
-                    };
-                    
-                    // Сохраняем данные (в реальном приложении - запрос к серверу)
-                    const users = JSON.parse(localStorage.getItem('hermes_users') || '[]');
-                    const index = users.findIndex(u => u.id === this.currentUser.id);
-                    if (index !== -1) {
-                        users[index] = { ...users[index], ...data };
-                        localStorage.setItem('hermes_users', JSON.stringify(users));
-                        
-                        // Обновляем сессию
-                        const sessionUser = { ...users[index] };
-                        delete sessionUser.password;
-                        localStorage.setItem('currentUser', JSON.stringify(sessionUser));
-                        
-                        // Обновляем отображение
-                        this.currentUser = sessionUser;
-                        this.loadUserData();
-                        this.showNotification('Профиль обновлен!', 'success');
-                    }
-                });
-
-                // Форма смены пароля
-                document.getElementById('passwordForm').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const current = document.getElementById('currentPassword').value;
-                    const newPass = document.getElementById('newPassword').value;
-                    const confirm = document.getElementById('confirmPassword').value;
-                    
-                    if (!current || !newPass || !confirm) {
-                        this.showNotification('Заполните все поля', 'error');
-                        return;
-                    }
-                    
-                    if (newPass !== confirm) {
-                        this.showNotification('Пароли не совпадают', 'error');
-                        return;
-                    }
-                    
-                    if (newPass.length < 6) {
-                        this.showNotification('Пароль должен быть не менее 6 символов', 'error');
-                        return;
-                    }
-                    
-                    this.showNotification('Пароль изменен!', 'success');
-                    document.getElementById('passwordForm').reset();
-                });
-
-                // Кнопка "Прочитать все"
-                document.getElementById('markAllReadBtn').addEventListener('click', () => {
-                    if (window.notificationSystem) {
-                        notificationSystem.markAllAsRead();
-                        this.loadNotifications();
-                        this.updateNotificationBadge();
-                        this.showNotification('Все уведомления прочитаны', 'success');
-                    }
-                });
-            }
-
-            formatPrice(price) {
-                return new Intl.NumberFormat('ru-RU', {
-                    style: 'currency',
-                    currency: 'RUB',
-                    minimumFractionDigits: 0
-                }).format(price);
-            }
-
-        
-            updateAuthUI() {
-                const user = this.currentUser;
-                const authSection = document.getElementById('authSection');
-                
-                if (authSection && user) {
-                    authSection.innerHTML = `
-                        <div class="user-menu" style="position: relative; display: flex; align-items: center; gap: 8px;">
-                            <div class="user-avatar" style="
-                                width: 38px;
-                                height: 38px;
-                                border-radius: 50%;
-                                background: linear-gradient(135deg, #667eea, #764ba2);
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                color: white;
-                                font-weight: 600;
-                                cursor: pointer;
-                                font-size: 0.9rem;
-                            ">
-                                ${user.firstName ? user.firstName.charAt(0).toUpperCase() : 'U'}
-                            </div>
-                            <span style="font-size: 0.85rem; color: var(--text-primary); display: none;">${user.firstName}</span>
-                        </div>
-                    `;
-                }
-            }
-        }
-
-        // Инициализация
-        let dashboard = null;
-        document.addEventListener('DOMContentLoaded', function() {
-            dashboard = new Dashboard();
-            window.dashboard = dashboard;
-            
-            // Обновляем бейдж уведомлений при загрузке
-            setTimeout(() => {
-                if (dashboard) dashboard.updateNotificationBadge();
-            }, 1000);
-        });
-
-        // Функция для обновления бейджа из других скриптов
-        function updateDashboardBadge() {
-            if (dashboard) {
-                dashboard.updateNotificationBadge();
-                dashboard.loadNotifications();
-            }
-        }
-    </script>
+    <script src="js/dashboard.js"></script>
 </body>
 </html>
