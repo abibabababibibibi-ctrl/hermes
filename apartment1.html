@@ -4,186 +4,663 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3-комн. квартира в Центральном районе - Гермес</title>
-    <link rel="stylesheet" href="css/properties.css">
-    <link rel="stylesheet" href="css/catalog.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/catalog.css">
     <link rel="stylesheet" href="css/login.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Дополнительные стили для карточки объекта */
+        .property-details {
+            padding-top: 100px;
+            padding-bottom: 60px;
+            background: var(--bg-secondary);
+            min-height: 100vh;
+        }
 
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Хлебные крошки */
+        .breadcrumbs {
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+        }
+        .breadcrumbs a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        .breadcrumbs span {
+            margin: 0 0.5rem;
+        }
+
+        /* Заголовок */
+        .property-header {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .property-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .property-price-main {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .property-address {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .property-status {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        .status-available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-sold {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-booked {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Основной контент */
+        .property-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .property-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Галерея */
+        .property-gallery {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .main-image {
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .main-image:hover img {
+            transform: scale(1.03);
+        }
+
+        .main-image .image-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .image-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            padding: 0.5rem;
+        }
+
+        .image-thumbnails img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .image-thumbnails img:hover {
+            transform: scale(1.05);
+            border-color: var(--secondary-color);
+        }
+
+        .image-thumbnails img.active {
+            border-color: var(--secondary-color);
+        }
+
+        /* Информация */
+        .property-info-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .info-card {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .info-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card h3 i {
+            color: var(--secondary-color);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .features-list li {
+            padding: 0.4rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .features-list li i {
+            color: var(--secondary-color);
+            width: 20px;
+        }
+
+        /* Виджет покупки */
+        .purchase-widget {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .purchase-widget h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .purchase-widget p {
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .purchase-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .purchase-buttons .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+            justify-content: center;
+            min-width: 140px;
+        }
+
+        .purchase-buttons .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #1e8449;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-primary:hover {
+            background: #f0f0f0;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Агент */
+        .agent-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        .agent-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .agent-info h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .agent-info p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Модальное окно */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 10px 15px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .modal-nav:hover {
+            background: rgba(0,0,0,0.8);
+        }
+
+        .modal-nav.prev {
+            left: 20px;
+        }
+
+        .modal-nav.next {
+            right: 20px;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .property-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .property-price-main {
+                font-size: 1.6rem;
+            }
+            
+            .main-image {
+                height: 250px;
+            }
+            
+            .image-thumbnails {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .image-thumbnails img {
+                height: 70px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .purchase-buttons {
+                flex-direction: column;
+            }
+            
+            .purchase-buttons .btn {
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .property-header {
+                padding: 1rem;
+            }
+            
+            .main-image {
+                height: 200px;
+            }
+            
+            .image-thumbnails {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.3rem;
+                padding: 0.3rem;
+            }
+            
+            .image-thumbnails img {
+                height: 55px;
+            }
+            
+            .info-card {
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
-        <!-- Header -->
-        <header class="header">
-            <nav class="nav">
-                <div class="nav-brand">
-                    <h2><a href="index.html" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
-                    <span>Агентство недвижимости</span>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h2><a href="index.html" style="text-decoration: none; color: inherit;">Г Е Р М Е С</a></h2>
+                <span>Агентство недвижимости</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="index.html#about">О нас</a></li>
+                <li><a href="index.html#services">Услуги</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="index.html#contact">Контакты</a></li>
+                <li><a href="news.html" class="active">Новости</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <div class="nav-auth" id="authSection">
+                    <a href="login.html" class="auth-btn auth-login">Войти</a>
+                    <a href="register.html" class="auth-btn auth-register">Регистрация</a>
                 </div>
-                <ul class="nav-links">
-                    <li><a href="index#home">Главная</a></li>
-                    <li><a href="index#about">О нас</a></li>
-                    <li><a href="index#services">Услуги</a></li>
-                    <li><a href="catalog.html" class="active">Каталог</a></li>
-                    <li><a href="index#contact">Контакты</a></li>
-                </ul>
-                <div class="nav-actions">
-    <button class="theme-toggle" id="themeToggle">🌙</button>
-    
-    <!-- Кнопки авторизации -->
-    <div class="nav-auth" id="authSection">
-        <a href="login.html" class="auth-btn auth-login">Войти</a>
-        <a href="register.html" class="auth-btn auth-register">Регистрация</a>
-    </div>
-</div>
+            </div>
+        </nav>
+    </header>
 
-<!-- После body добавить скрипт -->
-<script>
-    // Проверка авторизации и обновление UI
-    (function() {
-        const user = JSON.parse(localStorage.getItem('currentUser') || 
-            localStorage.getItem('hermes_session') || 
-            sessionStorage.getItem('hermes_current_user') || 'null');
-        
-        const authSection = document.getElementById('authSection');
-        if (authSection && user) {
-            authSection.innerHTML = `
-                <div class="user-menu" style="position: relative;">
-                    <div class="user-avatar" style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; cursor: pointer;">
-                        ${user.firstName ? user.firstName.charAt(0).toUpperCase() : 'U'}
-                    </div>
-                    <div class="user-dropdown" style="display: none; position: absolute; top: 45px; right: 0; background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); min-width: 200px; padding: 8px 0; z-index: 1000;">
-                        <a href="profile.html" style="display: block; padding: 8px 16px; color: #333; text-decoration: none;">👤 Профиль</a>
-                        <a href="dashboard.html" style="display: block; padding: 8px 16px; color: #333; text-decoration: none;">📊 Личный кабинет</a>
-                        <a href="favorites.html" style="display: block; padding: 8px 16px; color: #333; text-decoration: none;">❤️ Избранное</a>
-                        <div style="height: 1px; background: #eee; margin: 4px 0;"></div>
-                        <a href="#" onclick="logout()" style="display: block; padding: 8px 16px; color: #e74c3c; text-decoration: none;">🚪 Выйти</a>
-                    </div>
-                </div>
-            `;
-            
-            // Переключение меню
-            const avatar = document.querySelector('.user-avatar');
-            const dropdown = document.querySelector('.user-dropdown');
-            if (avatar && dropdown) {
-                avatar.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-                });
-                document.addEventListener('click', function() {
-                    dropdown.style.display = 'none';
-                });
-            }
-        }
-    })();
-    
-    function logout() {
-        localStorage.removeItem('currentUser');
-        localStorage.removeItem('hermes_session');
-        localStorage.removeItem('hermes_remember');
-        sessionStorage.removeItem('hermes_current_user');
-        window.location.reload();
-    }
-</script>
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-    <!-- Property Details Section -->
+    <!-- Основной контент -->
     <section class="property-details">
         <div class="container">
-            <div class="property-header">
-                <h1>3-комнатная квартира в Центральном районе</h1>
-                <p class="property-price-main">12 500 000 ₽</p>
-                <p class="property-address">📍 ул. Ленина, 15, Центральный район</p>
+            <!-- Хлебные крошки -->
+            <div class="breadcrumbs">
+                <a href="index.html">Главная</a>
+                <span>/</span>
+                <a href="catalog.html">Каталог</a>
+                <span>/</span>
+                <span>3-комнатная квартира в Центральном районе</span>
             </div>
 
-            <div class="property-content">
-                <div class="property-gallery">
-                    <div class="main-image">
-                        <img src="images/properties/1.jpg" alt="3-комнатная квартира">
+            <!-- Заголовок -->
+            <div class="property-header">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <h1>3-комнатная квартира в Центральном районе</h1>
+                        <div class="property-address">
+                            <i class="fas fa-map-marker-alt"></i> ул. Ленина, 15, Центральный район
+                        </div>
                     </div>
-                    <div class="image-thumbnails">
-                        <img src="images/properties/1-1.jpg" alt="Гостиная">
-                        <img src="images/properties/1-2.jpg" alt="Кухня">
-                        <img src="images/properties/1-3.jpg" alt="Спальня">
-                        <img src="images/properties/1-4.jpg" alt="Ванная">
+                    <div style="text-align: right;">
+                        <div class="property-price-main">12 500 000 ₽</div>
+                        <span class="property-status status-available">
+                            <i class="fas fa-check-circle"></i> В наличии
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Контент -->
+            <div class="property-content">
+                <!-- Галерея -->
+                <div class="property-gallery">
+                    <div class="main-image" id="mainImage">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop" alt="3-комнатная квартира" id="mainImageDisplay">
+                        <span class="image-badge"><i class="fas fa-camera"></i> 4 фото</span>
+                    </div>
+                    <div class="image-thumbnails" id="thumbnails">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=300&h=200&fit=crop" alt="Гостиная" class="active" data-index="0">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=300&h=200&fit=crop" alt="Кухня" data-index="1">
+                        <img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=300&h=200&fit=crop" alt="Спальня" data-index="2">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=300&h=200&fit=crop" alt="Ванная" data-index="3">
                     </div>
                 </div>
 
+                <!-- Информация -->
                 <div class="property-info-details">
+                    <!-- Основная информация -->
                     <div class="info-card">
-                        <h3>Основная информация</h3>
+                        <h3><i class="fas fa-info-circle"></i> Основная информация</h3>
                         <div class="info-grid">
                             <div class="info-item">
-                                <span class="info-label">Площадь:</span>
+                                <span class="info-label">Площадь</span>
                                 <span class="info-value">85 м²</span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label">Комнат:</span>
+                                <span class="info-label">Комнат</span>
                                 <span class="info-value">3</span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label">Этаж:</span>
-                                <span class="info-value">5/9</span>
+                                <span class="info-label">Этаж</span>
+                                <span class="info-value">5 / 9</span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label">Ремонт:</span>
+                                <span class="info-label">Ремонт</span>
                                 <span class="info-value">Евроремонт</span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label">Санузел:</span>
+                                <span class="info-label">Санузел</span>
                                 <span class="info-value">Раздельный</span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label">Балкон:</span>
+                                <span class="info-label">Балкон</span>
                                 <span class="info-value">2 лоджии</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Год постройки</span>
+                                <span class="info-value">2020</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Вид из окон</span>
+                                <span class="info-value">Городской</span>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Описание -->
                     <div class="info-card">
-                        <h3>Описание</h3>
-                        <p>Просторная 3-комнатная квартира в современном жилом комплексе в самом центре города.
-                           Светлая и уютная квартира с панорамными окнами, из которых открывается прекрасный вид
-                           на город. Евроремонт выполнен с использованием качественных материалов.
-                           В шаговой доступности метро, парки, школы и детские сады.</p>
+                        <h3><i class="fas fa-align-left"></i> Описание</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.6;">
+                            Просторная 3-комнатная квартира в современном жилом комплексе в самом центре города.
+                            Светлая и уютная квартира с панорамными окнами, из которых открывается прекрасный вид
+                            на город. Евроремонт выполнен с использованием качественных материалов.
+                            В шаговой доступности метро, парки, школы и детские сады.
+                            Отличный вариант для семьи с детьми или для тех, кто ценит комфорт и удобство расположения.
+                        </p>
                     </div>
 
+                    <!-- Особенности -->
                     <div class="info-card">
-                        <h3>Особенности</h3>
+                        <h3><i class="fas fa-star"></i> Особенности</h3>
                         <ul class="features-list">
-                            <li>✅ Панорамные окна</li>
-                            <li>✅ Чистовая отделка</li>
-                            <li>✅ Встроенная кухня</li>
-                            <li>✅ Кондиционер</li>
-                            <li>✅ Охраняемая территория</li>
-                            <li>✅ Подземный паркинг</li>
+                            <li><i class="fas fa-check-circle"></i> Панорамные окна</li>
+                            <li><i class="fas fa-check-circle"></i> Чистовая отделка</li>
+                            <li><i class="fas fa-check-circle"></i> Встроенная кухня</li>
+                            <li><i class="fas fa-check-circle"></i> Кондиционер</li>
+                            <li><i class="fas fa-check-circle"></i> Охраняемая территория</li>
+                            <li><i class="fas fa-check-circle"></i> Подземный паркинг</li>
+                            <li><i class="fas fa-check-circle"></i> Домофон</li>
+                            <li><i class="fas fa-check-circle"></i> Лифт</li>
                         </ul>
                     </div>
 
-                    <div class="contact-widget">
-    <h3>💬 Хотите купить этот объект?</h3>
-    <p>Оформите покупку прямо сейчас или получите консультацию</p>
+                    <!-- Агент -->
+                    <div class="info-card">
+                        <h3><i class="fas fa-user-tie"></i> Ответственный агент</h3>
+                        <div class="agent-card">
+                            <div class="agent-avatar">АН</div>
+                            <div class="agent-info">
+                                <h4>Алексей Новиков</h4>
+                                <p><i class="fas fa-phone"></i> +7 (999) 123-45-67</p>
+                                <p><i class="fas fa-envelope"></i> a.novikov@hermes.ru</p>
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="purchase-buttons">
-        <button class="btn btn-success" onclick="buyWithoutRegistration()">
-            <i class="fas fa-shopping-cart"></i> Купить без регистрации
-        </button>
-        <button class="btn btn-primary" onclick="openQuickOrderForm()">
-            <i class="fas fa-file-contract"></i> Быстрый заказ
-        </button>
-        <button class="btn btn-secondary" onclick="window.open('tel:+74951234567')">
-            <i class="fas fa-phone"></i> Консультация
-        </button>
-    </div>
-</div>
+                    <!-- Виджет покупки -->
+                    <div class="purchase-widget">
+                        <h3>🏠 Хотите купить этот объект?</h3>
+                        <p>Оформите покупку прямо сейчас или получите консультацию</p>
+                        <div class="purchase-buttons">
+                            <button class="btn btn-success" onclick="buyNow()">
+                                <i class="fas fa-shopping-cart"></i> Купить
+                            </button>
+                            <button class="btn btn-primary" onclick="bookViewing()">
+                                <i class="fas fa-calendar-alt"></i> Записаться на просмотр
+                            </button>
+                            <button class="btn btn-secondary" onclick="window.location.href='tel:+74951234567'">
+                                <i class="fas fa-phone"></i> Консультация
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Модальное окно просмотра фото -->
+    <div class="modal-overlay" id="imageModal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <span class="modal-nav prev" onclick="changeImage(-1)">&#10094;</span>
+        <span class="modal-nav next" onclick="changeImage(1)">&#10095;</span>
+        <img id="modalImage" src="" alt="Просмотр фото">
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -194,26 +671,198 @@
                     <p>Агентство недвижимости</p>
                 </div>
                 <div class="footer-links">
-                    <a href="index#home">Главная</a>
-                    <a href="index#about">О нас</a>
-                    <a href="index#services">Услуги</a>
+                    <a href="index.html">Главная</a>
+                    <a href="index.html#about">О нас</a>
+                    <a href="index.html#services">Услуги</a>
                     <a href="catalog.html">Каталог</a>
-                    <a href="index#contact">Контакты</a>
+                    <a href="news.html">Новости</a>
+                    <a href="index.html#contact">Контакты</a>
                 </div>
                 <div class="footer-social">
                     <a href="https://vk.com/club233530044"><i class="fab fa-vk"></i></a>
+
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Агентство недвижимости "Гермес". Все права защищены.</p>
-                <p class="footer-info">
-                    Информация на сайте не является публичной офертой.
-                    <a href="privacy.html">Политика конфиденциальности</a>
-                </p>
+                <p>&copy; 2025-2026 Агентство недвижимости "Гермес". Все права защищены.</p>
             </div>
         </div>
     </footer>
 
-    <script src="../js/script.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+        // ============================================
+        // ГАЛЕРЕЯ ИЗОБРАЖЕНИЙ
+        // ============================================
+        const images = [
+            'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop',
+            'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=500&fit=crop',
+            'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800&h=500&fit=crop',
+            'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop'
+        ];
+
+        let currentIndex = 0;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Клик по миниатюрам
+            document.querySelectorAll('.image-thumbnails img').forEach(img => {
+                img.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    setMainImage(index);
+                });
+            });
+
+            // Клик по главному изображению - открыть модальное окно
+            document.getElementById('mainImage').addEventListener('click', function() {
+                openModal(currentIndex);
+            });
+        });
+
+        function setMainImage(index) {
+            currentIndex = index;
+            document.getElementById('mainImageDisplay').src = images[index];
+            
+            // Обновляем активный класс на миниатюрах
+            document.querySelectorAll('.image-thumbnails img').forEach(img => {
+                img.classList.remove('active');
+                if (parseInt(img.dataset.index) === index) {
+                    img.classList.add('active');
+                }
+            });
+        }
+
+        function openModal(index) {
+            currentIndex = index;
+            document.getElementById('modalImage').src = images[index];
+            document.getElementById('imageModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function changeImage(direction) {
+            currentIndex = (currentIndex + direction + images.length) % images.length;
+            document.getElementById('modalImage').src = images[currentIndex];
+        }
+
+        // Закрытие модального окна по Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+            if (e.key === 'ArrowLeft') {
+                changeImage(-1);
+            }
+            if (e.key === 'ArrowRight') {
+                changeImage(1);
+            }
+        });
+
+        // ============================================
+        // ДЕЙСТВИЯ
+        // ============================================
+        function buyNow() {
+            const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            if (user) {
+                if (confirm('Вы уверены, что хотите купить этот объект?')) {
+                    alert('Заявка на покупку отправлена! Наш менеджер свяжется с вами.');
+                }
+            } else {
+                if (confirm('Для покупки необходимо войти. Перейти на страницу входа?')) {
+                    window.location.href = 'login.html';
+                }
+            }
+        }
+
+        function bookViewing() {
+            const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            if (user) {
+                const date = prompt('Введите удобную дату для просмотра (ДД.ММ.ГГГГ):');
+                if (date) {
+                    const time = prompt('Введите удобное время:');
+                    if (time) {
+                        alert(`Заявка на просмотр отправлена!\nДата: ${date}\nВремя: ${time}\nНаш менеджер свяжется с вами.`);
+                    }
+                }
+            } else {
+                if (confirm('Для записи на просмотр необходимо войти. Перейти на страницу входа?')) {
+                    window.location.href = 'login.html';
+                }
+            }
+        }
+
+        // ============================================
+        // АВТОРИЗАЦИЯ В ХЕДЕРЕ
+        // ============================================
+        (function() {
+            const user = JSON.parse(localStorage.getItem('currentUser') || 
+                localStorage.getItem('hermes_session') || 
+                sessionStorage.getItem('hermes_current_user') || 'null');
+            
+            const authSection = document.getElementById('authSection');
+            if (authSection && user) {
+                authSection.innerHTML = `
+                    <div class="user-menu" style="position: relative;">
+                        <div class="user-avatar" style="
+                            width: 38px;
+                            height: 38px;
+                            border-radius: 50%;
+                            background: linear-gradient(135deg, #667eea, #764ba2);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: white;
+                            font-weight: 600;
+                            cursor: pointer;
+                        ">
+                            ${user.firstName ? user.firstName.charAt(0).toUpperCase() : 'U'}
+                        </div>
+                        <div class="user-dropdown" style="
+                            display: none;
+                            position: absolute;
+                            top: 45px;
+                            right: 0;
+                            background: var(--bg-primary);
+                            border-radius: 12px;
+                            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                            min-width: 200px;
+                            padding: 8px 0;
+                            z-index: 1000;
+                            border: 1px solid var(--border-color);
+                        ">
+                            <a href="profile.html" style="display: block; padding: 8px 16px; color: var(--text-primary); text-decoration: none;">👤 Профиль</a>
+                            <a href="dashboard.html" style="display: block; padding: 8px 16px; color: var(--text-primary); text-decoration: none;">📊 Личный кабинет</a>
+                            <a href="favorites.html" style="display: block; padding: 8px 16px; color: var(--text-primary); text-decoration: none;">❤️ Избранное</a>
+                            <div style="height: 1px; background: var(--border-color); margin: 4px 0;"></div>
+                            <a href="#" onclick="logout()" style="display: block; padding: 8px 16px; color: #e74c3c; text-decoration: none;">🚪 Выйти</a>
+                        </div>
+                    </div>
+                `;
+                
+                const avatar = document.querySelector('.user-avatar');
+                const dropdown = document.querySelector('.user-dropdown');
+                if (avatar && dropdown) {
+                    avatar.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+                    });
+                    document.addEventListener('click', function() {
+                        dropdown.style.display = 'none';
+                    });
+                }
+            }
+        })();
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('hermes_session');
+            localStorage.removeItem('hermes_remember');
+            sessionStorage.removeItem('hermes_current_user');
+            window.location.reload();
+        }
+    </script>
 </body>
 </html>
